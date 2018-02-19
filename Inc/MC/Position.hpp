@@ -1,7 +1,7 @@
 /*
  * Position.hpp
  *
- *  Created on: 19 февр. 2018 г.
+ *  Created on: 19 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: Sales
  */
 
@@ -9,7 +9,6 @@
 #define POSITION_HPP_
 
 #include <stdint.h>
-#include "MC/Singleton.hpp"
 
 class Position {
 private:
@@ -26,18 +25,27 @@ protected:
 	virtual void SetPWM(uint8_t angle);
 };
 
-class PositionX final : public Singleton<Position> {
+class PositionX final : public Position {
 private:
 	PositionX();
 	virtual ~PositionX();
+    PositionX(const PositionX&) = delete;
+    PositionX& operator=(const PositionX&) = delete;
+public:
+	static PositionX* GetInstance();
 protected:
 	virtual void SetPWM(uint8_t angle);
 };
 
-class PositionY final : public Singleton<Position> {
+class PositionY final : public Position {
 private:
+    static PositionY* instance;
 	PositionY();
 	virtual ~PositionY();
+    PositionY(const PositionY&) = delete;
+    PositionY& operator=(const PositionY&) = delete;
+public:
+	static PositionY* GetInstance();
 protected:
 	virtual void SetPWM(uint8_t angle);
 };

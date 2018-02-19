@@ -1,7 +1,7 @@
 /*
  * Position.cpp
  *
- *  Created on: 19 февр. 2018 г.
+ *  Created on: 19 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: Sales
  */
 
@@ -31,6 +31,9 @@ void buildPwmTable(){
 
 Position::Position() {
 	this->absPosition = 0LL;
+}
+
+Position::~Position() {
 }
 
 int64_t Position::Get(){
@@ -66,8 +69,19 @@ void InitPWM(TIM_HandleTypeDef htim){
   HAL_TIM_Base_Start_IT(&htim);
 }
 
-PositionX::PositionX() {
+
+
+PositionX::PositionX():Position() {
 	InitPWM(htim2);
+}
+
+
+PositionX::~PositionX() {
+}
+
+PositionX* PositionX::GetInstance(){
+    static PositionX instance;
+    return &instance;
 }
 
 void PositionX::SetPWM(uint8_t angle){
@@ -115,9 +129,14 @@ void PositionX::SetPWM(uint8_t angle){
 	X_AXIS_TIMER->CCR4 = phase4;
 }
 
-PositionY::PositionY() {
+PositionY::PositionY():Position() {
 	InitPWM(htim3);
 }
+
+PositionY* PositionY::GetInstance(){
+	static PositionY instance;
+    return &instance;
+};
 
 void PositionY::SetPWM(uint8_t angle){
 	uint32_t phase1, phase2, phase3, phase4;
@@ -164,22 +183,26 @@ void PositionY::SetPWM(uint8_t angle){
 	Y_AXIS_TIMER->CCR4 = phase4;
 }
 
+
+extern "C" {
 int64_t GetPositionX(){
-	return PositionX::GetInstance().Get();
+	return PositionX::GetInstance()->Get();
 }
 
 int64_t GetPositionY(){
-	return PositionY::GetInstance().Get();
+	return PositionY::GetInstance()->Get();
 }
 
 void SetPositionX(int64_t x){
-	PositionX::GetInstance().Set(x);
+	PositionX::GetInstance()->Set(x);
 }
 
 void SetPositionY(int64_t y){
-	PositionY::GetInstance().Set(y);
+	PositionY::GetInstance()->Set(y);
 }
 
 void shiftPositionX(){
-	PositionX::GetInstance().Shift(1);
+	PositionX::GetInstance()->Shift(1);
 }
+} // extern C
+
