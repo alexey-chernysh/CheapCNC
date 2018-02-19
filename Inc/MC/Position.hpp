@@ -42,11 +42,4 @@ protected:
 	virtual void SetPWM(uint8_t angle);
 };
 
-int64_t GetPositionX();
-int64_t GetPositionY();
-void SetPositionX(int64_t x);
-void SetPositionY(int64_t y);
-
-void shiftPositionX();
-
 #endif /* POSITION_HPP_ */

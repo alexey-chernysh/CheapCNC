@@ -36,7 +36,7 @@
 #include "stm32f1xx_it.h"
 
 /* USER CODE BEGIN 0 */
-#include "MC/Position.hpp"
+#include "MC/Position.h"
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
