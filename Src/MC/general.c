@@ -6,6 +6,7 @@
  */
 
 #include "MC/general.h"
+#include "stm32f1xx_hal.h"
 
 static float GetTimerFrequency(){
     // calc timer interrupt frequency
@@ -17,7 +18,7 @@ static float GetOneBitLengthMM(){
 	return (N_OF_TOOTH * TOOTH_STEP)/STEP_PER_ROTATION/(MAX_MICROSTEP + 1.0)/scale;
 }
 
-static float GetMinVelocityMM(){  // mm in minute
+static float GetMinVelocity(){  // mm in minute
 	// calc min velocity
 	return 60.0*GetOneBitLengthMM()*GetTimerFrequency();
 }
@@ -27,3 +28,12 @@ static float GetMaxVelocity(){  // mm in minute
 	float maxPositionIncrement = (N_OF_TOOTH*TOOTH_STEP)/STEP_PER_ROTATION/2;
 	return 60.0*maxPositionIncrement*GetTimerFrequency();
 }
+
+static int64_t get64bitForDoubleMM(double mm){
+	return (int64_t)(mm/GetOneBitLengthMM());
+}
+
+static double getDoubleMMFor64bit(int64_t iValue){
+	return GetOneBitLengthMM()*iValue;
+}
+

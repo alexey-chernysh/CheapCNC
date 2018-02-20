@@ -8,6 +8,8 @@
 #ifndef MC_GENERAL_H_
 #define MC_GENERAL_H_
 
+#include "Math/int_math.h"
+
 // Прескалер для ШИМ-ов осей X и Y, т.е. тактовая частота счетчика ШИМ
 // будет равна (тактовая MCU)/(PWM_PRESCALER+1)
 #define PWM_PRESCALER 0
@@ -50,5 +52,17 @@
 // Число зубов у шестерни
 // TODO надо определять програмно
 #define N_OF_TOOTH 15
+
+float GetTimerFrequency();
+
+float GetOneBitLengthMM();
+
+float GetMinVelocity();  // mm in minute
+
+float GetMaxVelocity();  // mm in minute
+
+int64_t get64bitForDoubleMM(double mm);
+
+double  getDoubleMMFor64bit(int64_t iValue);
 
 #endif /* MC_GENERAL_H_ */
