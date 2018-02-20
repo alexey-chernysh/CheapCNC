@@ -9,6 +9,7 @@
 #include "MC/Motion.hpp"
 #include "MC/Action.hpp"
 #include "MC/Position.hpp"
+#include "MC/MotionController.hpp"
 
 Motion::~Motion() {
 	// TODO Auto-generated destructor stub
@@ -20,8 +21,9 @@ Motion::Motion( double _relEndPosX,
 			    double startVel,
 			    double endVel) {
 
-	this->relEndPosX = get64bitForDoubleMM(_relEndPosX);
-	this->relEndPosY = get64bitForDoubleMM(_relEndPosY);
+	MotionController* mc = MotionController::GetInstance();
+	this->relEndPosX = mc->Get64bitForDoubleMM(_relEndPosX);
+	this->relEndPosY = mc->Get64bitForDoubleMM(_relEndPosY);
 
 	this->relCurrentPosX = 0;
 	this->relCurrentPosY = 0;
@@ -55,14 +57,15 @@ void Motion::calcWayLength(){
 }
 
 void Motion::setupMotion(){
+	bool executionIsForward = MotionController::GetInstance()->IsForward();
 	this->currentDistanceToTarget = this->wayLength;
 
-	if(executionIsForward())
+	if(executionIsForward)
 		this->stepSizeCurrent =  this->stepSizeBeforeAcceleration;
 	else
 		this->stepSizeCurrent = this->stepSizeAfterDeceleration;
 
-	if(executionIsForward()){
+	if(executionIsForward){
 		this->startAbsPosX = PositionX::GetInstance()->Get();
 		this->startAbsPosY = PositionY::GetInstance()->Get();
 	}

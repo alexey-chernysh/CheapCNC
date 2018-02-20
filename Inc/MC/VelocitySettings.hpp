@@ -1,7 +1,7 @@
 /*
  * VelocitySettings.hpp
  *
- *  Created on: 28 ÿíâ. 2018 ã.
+ *  Created on: 28 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: Sales
  */
 
@@ -23,10 +23,6 @@ typedef enum {
 
 class VelocitySettings {
 private:
-	static double timerInterruptFrequency;
-	static double oneBitLength;
-	static float minVelocity;
-	static float maxVelocity;
 	static float startVelocity;
 	static float freeRunVelocity;
 	static float workingVelocity;
@@ -40,22 +36,16 @@ public:
 	virtual ~VelocitySettings();
 
 // public methods
-	double getTimerFrequencyUsed();
-	double getOneBitLength();
-	int64_t get64bitForDoubleMM(double mm);
-	double  getDoubleMMFor64bit(int64_t iValue);
 	int32_t getStepSize(MOTION_VELOCITY t);
 	void setCurrentStepSize(int32_t newStepSIze);
-	inline int32_t getStepIncrement(){ return this->stepIncrement; }
-	inline float getStartVelocity(){ return this->startVelocity; }
-	inline float getFreeRunVelocity() { return this->freeRunVelocity; }
-	inline float getWorkingVelocity() { return this->workingVelocity; }
+	inline int32_t getStepIncrement(){ return stepIncrement; }
+	inline float getStartVelocity(){ return startVelocity; }
+	inline float getFreeRunVelocity() { return freeRunVelocity; }
+	inline float getWorkingVelocity() { return workingVelocity; }
 	float getCurrentVelocity();
 	int64_t getWayLength4StepChange(int32_t stepSize1, int32_t stepSize2);
 
 private:
-	float getMinVelocity();
-	float getMaxVelocity();
 	int32_t getStep4Velocity(double velocity);
 	double  getVelocity4Step(int32_t stepSize);
 	int32_t getStepIncrement4Acceleration();
