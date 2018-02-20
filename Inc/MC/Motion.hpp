@@ -1,7 +1,7 @@
 /*
  * Motion.h
  *
- *  Created on: 26 ÿíâ. 2018 ã.
+ *  Created on: 26 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: Sales
  */
 
@@ -49,8 +49,8 @@ public:
 		    double endVel);
 	virtual ~Motion();
 	virtual void setupMotion();
-	bool goByOneNanoStepForward();
-	bool goByOneNanoStepBackward();
+	bool iterateForward();
+	bool iterateBackward();
 protected:
 	void calcWayLength();
 	virtual void onFastTimerTick();

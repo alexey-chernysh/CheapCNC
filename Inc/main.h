@@ -58,8 +58,6 @@
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/
-#define PWM_PRESCALER 0
-#define PWM_PERIOD 7200
 
 /* ########################## Assert Selection ############################## */
 /**

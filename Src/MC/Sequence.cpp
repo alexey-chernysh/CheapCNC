@@ -1,37 +1,37 @@
 /*
  * CNCTask.cpp
  *
- *  Created on: 28 янв. 2018 г.
+ *  Created on: 28 пїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: Sales
  */
 
-#include "MC/CNCTask.hpp"
+#include <MC/Sequence.hpp>
 #include "MC/Action.hpp"
 #include "MC/Motion.hpp"
 #include "MC/MotionStraight.hpp"
 #include "MC/MotionArc.hpp"
 
-CNCTask::CNCTask(MotionController *mc) {
+Sequence::Sequence(MotionController *mc) {
 	this->parent = mc;
     this->fillDebugTask();
     for(uint32_t i=0; i< this->getSize(); i++)
     	this->actions[i]->reset();
 }
 
-CNCTask::~CNCTask() {
+Sequence::~Sequence() {
 	// TODO Auto-generated destructor stub
 }
 
 
-uint32_t CNCTask::getSize(){
+uint32_t Sequence::getSize(){
 	return this->size;
 }
 
-Action* CNCTask::getAction(uint32_t num){
+Action* Sequence::getAction(uint32_t num){
 	return this->actions[num];
 }
 
-void CNCTask::fillLines(){
+void Sequence::fillLines(){
 	double v = velocitySettings.getStartVelocity();
 
     MotionStraight *straight1 = new MotionStraight(100.0, 0.0, WORKING, v, v);
@@ -43,12 +43,12 @@ void CNCTask::fillLines(){
     this->size = 2;
 }
 
-void CNCTask::fillArcs(){
+void Sequence::fillArcs(){
 	double v = velocitySettings.getStartVelocity();
     double v1 = velocitySettings.getWorkingVelocity();
     double v2 = velocitySettings.getFreeRunVelocity();
 
-    // 4 дуги на 90 градусов по чвсовой на рабочей скорости
+    // 4 пїЅпїЅпїЅпїЅ пїЅпїЅ 90 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     MotionArc *arc1 = new MotionArc(100.0, 100.0,  100.0, 0.0, CW, WORKING, v, v1);
     this->actions[0] = (Action*)arc1;
 
@@ -61,21 +61,21 @@ void CNCTask::fillArcs(){
     MotionArc *arc4 = new MotionArc(-100.0, 100.0, 0.0, 100.0, CW, WORKING, v1, v);
     this->actions[3] = (Motion*)arc4;
 
-    // 2 дуги на 180 градусов против часовой на скорости холостого хода
+    // 2 пїЅпїЅпїЅпїЅ пїЅпїЅ 180 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
     MotionArc *arc5 = new MotionArc(200.0, 0.0,  100.0, 0.0, CCW, FREE_RUN, v, v2);
     this->actions[4] = (Action*)arc5;
 
     MotionArc *arc6 = new MotionArc(-200.0, 0.0, -100.0, 0.0, CCW, FREE_RUN, v2, v);
     this->actions[5] = (Action*)arc6;
 
-    // полный круг по часовой на рабочей скорости
+    // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     MotionArc *arc7 = new MotionArc(0.0, 0.0,  100.0, 0.0, CW, WORKING, v, v);
     this->actions[6] = (Action*)arc7;
 
     this->size = 7;
 }
 
-void CNCTask::fillComplex(){
+void Sequence::fillComplex(){
 	double v = velocitySettings.getStartVelocity();
     double v1 = velocitySettings.getWorkingVelocity();
     double v2 = velocitySettings.getFreeRunVelocity();
@@ -107,13 +107,13 @@ void CNCTask::fillComplex(){
     this->size = 8;
 }
 
-void CNCTask::fillDebugTask(){
+void Sequence::fillDebugTask(){
 //	fillLines();
 	this->fillArcs();
 //	fillComplex();
 }
 
-void CNCTask::resetTask(){
+void Sequence::resetTask(){
     for(uint32_t i=0; i<this->size; i++){
     	this->actions[i]->reset();
     };

@@ -1,27 +1,28 @@
 /*
  * CNCTask.hpp
  *
- *  Created on: 28 ÿíâ. 2018 ã.
+ *  Created on: 28 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: Sales
  */
 
-#ifndef MC_CNCTASK_HPP_
-#define MC_CNCTASK_HPP_
+#ifndef MC_SEQUENCE_HPP_
+#define MC_SEQUENCE_HPP_
 
 #include "Math/int_math.h"
 #include "MC/Action.hpp"
-#include "MC/MotionController.hpp"
 
 #define ACTION_BUFFER_SIZE 16
 
-class CNCTask {
+class MotionController;
+
+class Sequence {
 private:
 	uint32_t size;
 	Action *actions[ACTION_BUFFER_SIZE];
 	MotionController *parent;
 public:
-	CNCTask(MotionController *mc);
-	virtual ~CNCTask();
+	Sequence(MotionController *mc);
+	virtual ~Sequence();
 	uint32_t getSize();
 	Action *getAction(uint32_t ActionNum);
 	void fillDebugTask();
@@ -32,4 +33,4 @@ private:
 	void fillComplex();
 };
 
-#endif /* MC_CNCTASK_HPP_ */
+#endif /* MC_SEQUENCE_HPP_ */

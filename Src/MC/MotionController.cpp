@@ -1,7 +1,7 @@
 /*
  * MotionController.cpp
  *
- *  Created on: 28 ÿíâ. 2018 ã.
+ *  Created on: 28 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: Sales
  */
 
@@ -14,7 +14,7 @@ MotionController::MotionController() {
 	this->positionX = PositionX();
 	this->positionY = PositionY();
 
-	this->cncTask = CNCTask();
+	this->cncTask = Sequence();
 	this->taskSize = cncTask.getSize();
 
 	this->Reset();
@@ -33,7 +33,7 @@ void MotionController::Reset(){
 	this->isForward = true;
 
 	this->currentMotionNum = 0;
-	this->currentMotion = cncTask.getMotion(this->currentMotionNum);
+	this->currentMotion = (Motion*)cncTask.getAction(this->currentMotionNum);
 }
 
 void MotionController::iterateActionNum(){
@@ -48,9 +48,9 @@ void MotionController::onTimerTick(){
 		bool anotherStepNeeded = true;
 		if(this->isRunning) {
 			if(this->isForward){
-				anotherStepNeeded = currentMotion->goByOneNanoStepForward();
+				anotherStepNeeded = currentMotion->iterateForward();
 			} else {
-				anotherStepNeeded = currentMotion->goByOneNanoStepBackward();
+				anotherStepNeeded = currentMotion->iterateBackward();
 			}
 		}
 
@@ -58,7 +58,7 @@ void MotionController::onTimerTick(){
 		else{
 			iterateActionNum();
 			if((this->currentMotionNum >= 0)&&(this->currentMotionNum < this->taskSize)){
-				this->currentMotion = cncTask.getMotion(this->currentMotionNum);
+				this->currentMotion = (Motion*)cncTask.getAction(this->currentMotionNum);
 				this->currentMotion->setupMotion();
 			} else this->Reset();
 		}

@@ -1,11 +1,11 @@
 /*
  * Motion.cpp
  *
- *  Created on: 26 ÿíâ. 2018 ã.
+ *  Created on: 26 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: Sales
  */
 
-#include "MC/general.h"
+#include "MC/General.h"
 #include "MC/Motion.hpp"
 #include "MC/Action.hpp"
 #include "MC/Position.hpp"
@@ -73,7 +73,7 @@ static int64_t iabs(int64_t x){
 	else return -x;
 }
 
-bool Motion::goByOneNanoStepForward(){ // return true if another step needed
+bool Motion::iterateForward(){ // return true if another step needed
 
 	this->wayLengthCurrent += this->stepSizeCurrent;
 	this->onFastTimerTick();
@@ -108,7 +108,7 @@ bool Motion::goByOneNanoStepForward(){ // return true if another step needed
 	return (iabs(this->currentDistanceToTarget) > this->stepSizeCurrent);
 }
 
-bool Motion::goByOneNanoStepBackward(){ // return true if another step needed
+bool Motion::iterateBackward(){ // return true if another step needed
 
 	this->wayLengthCurrent -= this->stepSizeCurrent;
 	this->onFastTimerTick();
