@@ -6,23 +6,21 @@
  */
 
 #include "MC/Position.hpp"
-
-#include "MC/Position.hpp"
-#include "MC/General.hpp"
 #include <stdint.h>
 #include <math.h>
+#include <MC/General.h>
 #include "tim.h"
 #include "stm32f103xb.h"
 #include "stm32f1xx_hal.h"
 
 static bool pwm_table_ready = false;
-static uint32_t pwm_table[MAX_PHASE+1];
+static uint32_t pwm_table[MAX_MICROSTEP+1];
 
 void buildPwmTable(){
 	if(!pwm_table_ready){
-		float scale1 = M_PI/2.0/MAX_PHASE;
-		float scale2 = MAX_PWM_WIDTH*PWM_PERIOD;
-		for(uint32_t i=0; i<=MAX_PHASE; i++){
+		float scale1 = M_PI / 2.0 / MAX_MICROSTEP;
+		float scale2 = MAX_PWM_WIDTH * PWM_PERIOD;
+		for(uint32_t i=0; i <= MAX_MICROSTEP; i++){
 			pwm_table[i] = scale2*sin(scale1*i);
 		}
 		pwm_table_ready = true;
@@ -30,6 +28,7 @@ void buildPwmTable(){
 }
 
 Position::Position() {
+	buildPwmTable();
 	this->absPosition = 0LL;
 }
 
@@ -51,11 +50,10 @@ void Position::Shift(int8_t shift){
 }
 
 uint8_t Position::GetAngle(){
-	return (uint8_t)(0x000000FF & (absPosition >> SMOOTHING_SCALE));
+	return (uint8_t)(0x000000FF & (absPosition >> POSITION_FIRST_SIGNIFICANT_BIT));
 }
 
 void Position::SetPWM(uint8_t angle){
-
 }
 
 void InitPWM(TIM_HandleTypeDef htim){
@@ -87,8 +85,8 @@ PositionX* PositionX::GetInstance(){
 void PositionX::SetPWM(uint8_t angle){
 	uint32_t phase1, phase2, phase3, phase4;
 	uint8_t segment = (angle>>6) & 0b00000011;
-	uint8_t phase = angle & MAX_PHASE;
-	uint8_t phase_inv = MAX_PHASE-phase;
+	uint8_t phase = angle & MAX_MICROSTEP;
+	uint8_t phase_inv = MAX_MICROSTEP-phase;
 	uint32_t pwm = pwm_table[phase];
 	uint32_t pwm_inv = pwm_table[phase_inv];
 	switch(segment){
@@ -141,8 +139,8 @@ PositionY* PositionY::GetInstance(){
 void PositionY::SetPWM(uint8_t angle){
 	uint32_t phase1, phase2, phase3, phase4;
 	uint8_t segment = (angle>>6) & 0b00000011;
-	uint8_t phase = angle & MAX_PHASE;
-	uint8_t phase_inv = MAX_PHASE-phase;
+	uint8_t phase = angle & MAX_MICROSTEP;
+	uint8_t phase_inv = MAX_MICROSTEP-phase;
 	uint32_t pwm = pwm_table[phase];
 	uint32_t pwm_inv = pwm_table[phase_inv];
 	switch(segment){
@@ -186,23 +184,28 @@ void PositionY::SetPWM(uint8_t angle){
 
 extern "C" {
 int64_t GetPositionX(){
-	return PositionX::GetInstance()->Get();
+	PositionX* pX = PositionX::GetInstance();
+	return pX->Get();
 }
 
 int64_t GetPositionY(){
-	return PositionY::GetInstance()->Get();
+	PositionY* pY = PositionY::GetInstance();
+	return pY->Get();
 }
 
 void SetPositionX(int64_t x){
-	PositionX::GetInstance()->Set(x);
+	PositionX* pX = PositionX::GetInstance();
+	pX->Set(x);
 }
 
 void SetPositionY(int64_t y){
-	PositionY::GetInstance()->Set(y);
+	PositionY* pY = PositionY::GetInstance();
+	pY->Set(y);
 }
 
 void shiftPositionX(){
-	PositionX::GetInstance()->Shift(1);
+	PositionX* pX = PositionX::GetInstance();
+	pX->Shift(1);
 }
 } // extern C
 
