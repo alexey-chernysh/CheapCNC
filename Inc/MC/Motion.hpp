@@ -10,7 +10,6 @@
 
 #include <stdint.h>
 #include "MC/Action.hpp"
-#include "MC/Velocity.hpp"
 #include "MC/VelocitySettings.hpp"
 
 typedef enum {
@@ -48,12 +47,12 @@ public:
 		    double startVel,
 		    double endVel);
 	virtual ~Motion();
-	virtual void setupMotion();
-	bool iterateForward();
-	bool iterateBackward();
+	virtual void SetupMotion();
+	bool IterateForward();
+	bool IterateBackward();
 protected:
-	void calcWayLength();
-	virtual void onFastTimerTick();
+	void CalcWayLength();
+	virtual void OnIteration();
 };
 
 #endif /* MC_MOTION_HPP_ */

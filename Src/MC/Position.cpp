@@ -67,8 +67,6 @@ void InitPWM(TIM_HandleTypeDef htim){
   HAL_TIM_Base_Start_IT(&htim);
 }
 
-
-
 PositionX::PositionX():Position() {
 	InitPWM(htim2);
 }

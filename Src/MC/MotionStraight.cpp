@@ -1,10 +1,12 @@
 /*
  * MotionStraight.cpp
  *
- *  Created on: 26 ÿíâ. 2018 ã.
+ *  Created on: 26 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: Sales
  */
 
+#include "Math/sine_n_cosine.h"
+#include "Math/int128.h"
 #include "MC/MotionStraight.hpp"
 #include "MC/Motion.hpp"
 
@@ -20,15 +22,14 @@ MotionStraight::MotionStraight( double _relEndPosX,
 	double x = this->relEndPosX;
 	double y = this->relEndPosY;
 	this->wayLength = (int64_t)sqrt(x*x + y*y);
-	assert(this->wayLength);
 
 	this->Kx = getLongFromDouble(x/this->wayLength);
 	this->Ky = getLongFromDouble(y/this->wayLength);
 
-	this->calcWayLength();
+	this->CalcWayLength();
 }
 
-void MotionStraight::onFastTimerTickt(){
+void MotionStraight::OnIteration(){
 //	int64_t dx = _wayLengthCurrent * this->Kx;
 //	this->relCurrentPosX = dx>>SCALING_SHIFT;
 	this->relCurrentPosX = mulshift(this->wayLengthCurrent, this->Kx, SCALING_SHIFT);

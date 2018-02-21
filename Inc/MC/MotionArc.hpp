@@ -1,7 +1,7 @@
 /*
  * MotionArc.hpp
  *
- *  Created on: 26 ÿíâ. 2018 ã.
+ *  Created on: 26 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: Sales
  */
 
@@ -9,7 +9,6 @@
 #define MC_MOTIONARC_HPP_
 
 #include "MC/Motion.hpp"
-#include "MC/Velocity.hpp"
 
 typedef enum {
 	CW, // clockwise
@@ -42,7 +41,7 @@ public:
 			   double endVel);
 	virtual ~MotionArc();
 protected:
-	virtual void onFastTimerTick();
+	virtual void OnIteration();
 };
 
 #endif /* MC_MOTIONARC_HPP_ */

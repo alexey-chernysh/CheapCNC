@@ -1,13 +1,14 @@
 /*
  * MotionArc.cpp
  *
- *  Created on: 26 ÿíâ. 2018 ã.
+ *  Created on: 26 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: Sales
  */
 
+#include "Math/sine_n_cosine.h"
 #include "MC/MotionArc.hpp"
 #include "MC/VelocitySettings.hpp"
-#include "Math/sine_n_cosine.h"
+#include "MC/MotionController.hpp"
 
 MotionArc::~MotionArc() {
 	// TODO Auto-generated destructor stub
@@ -23,8 +24,8 @@ MotionArc::MotionArc(  double _relEndPosX,
 					   MOTION_VELOCITY velocity,
 					   double startVel,
 					   double endVel):Motion(_relEndPosX, _relEndPosY, velocity, startVel, endVel){
-    this->relCenterPosX = get64bitForDoubleMM(_relCenterPosX);
-    this->relCenterPosY = get64bitForDoubleMM(_relCenterPosY);
+    this->relCenterPosX = MotionController::GetInstance()->Get64bitForDoubleMM(_relCenterPosX);
+    this->relCenterPosY = MotionController::GetInstance()->Get64bitForDoubleMM(_relCenterPosY);
     this->arcDirection = dir;
 
 	double      angle;
@@ -70,7 +71,7 @@ MotionArc::MotionArc(  double _relEndPosX,
 	if(tmp<0) tmp = -angle;
 	this->wayLength = (int64_t)(this->radiusLong * tmp);
 
-	this->calcWayLength();
+	this->CalcWayLength();
 
 	volatile int64_t angleCheck = (this->wayLength * this->oneDividedByRadiusScaled) >> SCALING_SHIFT;
 //	volatile int64_t angleCheck = mulshift(this->wayLength, this->oneDividedByRadiusScaled, SCALING_SHIFT);
@@ -85,7 +86,7 @@ MotionArc::MotionArc(  double _relEndPosX,
 
 }
 
-void MotionArc::onFastTimerTick() {
+void MotionArc::OnIteration() {
 	volatile int64_t angleChange = (this->wayLengthCurrent * this->oneDividedByRadiusScaled) >> SCALING_SHIFT;
 //	volatile int64_t angleChange = mulshift(this->wayLengthCurrent, this->oneDividedByRadiusScaled, SCALING_SHIFT);
 	if(this->arcDirection == CW) angleChange = - angleChange;

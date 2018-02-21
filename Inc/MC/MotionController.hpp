@@ -23,8 +23,6 @@ private:
 public:
 	static MotionController* GetInstance();
 private:
-	VelocitySettings velocitySettings;
-
 	static bool running;
 	static bool forward;
 

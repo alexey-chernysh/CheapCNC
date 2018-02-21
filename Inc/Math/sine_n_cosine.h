@@ -6,6 +6,8 @@
 #ifndef SINE_N_COSINE_H_
 #define SINE_N_COSINE_H_
 
+#include "Math/int_math.h"
+
 #ifndef SCALING_SHIFT
 	#define SCALING_SHIFT 29
 #endif

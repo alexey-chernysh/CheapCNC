@@ -6,11 +6,11 @@
  */
 
 #include "stm32f1xx_hal.h"
+#include "Math/sine_n_cosine.h"
 #include "MC/General.h"
-#include "MC/MotionController.hpp"
 #include "MC/Motion.hpp"
 #include "MC/Position.hpp"
-#include "Math/sine_n_cosine.h"
+#include "MC/MotionController.hpp"
 
 MotionController::MotionController() {
 	this->running = false;
@@ -21,9 +21,9 @@ MotionController::MotionController() {
 	this->oneBitLengthMM = (N_OF_TOOTH * TOOTH_STEP)/STEP_PER_ROTATION/(MAX_MICROSTEP + 1.0)/scale;
 
 	this->sequence = Sequence();
-	this->sequenceSize = sequence.getSize();
+	this->sequenceSize = sequence.GetSize();
 	this->currentMotionNum = 0;
-	this->currentMotion = (Motion*)sequence.getAction(this->currentMotionNum);
+	this->currentMotion = (Motion*)sequence.GetAction(this->currentMotionNum);
 
 	initMath();
 }
@@ -42,7 +42,7 @@ void MotionController::Reset(){
 	this->forward = true;
 
 	this->currentMotionNum = 0;
-	this->currentMotion = (Motion*)sequence.getAction(this->currentMotionNum);
+	this->currentMotion = (Motion*)sequence.GetAction(this->currentMotionNum);
 }
 
 void MotionController::IterateActionNum(){
@@ -57,9 +57,9 @@ void MotionController::onTimer(){
 		bool anotherStepNeeded = true;
 		if(this->running) {
 			if(this->forward){
-				anotherStepNeeded = currentMotion->iterateForward();
+				anotherStepNeeded = currentMotion->IterateForward();
 			} else {
-				anotherStepNeeded = currentMotion->iterateBackward();
+				anotherStepNeeded = currentMotion->IterateBackward();
 			}
 		}
 
@@ -67,8 +67,8 @@ void MotionController::onTimer(){
 		else{
 			IterateActionNum();
 			if((this->currentMotionNum >= 0)&&(this->currentMotionNum < this->sequenceSize)){
-				this->currentMotion = (Motion*)sequence.getAction(this->currentMotionNum);
-				this->currentMotion->setupMotion();
+				this->currentMotion = (Motion*)sequence.GetAction(this->currentMotionNum);
+				this->currentMotion->SetupMotion();
 			} else this->Reset();
 		}
 	}

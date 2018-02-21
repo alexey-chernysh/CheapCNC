@@ -23,6 +23,9 @@ typedef enum {
 
 class VelocitySettings {
 private:
+	static float oneBitLength;
+	static float timerFrequency;
+
 	static float startVelocity;
 	static float freeRunVelocity;
 	static float workingVelocity;
@@ -31,26 +34,27 @@ private:
 	static int32_t stepIncrement;
 	static int32_t currentStepSize;
 
-public:
+private:
 	VelocitySettings();
 	virtual ~VelocitySettings();
-
-// public methods
-	int32_t getStepSize(MOTION_VELOCITY t);
-	void setCurrentStepSize(int32_t newStepSIze);
-	inline int32_t getStepIncrement(){ return stepIncrement; }
-	inline float getStartVelocity(){ return startVelocity; }
-	inline float getFreeRunVelocity() { return freeRunVelocity; }
-	inline float getWorkingVelocity() { return workingVelocity; }
-	float getCurrentVelocity();
-	int64_t getWayLength4StepChange(int32_t stepSize1, int32_t stepSize2);
+    VelocitySettings(const VelocitySettings&) = delete;
+    VelocitySettings& operator=(const VelocitySettings&) = delete;
+public:
+	static VelocitySettings* GetInstance();
+public:
+	int32_t GetStepSize(MOTION_VELOCITY t);
+	void SetCurrentStepSize(int32_t newStepSIze);
+	inline int32_t GetStepIncrement(){ return stepIncrement; }
+	int32_t GetStep4Velocity(double velocity);
+	inline float GetStartVelocity(){ return startVelocity; }
+	inline float GetFreeRunVelocity() { return freeRunVelocity; }
+	inline float GetWorkingVelocity() { return workingVelocity; }
+	float GetCurrentVelocity();
+	int64_t GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2);
 
 private:
-	int32_t getStep4Velocity(double velocity);
-	double  getVelocity4Step(int32_t stepSize);
-	int32_t getStepIncrement4Acceleration();
+	double  GetVelocity4Step(int32_t stepSize);
+	int32_t GetStepIncrement4Acceleration();
 };
-
-extern VelocitySettings velocitySettings;
 
 #endif /* MC_VELOCITYSETTINGS_HPP_ */

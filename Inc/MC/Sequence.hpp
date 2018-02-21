@@ -19,18 +19,17 @@ class Sequence {
 private:
 	uint32_t size;
 	Action *actions[ACTION_BUFFER_SIZE];
-	MotionController *parent;
 public:
-	Sequence(MotionController *mc);
+	Sequence();
 	virtual ~Sequence();
-	uint32_t getSize();
-	Action *getAction(uint32_t ActionNum);
-	void fillDebugTask();
-	void resetTask();
+	uint32_t GetSize();
+	Action *GetAction(uint32_t ActionNum);
+	void FillDebugTask();
+	void ResetTask();
 private:
-	void fillLines();
-	void fillArcs();
-	void fillComplex();
+	void FillLines();
+	void FillArcs();
+	void FillComplex();
 };
 
 #endif /* MC_SEQUENCE_HPP_ */

@@ -10,6 +10,7 @@
 #include "MC/Action.hpp"
 #include "MC/Position.hpp"
 #include "MC/MotionController.hpp"
+#include "MC/VelocitySettings.hpp"
 
 Motion::~Motion() {
 	// TODO Auto-generated destructor stub
@@ -28,10 +29,10 @@ Motion::Motion( double _relEndPosX,
 	this->relCurrentPosX = 0;
 	this->relCurrentPosY = 0;
 
-	this->stepSizeConstantVelocity = getStepSize(velocity);
-	this->stepSizeBeforeAcceleration = getStep4Velocity(startVel);
-	this->stepSizeAfterDeceleration = getStep4Velocity(endVel);
-	this->stepSizeIncrement = getStepIncrement();
+	this->stepSizeConstantVelocity = VelocitySettings::GetInstance()->GetStepSize(velocity);
+	this->stepSizeBeforeAcceleration = VelocitySettings::GetInstance()->GetStep4Velocity(startVel);
+	this->stepSizeAfterDeceleration = VelocitySettings::GetInstance()->GetStep4Velocity(endVel);
+	this->stepSizeIncrement = VelocitySettings::GetInstance()->GetStepIncrement();
 
 	this->phase = HEAD;
 
@@ -42,10 +43,10 @@ Motion::Motion( double _relEndPosX,
 	this->wayLength = 0;
 }
 
-void Motion::calcWayLength(){
+void Motion::CalcWayLength(){
 	this->wayLengthCurrent = 0LL;
-	this->wayLengthAcceleration = getWayLength4StepChange(this->stepSizeBeforeAcceleration, this->stepSizeConstantVelocity);
-	this->wayLengthDeceleration = getWayLength4StepChange(this->stepSizeConstantVelocity, this->stepSizeAfterDeceleration);
+	this->wayLengthAcceleration = VelocitySettings::GetInstance()->GetWayLength4StepChange(this->stepSizeBeforeAcceleration, this->stepSizeConstantVelocity);
+	this->wayLengthDeceleration = VelocitySettings::GetInstance()->GetWayLength4StepChange(this->stepSizeConstantVelocity, this->stepSizeAfterDeceleration);
 
 	int64_t wayLengthConstantVelocity = this->wayLength - this->wayLengthAcceleration - this->wayLengthDeceleration;
 	if(wayLengthConstantVelocity < 0){
@@ -56,19 +57,16 @@ void Motion::calcWayLength(){
 
 }
 
-void Motion::setupMotion(){
-	bool executionIsForward = MotionController::GetInstance()->IsForward();
+void Motion::SetupMotion(){
 	this->currentDistanceToTarget = this->wayLength;
 
-	if(executionIsForward)
+	if(MotionController::GetInstance()->IsForward()){
 		this->stepSizeCurrent =  this->stepSizeBeforeAcceleration;
-	else
-		this->stepSizeCurrent = this->stepSizeAfterDeceleration;
-
-	if(executionIsForward){
 		this->startAbsPosX = PositionX::GetInstance()->Get();
 		this->startAbsPosY = PositionY::GetInstance()->Get();
-	}
+	} else
+		this->stepSizeCurrent = this->stepSizeAfterDeceleration;
+
 }
 
 static int64_t iabs(int64_t x){
@@ -76,14 +74,14 @@ static int64_t iabs(int64_t x){
 	else return -x;
 }
 
-bool Motion::iterateForward(){ // return true if another step needed
+bool Motion::IterateForward(){ // return true if another step needed
 
 	this->wayLengthCurrent += this->stepSizeCurrent;
-	this->onFastTimerTick();
+	this->OnIteration();
 
 	PositionX::GetInstance()->Set(this->startAbsPosX + this->relCurrentPosX);
 	PositionY::GetInstance()->Set(this->startAbsPosY + this->relCurrentPosY);
-	setCurrentStepSize(this->stepSizeCurrent);
+	VelocitySettings::GetInstance()->SetCurrentStepSize(this->stepSizeCurrent);
 
 	switch (this->phase){
 		case HEAD:
@@ -111,14 +109,14 @@ bool Motion::iterateForward(){ // return true if another step needed
 	return (iabs(this->currentDistanceToTarget) > this->stepSizeCurrent);
 }
 
-bool Motion::iterateBackward(){ // return true if another step needed
+bool Motion::IterateBackward(){ // return true if another step needed
 
 	this->wayLengthCurrent -= this->stepSizeCurrent;
-	this->onFastTimerTick();
+	this->OnIteration();
 
 	PositionX::GetInstance()->Set(this->startAbsPosX + this->relCurrentPosX);
 	PositionY::GetInstance()->Set(this->startAbsPosY + this->relCurrentPosY);
-	setCurrentStepSize(this->stepSizeCurrent);
+	VelocitySettings::GetInstance()->SetCurrentStepSize(this->stepSizeCurrent);
 
 	switch (this->phase){
 		case HEAD:
@@ -145,4 +143,3 @@ bool Motion::iterateBackward(){ // return true if another step needed
 
 	return (iabs(this->currentDistanceToTarget) > this->stepSizeCurrent);
 }
-

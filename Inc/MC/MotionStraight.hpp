@@ -1,7 +1,7 @@
 /*
  * MotionStraight.h
  *
- *  Created on: 26 ÿíâ. 2018 ã.
+ *  Created on: 26 ï¿½ï¿½ï¿½. 2018 ï¿½.
  *      Author: Sales
  */
 
@@ -9,7 +9,6 @@
 #define MC_MOTIONSTRAIGHT_HPP_
 
 #include "MC/Motion.hpp"
-#include "MC/Velocity.hpp"
 
 class MotionStraight : public Motion {
 private:
@@ -25,7 +24,7 @@ public:
 					double endVel);
 	virtual ~MotionStraight();
 protected:
-	virtual void onFastTimerTick();
+	virtual void OnIteration();
 };
 
 #endif /* MC_MOTIONSTRAIGHT_HPP_ */

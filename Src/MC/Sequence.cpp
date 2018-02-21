@@ -11,10 +11,9 @@
 #include "MC/MotionStraight.hpp"
 #include "MC/MotionArc.hpp"
 
-Sequence::Sequence(MotionController *mc) {
-	this->parent = mc;
-    this->fillDebugTask();
-    for(uint32_t i=0; i< this->getSize(); i++)
+Sequence::Sequence() {
+    this->FillDebugTask();
+    for(uint32_t i=0; i< this->GetSize(); i++)
     	this->actions[i]->reset();
 }
 
@@ -23,16 +22,16 @@ Sequence::~Sequence() {
 }
 
 
-uint32_t Sequence::getSize(){
+uint32_t Sequence::GetSize(){
 	return this->size;
 }
 
-Action* Sequence::getAction(uint32_t num){
+Action* Sequence::GetAction(uint32_t num){
 	return this->actions[num];
 }
 
-void Sequence::fillLines(){
-	double v = velocitySettings.getStartVelocity();
+void Sequence::FillLines(){
+	double v = velocitySettings.GetStartVelocity();
 
     MotionStraight *straight1 = new MotionStraight(100.0, 0.0, WORKING, v, v);
     this->actions[0] = (Action*)straight1;
@@ -43,10 +42,10 @@ void Sequence::fillLines(){
     this->size = 2;
 }
 
-void Sequence::fillArcs(){
-	double v = velocitySettings.getStartVelocity();
-    double v1 = velocitySettings.getWorkingVelocity();
-    double v2 = velocitySettings.getFreeRunVelocity();
+void Sequence::FillArcs(){
+	double v = velocitySettings.GetStartVelocity();
+    double v1 = velocitySettings.GetWorkingVelocity();
+    double v2 = velocitySettings.GetFreeRunVelocity();
 
     // 4 ���� �� 90 �������� �� ������� �� ������� ��������
     MotionArc *arc1 = new MotionArc(100.0, 100.0,  100.0, 0.0, CW, WORKING, v, v1);
@@ -75,10 +74,9 @@ void Sequence::fillArcs(){
     this->size = 7;
 }
 
-void Sequence::fillComplex(){
-	double v = velocitySettings.getStartVelocity();
-    double v1 = velocitySettings.getWorkingVelocity();
-    double v2 = velocitySettings.getFreeRunVelocity();
+void Sequence::FillComplex(){
+	double v = velocitySettings.GetStartVelocity();
+    double v1 = velocitySettings.GetWorkingVelocity();
 
     MotionStraight *straight1 = new MotionStraight(0.0, 45.0, WORKING, v, v1);
     this->actions[0] = (Action*)straight1;
@@ -107,13 +105,13 @@ void Sequence::fillComplex(){
     this->size = 8;
 }
 
-void Sequence::fillDebugTask(){
+void Sequence::FillDebugTask(){
 //	fillLines();
-	this->fillArcs();
+	this->FillArcs();
 //	fillComplex();
 }
 
-void Sequence::resetTask(){
+void Sequence::ResetTask(){
     for(uint32_t i=0; i<this->size; i++){
     	this->actions[i]->reset();
     };
