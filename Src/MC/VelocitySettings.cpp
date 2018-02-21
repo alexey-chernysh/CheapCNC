@@ -73,12 +73,9 @@ float VelocitySettings::GetCurrentVelocity() { // millimeters in minute
 }
 
 int64_t VelocitySettings::GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2) {
-	bool isAccelereting = (stepSize2 >= stepSize1);
-	int64_t result = 0;
-	int32_t stepSize = stepSize1;
 	int64_t sqr1 = stepSize1*((int64_t)stepSize1);
 	int64_t sqr2 = stepSize2*((int64_t)stepSize2);
-	result = ((sqr2-sqr1)/this->stepIncrement)/2;
+	int64_t result = ((sqr2-sqr1)/this->stepIncrement)/2;
 	if(result >= 0) return result;
 	else return -result;
 }
