@@ -8,6 +8,7 @@
 #ifndef MC_MOTIONCONTROLLER_H_
 #define MC_MOTIONCONTROLLER_H_
 
+void MC_Setup();
 void MC_OnTimer();
 
 #endif /* MC_MOTIONCONTROLLER_H_ */

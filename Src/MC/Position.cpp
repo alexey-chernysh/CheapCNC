@@ -207,5 +207,11 @@ void shiftPositionX(){
 	PositionX* pX = PositionX::GetInstance();
 	pX->Shift(1);
 }
+
+void resetPositions(){
+	SetPositionX(0LL);
+	SetPositionY(0LL);
+}
+
 } // extern C
 

@@ -53,7 +53,8 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN Includes */
-
+#include "../Inc/MC/Position.h"
+#include "../Inc/MC/MotionController.h"
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -108,7 +109,8 @@ int main(void)
   MX_USB_DEVICE_Init();
   MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-
+  MC_Setup();
+  resetPositions();
   /* USER CODE END 2 */
 
   /* Infinite loop */

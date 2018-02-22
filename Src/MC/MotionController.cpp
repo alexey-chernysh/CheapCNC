@@ -140,4 +140,10 @@ extern "C"{
 void MC_OnTimer(){
 	MotionController::GetInstance()->OnTimer();
 }
+
+void MC_Setup(){
+	MotionController::GetInstance();
+	VelocitySettings::GetInstance();
+}
+
 }

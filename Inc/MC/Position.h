@@ -21,5 +21,6 @@ void SetPositionY(int64_t y);
 
 //
 void shiftPositionX();
+void resetPositions();
 
 #endif /* MC_POSITION_H_ */
