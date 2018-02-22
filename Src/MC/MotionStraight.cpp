@@ -5,8 +5,9 @@
  *      Author: Sales
  */
 
-#include "Math/sine_n_cosine.h"
-#include "Math/int128.h"
+#include <math.h>
+#include <Math/int128.hpp>
+#include <Math/sine_n_cosine.hpp>
 #include "MC/MotionStraight.hpp"
 #include "MC/Motion.hpp"
 

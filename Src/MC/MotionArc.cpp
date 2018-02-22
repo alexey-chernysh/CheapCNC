@@ -5,9 +5,11 @@
  *      Author: Sales
  */
 
-#include "Math/sine_n_cosine.h"
+#include <stdint.h>
+#include <math.h>
+#include <Math/sine_n_cosine.hpp>
+#include "MC/Enums.h"
 #include "MC/MotionArc.hpp"
-#include "MC/VelocitySettings.hpp"
 #include "MC/MotionController.hpp"
 
 MotionArc::~MotionArc() {

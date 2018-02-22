@@ -15,3 +15,9 @@ Action::Action() {
 Action::~Action() {
 	// TODO Auto-generated destructor stub
 }
+
+void Action::Reset() {
+	// TODO Auto-generated constructor stub
+}
+
+

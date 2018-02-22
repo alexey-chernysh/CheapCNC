@@ -5,25 +5,28 @@
  *      Author: Sales
  */
 
+#include <Math/sine_n_cosine.hpp>
+#include <stdint.h>
 #include "stm32f1xx_hal.h"
-#include "Math/sine_n_cosine.h"
 #include "MC/General.h"
 #include "MC/Motion.hpp"
-#include "MC/Position.hpp"
 #include "MC/MotionController.hpp"
+#include "MC/VelocitySettings.hpp"
 
 MotionController::MotionController() {
-	this->running = false;
-	this->forward = true;
+	running = false;
+	forward = true;
+	resuming = false;
+	pausing = false;
 
-	this->timerFrequency = ((float)HAL_RCC_GetPCLK2Freq())/(PWM_PRESCALER+1)/(PWM_PERIOD+1);
+	timerFrequency = ((float)HAL_RCC_GetPCLK2Freq())/(PWM_PRESCALER+1)/(PWM_PERIOD+1);
 	float scale = (float)(1LL<<POSITION_FIRST_SIGNIFICANT_BIT);
-	this->oneBitLengthMM = (N_OF_TOOTH * TOOTH_STEP)/STEP_PER_ROTATION/(MAX_MICROSTEP + 1.0)/scale;
+	oneBitLengthMM = (N_OF_TOOTH * TOOTH_STEP)/STEP_PER_ROTATION/(MAX_MICROSTEP + 1.0)/scale;
 
-	this->sequence = Sequence();
-	this->sequenceSize = sequence.GetSize();
-	this->currentMotionNum = 0;
-	this->currentMotion = (Motion*)sequence.GetAction(this->currentMotionNum);
+	sequence = Sequence();
+	sequenceSize = sequence.GetSize();
+	currentMotionNum = 0;
+	currentMotion = (Motion*)sequence.GetAction(currentMotionNum);
 
 	initMath();
 }
@@ -38,25 +41,43 @@ MotionController* MotionController::GetInstance(){
 }
 
 void MotionController::Reset(){
-	this->running = false;
-	this->forward = true;
+	running = false;
+	forward = true;
+	resuming = false;
+	pausing = false;
 
-	this->currentMotionNum = 0;
-	this->currentMotion = (Motion*)sequence.GetAction(this->currentMotionNum);
+	currentMotionNum = 0;
+	currentMotion = (Motion*)sequence.GetAction(currentMotionNum);
 }
+
+bool MotionController::IsRunning(){ return running; };
+
+bool MotionController::IsForward(){ return forward; };
+
+float MotionController::GetTimerFrequency(){ return timerFrequency; };
+
+float MotionController::GetOneBitLengthMM(){ return oneBitLengthMM; };
+
+int64_t MotionController::Get64bitForDoubleMM(double mm){ return (int64_t)(mm/oneBitLengthMM); };
+
+double MotionController::GetDoubleMMFor64bit(int64_t iValue){	return oneBitLengthMM*iValue; };
+
+float MotionController::GetMinVelocity(){ return 60.0*timerFrequency*oneBitLengthMM; };
+
+float MotionController::GetMaxVelocity(){ return 60.0*timerFrequency*(N_OF_TOOTH*TOOTH_STEP)/STEP_PER_ROTATION/2; };
 
 void MotionController::IterateActionNum(){
 	if(this->forward)
-		this->currentMotionNum++;
+		currentMotionNum++;
 	else
-		this->currentMotionNum--;
+		currentMotionNum--;
 }
 
-void MotionController::onTimer(){
-	if(this->currentMotion != 0){
+void MotionController::OnTimer(){
+	if(currentMotion != 0){
 		bool anotherStepNeeded = true;
-		if(this->running) {
-			if(this->forward){
+		if(running) {
+			if(forward){
 				anotherStepNeeded = currentMotion->IterateForward();
 			} else {
 				anotherStepNeeded = currentMotion->IterateBackward();
@@ -66,10 +87,57 @@ void MotionController::onTimer(){
 		if(anotherStepNeeded) return;
 		else{
 			IterateActionNum();
-			if((this->currentMotionNum >= 0)&&(this->currentMotionNum < this->sequenceSize)){
-				this->currentMotion = (Motion*)sequence.GetAction(this->currentMotionNum);
-				this->currentMotion->SetupMotion();
+			if((currentMotionNum >= 0)&&(currentMotionNum < sequenceSize)){
+				currentMotion = (Motion*)sequence.GetAction(this->currentMotionNum);
+				currentMotion->SetupMotion();
 			} else this->Reset();
 		}
 	}
+}
+
+void MotionController::SetResuming(){
+    resuming = true;
+    pausing = false;
+    startStopStepSize = VelocitySettings::GetInstance()->GetStepSize(START);
+    stepIncrement = VelocitySettings::GetInstance()->GetStepIncrement();
+    resumingStepSize = startStopStepSize;
+}
+
+int32_t MotionController::GetResumingStepSize(int32_t currentStepSize){
+    if(resuming){
+    	int32_t result = resumingStepSize;
+        resumingStepSize += stepIncrement;
+        if(result < currentStepSize) return result;
+        else {
+            resuming = false;
+            return currentStepSize;
+        }
+    } else return currentStepSize;
+}
+
+void MotionController::SetPausing(){
+    resuming = false;
+    pausing = true;
+    startStopStepSize = VelocitySettings::GetInstance()->GetStepSize(START);
+    stepIncrement = VelocitySettings::GetInstance()->GetStepIncrement();
+    pausingStepSize = VelocitySettings::GetInstance()->GetCurrentStepSize();
+}
+
+int32_t MotionController::GetPausingStepSize(int32_t currentStepSize){
+    if(pausing){
+        int32_t result = pausingStepSize;
+        pausingStepSize -= stepIncrement;
+        if(result > startStopStepSize) return result;
+        else {
+            running = false;
+            pausing = false;
+            return startStopStepSize;
+        }
+    } else return currentStepSize;
+}
+
+extern "C"{
+void MC_OnTimer(){
+	MotionController::GetInstance()->OnTimer();
+}
 }

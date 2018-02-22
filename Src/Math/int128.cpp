@@ -7,6 +7,10 @@
 
 #include "Math/int_math.h"
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 void umul64wide (uint64_t a, uint64_t b, uint64_t *hi, uint64_t *lo)
 {
     uint64_t a_lo = (uint64_t)(uint32_t)a;
@@ -45,4 +49,8 @@ int64_t mulshift (int64_t a, int64_t b, uint8_t s)
     }
     return res;
 }
+
+#ifdef __cplusplus
+}
+#endif
 

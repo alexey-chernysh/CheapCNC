@@ -8,8 +8,9 @@
 #ifndef MC_SEQUENCE_HPP_
 #define MC_SEQUENCE_HPP_
 
-#include "Math/int_math.h"
-#include "MC/Action.hpp"
+#include <stdint.h>
+
+class Action;
 
 #define ACTION_BUFFER_SIZE 16
 

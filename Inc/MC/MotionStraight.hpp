@@ -8,6 +8,7 @@
 #ifndef MC_MOTIONSTRAIGHT_HPP_
 #define MC_MOTIONSTRAIGHT_HPP_
 
+#include "MC/Enums.h"
 #include "MC/Motion.hpp"
 
 class MotionStraight : public Motion {

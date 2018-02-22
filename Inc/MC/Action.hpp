@@ -12,7 +12,7 @@ class Action {
 public:
 	Action();
 	virtual ~Action();
-	virtual void reset();
+	virtual void Reset();
 };
 
 #endif /* MC_ACTION_HPP_ */

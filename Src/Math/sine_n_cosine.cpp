@@ -5,8 +5,8 @@
  *      Author: Sales
  */
 
+#include <Math/sine_n_cosine.hpp>
 #include "Math/int_math.h"
-#include "Math/sine_n_cosine.h"
 
 const uint8_t shift = SCALING_SHIFT;
 const int64_t one = 1LL;

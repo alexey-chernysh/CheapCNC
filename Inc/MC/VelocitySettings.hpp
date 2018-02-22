@@ -8,31 +8,21 @@
 #ifndef MC_VELOCITYSETTINGS_HPP_
 #define MC_VELOCITYSETTINGS_HPP_
 
-#include "Math/int_math.h"
-
-#define N_OF_TOOTH 15
-#define TOOTH_STEP 3.14
-#define STEP_PER_ROTATION 200.0
-
-typedef enum {
-	FREE_RUN = 0,
-	WORKING,
-	START,
-	ADJUSTMENT,
-} MOTION_VELOCITY;
+#include <stdint.h>
+#include "MC/Enums.h"
 
 class VelocitySettings {
 private:
-	static float oneBitLength;
-	static float timerFrequency;
+	float oneBitLength;
+	float timerFrequency;
 
-	static float startVelocity;
-	static float freeRunVelocity;
-	static float workingVelocity;
-	static float adjustmentVelocity;
-	static double acceleration;
-	static int32_t stepIncrement;
-	static int32_t currentStepSize;
+	float startVelocity;
+	float freeRunVelocity;
+	float workingVelocity;
+	float adjustmentVelocity;
+	double acceleration;
+	int32_t stepIncrement;
+	int32_t currentStepSize;
 
 private:
 	VelocitySettings();
@@ -44,13 +34,14 @@ public:
 public:
 	int32_t GetStepSize(MOTION_VELOCITY t);
 	void SetCurrentStepSize(int32_t newStepSIze);
-	inline int32_t GetStepIncrement(){ return stepIncrement; }
-	int32_t GetStep4Velocity(double velocity);
-	inline float GetStartVelocity(){ return startVelocity; }
-	inline float GetFreeRunVelocity() { return freeRunVelocity; }
-	inline float GetWorkingVelocity() { return workingVelocity; }
+	int32_t GetCurrentStepSize();
+	int32_t GetStepIncrement();
+	float GetStartVelocity();
+	float GetFreeRunVelocity();
+	float GetWorkingVelocity();
 	float GetCurrentVelocity();
 	int64_t GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2);
+	int32_t GetStep4Velocity(double velocity);
 
 private:
 	double  GetVelocity4Step(int32_t stepSize);

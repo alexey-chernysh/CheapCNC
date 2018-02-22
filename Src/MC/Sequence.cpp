@@ -10,11 +10,12 @@
 #include "MC/Motion.hpp"
 #include "MC/MotionStraight.hpp"
 #include "MC/MotionArc.hpp"
+#include "MC/VelocitySettings.hpp"
 
 Sequence::Sequence() {
     this->FillDebugTask();
     for(uint32_t i=0; i< this->GetSize(); i++)
-    	this->actions[i]->reset();
+    	this->actions[i]->Reset();
 }
 
 Sequence::~Sequence() {
@@ -113,6 +114,6 @@ void Sequence::FillDebugTask(){
 
 void Sequence::ResetTask(){
     for(uint32_t i=0; i<this->size; i++){
-    	this->actions[i]->reset();
+    	this->actions[i]->Reset();
     };
 }

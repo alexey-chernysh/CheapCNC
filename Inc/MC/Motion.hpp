@@ -9,14 +9,8 @@
 #define MC_MOTION_HPP_
 
 #include <stdint.h>
+#include "MC/Enums.h"
 #include "MC/Action.hpp"
-#include "MC/VelocitySettings.hpp"
-
-typedef enum {
-	HEAD,
-	BODY,
-	TAIL
-} MOTION_PHASE;
 
 class Motion : public Action {
 protected:

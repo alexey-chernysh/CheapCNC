@@ -8,12 +8,8 @@
 #ifndef MC_MOTIONARC_HPP_
 #define MC_MOTIONARC_HPP_
 
+#include "MC/Enums.h"
 #include "MC/Motion.hpp"
-
-typedef enum {
-	CW, // clockwise
-	CCW // counterclockwise
-} ARC_DIRECTION;
 
 class MotionArc: public Motion {
 private:

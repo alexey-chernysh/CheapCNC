@@ -8,11 +8,9 @@
 #ifndef MC_MOTIONCONTROLLER_HPP_
 #define MC_MOTIONCONTROLLER_HPP_
 
-#include "Math/int_math.h"
-#include <MC/Sequence.hpp>
-#include "MC/VelocitySettings.hpp"
-#include "MC/Position.hpp"
+#include <stdint.h>
 #include "MC/Motion.hpp"
+#include "MC/Sequence.hpp"
 
 class MotionController { // MC singleton
 private:
@@ -23,29 +21,40 @@ private:
 public:
 	static MotionController* GetInstance();
 private:
-	static bool running;
-	static bool forward;
+	bool running;
+	bool forward;
+	bool resuming;
+	bool pausing;
 
-	static float timerFrequency;
-	static float oneBitLengthMM;
+	float timerFrequency;
+	float oneBitLengthMM;
 
 	Sequence sequence;
 	uint32_t sequenceSize;
 	uint32_t currentMotionNum;
 	Motion *currentMotion;
+
+	int32_t stepIncrement;
+	int32_t startStopStepSize;
+	int32_t resumingStepSize;
+	int32_t pausingStepSize;
 public:
 	void Reset();
-	void onTimer();
-	bool IsRunning(){ return running; };
-	bool IsForward(){ return forward; };
+	void OnTimer();
+	bool IsRunning();
+	bool IsForward();
+	void SetResuming();
+	int32_t GetResumingStepSize(int32_t currentStepSize);
+	void SetPausing();
+	int32_t GetPausingStepSize(int32_t currentStepSize);
 
-	float GetTimerFrequency(){ return timerFrequency; };
-	float GetOneBitLengthMM(){ return oneBitLengthMM; };
-	int64_t Get64bitForDoubleMM(double mm){ return (int64_t)(mm/oneBitLengthMM); };
-	double GetDoubleMMFor64bit(int64_t iValue){	return oneBitLengthMM*iValue; };
+	float GetTimerFrequency();
+	float GetOneBitLengthMM();
+	int64_t Get64bitForDoubleMM(double mm);
+	double GetDoubleMMFor64bit(int64_t iValue);
 
-	float GetMinVelocity(){ return 60.0*timerFrequency*oneBitLengthMM; };
-	float GetMaxVelocity(){ return 60.0*timerFrequency*(N_OF_TOOTH*TOOTH_STEP)/STEP_PER_ROTATION/2; };
+	float GetMinVelocity();
+	float GetMaxVelocity();
 private:
 	void IterateActionNum();
 };

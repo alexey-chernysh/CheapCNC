@@ -29,10 +29,11 @@ Motion::Motion( double _relEndPosX,
 	this->relCurrentPosX = 0;
 	this->relCurrentPosY = 0;
 
-	this->stepSizeConstantVelocity = VelocitySettings::GetInstance()->GetStepSize(velocity);
-	this->stepSizeBeforeAcceleration = VelocitySettings::GetInstance()->GetStep4Velocity(startVel);
-	this->stepSizeAfterDeceleration = VelocitySettings::GetInstance()->GetStep4Velocity(endVel);
-	this->stepSizeIncrement = VelocitySettings::GetInstance()->GetStepIncrement();
+	VelocitySettings *vc = VelocitySettings::GetInstance();
+	this->stepSizeConstantVelocity = vc->GetStepSize(velocity);
+	this->stepSizeBeforeAcceleration = vc->GetStep4Velocity(startVel);
+	this->stepSizeAfterDeceleration = vc->GetStep4Velocity(endVel);
+	this->stepSizeIncrement = vc->GetStepIncrement();
 
 	this->phase = HEAD;
 
@@ -69,6 +70,8 @@ void Motion::SetupMotion(){
 
 }
 
+void Motion::OnIteration(){};
+
 static int64_t iabs(int64_t x){
 	if(x >= 0) return x;
 	else return -x;
@@ -76,6 +79,8 @@ static int64_t iabs(int64_t x){
 
 bool Motion::IterateForward(){ // return true if another step needed
 
+    stepSizeCurrent = MotionController::GetInstance()->GetResumingStepSize(stepSizeCurrent);
+    stepSizeCurrent = MotionController::GetInstance()->GetPausingStepSize(stepSizeCurrent);
 	this->wayLengthCurrent += this->stepSizeCurrent;
 	this->OnIteration();
 
@@ -111,6 +116,8 @@ bool Motion::IterateForward(){ // return true if another step needed
 
 bool Motion::IterateBackward(){ // return true if another step needed
 
+    stepSizeCurrent = MotionController::GetInstance()->GetResumingStepSize(stepSizeCurrent);
+    stepSizeCurrent = MotionController::GetInstance()->GetPausingStepSize(stepSizeCurrent);
 	this->wayLengthCurrent -= this->stepSizeCurrent;
 	this->OnIteration();
 
