@@ -10,5 +10,6 @@
 
 void MC_Setup();
 void MC_OnTimer();
+void MC_onControlKey(char controlKey);
 
 #endif /* MC_MOTIONCONTROLLER_H_ */

@@ -10,7 +10,7 @@
 #include "MC/Motion.hpp"
 #include "MC/MotionStraight.hpp"
 #include "MC/MotionArc.hpp"
-#include "MC/VelocitySettings.hpp"
+#include "MC/MotionController.hpp"
 
 Sequence::Sequence() {
     this->FillDebugTask();
@@ -32,7 +32,7 @@ Action* Sequence::GetAction(uint32_t num){
 }
 
 void Sequence::FillLines(){
-	double v = VelocitySettings::GetInstance()->GetStartVelocity();
+	double v = GetStartVelocity();
 
     MotionStraight *straight1 = new MotionStraight(100.0, 0.0, WORKING, v, v);
     this->actions[0] = (Action*)straight1;
@@ -44,9 +44,9 @@ void Sequence::FillLines(){
 }
 
 void Sequence::FillArcs(){
-	double v = VelocitySettings::GetInstance()->GetStartVelocity();
-    double v1 = VelocitySettings::GetInstance()->GetWorkingVelocity();
-    double v2 = VelocitySettings::GetInstance()->GetFreeRunVelocity();
+	double v = GetStartVelocity();
+    double v1 = GetWorkingVelocity();
+    double v2 = GetFreeRunVelocity();
 
     // 4 ���� �� 90 �������� �� ������� �� ������� ��������
     MotionArc *arc1 = new MotionArc(100.0, 100.0,  100.0, 0.0, CW, WORKING, v, v1);
@@ -76,8 +76,8 @@ void Sequence::FillArcs(){
 }
 
 void Sequence::FillComplex(){
-	double v = VelocitySettings::GetInstance()->GetStartVelocity();
-    double v1 = VelocitySettings::GetInstance()->GetWorkingVelocity();
+	double v = GetStartVelocity();
+    double v1 = GetWorkingVelocity();
 
     MotionStraight *straight1 = new MotionStraight(0.0, 45.0, WORKING, v, v1);
     this->actions[0] = (Action*)straight1;

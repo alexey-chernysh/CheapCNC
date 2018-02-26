@@ -26,23 +26,24 @@ private:
 	bool resuming;
 	bool pausing;
 
-	float timerFrequency;
-	float oneBitLengthMM;
-
-	Sequence sequence;
+	Sequence* sequence;
 	uint32_t sequenceSize;
 	uint32_t currentMotionNum;
-	Motion *currentMotion;
+	Motion* currentMotion;
 
-	int32_t stepIncrement;
-	int32_t startStopStepSize;
-	int32_t resumingStepSize;
-	int32_t pausingStepSize;
 public:
 	void Reset();
 	void OnTimer();
+
+	void OnControlKey(char controlKey);
 	bool IsRunning();
+	bool IsPaused();
+
 	bool IsForward();
+	void SetForward();
+	bool IsBackward();
+	void SetBackward();
+
 	void SetResuming();
 	int32_t GetResumingStepSize(int32_t currentStepSize);
 	void SetPausing();
@@ -50,13 +51,30 @@ public:
 
 	float GetTimerFrequency();
 	float GetOneBitLengthMM();
-	int64_t Get64bitForDoubleMM(double mm);
-	double GetDoubleMMFor64bit(int64_t iValue);
 
 	float GetMinVelocity();
 	float GetMaxVelocity();
+
+	void SetCurrentStepSize(int32_t newStepSIze);
+	int32_t GetCurrentStepSize();
+	float GetCurrentVelocity();
+
 private:
 	void IterateActionNum();
+	double  GetVelocity4Step(int32_t stepSize);
+	int32_t GetStepIncrement4Acceleration();
 };
+
+int64_t Get64bitForDoubleMM(double mm);
+double GetDoubleMMFor64bit(int64_t iValue);
+
+int32_t GetStepSize(MOTION_VELOCITY t);
+int32_t GetStepIncrement();
+int32_t GetStep4Velocity(double velocity);
+int64_t GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2);
+
+float GetStartVelocity();
+float GetFreeRunVelocity();
+float GetWorkingVelocity();
 
 #endif /* MC_MOTIONCONTROLLER_HPP_ */
