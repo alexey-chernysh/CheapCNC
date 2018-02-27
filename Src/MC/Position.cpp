@@ -16,6 +16,9 @@
 static bool pwm_table_ready = false;
 static uint32_t pwm_table[MAX_MICROSTEP+1];
 
+PositionX positionX;
+PositionY positionY;
+
 void buildPwmTable(){
 	if(!pwm_table_ready){
 		float scale1 = M_PI / 2.0 / MAX_MICROSTEP;
@@ -74,11 +77,6 @@ PositionX::PositionX():Position() {
 PositionX::~PositionX() {
 }
 
-PositionX* PositionX::GetInstance(){
-    static PositionX instance;
-    return &instance;
-}
-
 void PositionX::SetPWM(uint8_t angle){
 	uint32_t phase1, phase2, phase3, phase4;
 	uint8_t segment = (angle>>6) & 0b00000011;
@@ -131,11 +129,6 @@ PositionY::PositionY():Position() {
 PositionY::~PositionY() {
 }
 
-PositionY* PositionY::GetInstance(){
-	static PositionY instance;
-    return &instance;
-};
-
 void PositionY::SetPWM(uint8_t angle){
 	uint32_t phase1, phase2, phase3, phase4;
 	uint8_t segment = (angle>>6) & 0b00000011;
@@ -181,31 +174,26 @@ void PositionY::SetPWM(uint8_t angle){
 	Y_AXIS_TIMER->CCR4 = phase4;
 }
 
-
+/*
 extern "C" {
 int64_t GetPositionX(){
-	PositionX* pX = PositionX::GetInstance();
-	return pX->Get();
+	return positionX.Get();
 }
 
 int64_t GetPositionY(){
-	PositionY* pY = PositionY::GetInstance();
-	return pY->Get();
+	return positionY.Get();
 }
 
 void SetPositionX(int64_t x){
-	PositionX* pX = PositionX::GetInstance();
-	pX->Set(x);
+	positionX.Set(x);
 }
 
 void SetPositionY(int64_t y){
-	PositionY* pY = PositionY::GetInstance();
-	pY->Set(y);
+	positionY.Set(y);
 }
 
 void shiftPositionX(){
-	PositionX* pX = PositionX::GetInstance();
-	pX->Shift(1);
+	positionX.Shift(1);
 }
 
 void resetPositions(){
@@ -215,3 +203,4 @@ void resetPositions(){
 
 } // extern C
 
+*/

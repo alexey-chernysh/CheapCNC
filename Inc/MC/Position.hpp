@@ -26,28 +26,22 @@ protected:
 };
 
 class PositionX final : public Position {
-private:
+public:
 	PositionX();
 	virtual ~PositionX();
-    PositionX(const PositionX&) = delete;
-    PositionX& operator=(const PositionX&) = delete;
-public:
-	static PositionX* GetInstance();
 protected:
 	virtual void SetPWM(uint8_t angle);
 };
 
 class PositionY final : public Position {
-private:
-    static PositionY* instance;
+public:
 	PositionY();
 	virtual ~PositionY();
-    PositionY(const PositionY&) = delete;
-    PositionY& operator=(const PositionY&) = delete;
-public:
-	static PositionY* GetInstance();
 protected:
 	virtual void SetPWM(uint8_t angle);
 };
+
+extern PositionX positionX;
+extern PositionY positionY;
 
 #endif /* POSITION_HPP_ */

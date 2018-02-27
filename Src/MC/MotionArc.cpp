@@ -26,8 +26,8 @@ MotionArc::MotionArc(  double _relEndPosX,
 					   MOTION_VELOCITY velocity,
 					   double startVel,
 					   double endVel):Motion(_relEndPosX, _relEndPosY, velocity, startVel, endVel){
-    this->relCenterPosX = Get64bitForDoubleMM(_relCenterPosX);
-    this->relCenterPosY = Get64bitForDoubleMM(_relCenterPosY);
+    this->relCenterPosX = MotionController::Get64bitForDoubleMM(_relCenterPosX);
+    this->relCenterPosY = MotionController::Get64bitForDoubleMM(_relCenterPosY);
     this->arcDirection = dir;
 
 	double      angle;

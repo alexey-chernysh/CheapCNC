@@ -1,7 +1,7 @@
 /*
  * Velocity.cpp
  *
- *  Created on: 27 февр. 2018 г.
+ *  Created on: 27 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: Sales
  */
 
@@ -17,11 +17,11 @@ Velocity::~Velocity() {
 }
 
 void Velocity::SetVelocity(float newValue){
-	this->stepSize = GetStep4Velocity(newValue);
+	this->stepSize = MotionController::GetStep4Velocity(newValue);
 }
 
 float Velocity::GetVelocity(){
-	return GetVelocity4Step(this->stepSize);
+	return MotionController::GetVelocity4Step(this->stepSize);
 }
 
 uint32_t Velocity::GetStepSize(){
@@ -45,4 +45,3 @@ void WorkingVelocity::SetLimit(){
 uint32_t WorkingVelocity::GetAutoLimit(){
 	return this->autoLimit;
 }
-

@@ -21,16 +21,16 @@ Motion::Motion( double _relEndPosX,
 			    double startVel,
 			    double endVel) {
 
-	this->relEndPosX = Get64bitForDoubleMM(_relEndPosX);
-	this->relEndPosY = Get64bitForDoubleMM(_relEndPosY);
+	this->relEndPosX = MotionController::Get64bitForDoubleMM(_relEndPosX);
+	this->relEndPosY = MotionController::Get64bitForDoubleMM(_relEndPosY);
 
 	this->relCurrentPosX = 0;
 	this->relCurrentPosY = 0;
 
-	this->stepSizeConstantVelocity = GetStepSize(velocity);
-	this->stepSizeBeforeAcceleration = GetStep4Velocity(startVel);
-	this->stepSizeAfterDeceleration = GetStep4Velocity(endVel);
-	this->stepSizeIncrement = GetStepIncrement();
+	this->stepSizeConstantVelocity = MotionController::GetStepSize(velocity);
+	this->stepSizeBeforeAcceleration = MotionController::GetStep4Velocity(startVel);
+	this->stepSizeAfterDeceleration = MotionController::GetStep4Velocity(endVel);
+	this->stepSizeIncrement = MotionController::GetStepIncrement();
 
 	this->phase = HEAD;
 
@@ -43,8 +43,8 @@ Motion::Motion( double _relEndPosX,
 
 void Motion::CalcWayLength(){
 	this->wayLengthCurrent = 0LL;
-	this->wayLengthAcceleration = GetWayLength4StepChange(this->stepSizeBeforeAcceleration, this->stepSizeConstantVelocity);
-	this->wayLengthDeceleration = GetWayLength4StepChange(this->stepSizeConstantVelocity, this->stepSizeAfterDeceleration);
+	this->wayLengthAcceleration = MotionController::GetWayLength4StepChange(this->stepSizeBeforeAcceleration, this->stepSizeConstantVelocity);
+	this->wayLengthDeceleration = MotionController::GetWayLength4StepChange(this->stepSizeConstantVelocity, this->stepSizeAfterDeceleration);
 
 	int64_t wayLengthConstantVelocity = this->wayLength - this->wayLengthAcceleration - this->wayLengthDeceleration;
 	if(wayLengthConstantVelocity < 0){
@@ -58,10 +58,10 @@ void Motion::CalcWayLength(){
 void Motion::SetupMotion(){
 	this->currentDistanceToTarget = this->wayLength;
 
-	if(MotionIsForward()){
+	if(MotionController::MotionIsForward()){
 		this->stepSizeCurrent =  this->stepSizeBeforeAcceleration;
-		this->startAbsPosX = PositionX::GetInstance()->Get();
-		this->startAbsPosY = PositionY::GetInstance()->Get();
+		this->startAbsPosX = positionX.Get();
+		this->startAbsPosY = positionY.Get();
 	} else
 		this->stepSizeCurrent = this->stepSizeAfterDeceleration;
 
@@ -76,14 +76,14 @@ static int64_t iabs(int64_t x){
 
 bool Motion::IterateForward(){ // return true if another step needed
 
-    stepSizeCurrent = MotionController::GetInstance()->GetResumingStepSize(stepSizeCurrent);
-    stepSizeCurrent = MotionController::GetInstance()->GetPausingStepSize(stepSizeCurrent);
+    stepSizeCurrent = motionController.GetResumingStepSize(stepSizeCurrent);
+    stepSizeCurrent = motionController.GetPausingStepSize(stepSizeCurrent);
 	this->wayLengthCurrent += this->stepSizeCurrent;
 	this->OnIteration();
 
-	PositionX::GetInstance()->Set(this->startAbsPosX + this->relCurrentPosX);
-	PositionY::GetInstance()->Set(this->startAbsPosY + this->relCurrentPosY);
-	MotionController::GetInstance()->SetCurrentStepSize(this->stepSizeCurrent);
+	positionX.Set(this->startAbsPosX + this->relCurrentPosX);
+	positionY.Set(this->startAbsPosY + this->relCurrentPosY);
+	motionController.SetCurrentStepSize(this->stepSizeCurrent);
 
 	switch (this->phase){
 		case HEAD:
@@ -113,14 +113,14 @@ bool Motion::IterateForward(){ // return true if another step needed
 
 bool Motion::IterateBackward(){ // return true if another step needed
 
-    stepSizeCurrent = MotionController::GetInstance()->GetResumingStepSize(stepSizeCurrent);
-    stepSizeCurrent = MotionController::GetInstance()->GetPausingStepSize(stepSizeCurrent);
+    stepSizeCurrent = motionController.GetResumingStepSize(stepSizeCurrent);
+    stepSizeCurrent = motionController.GetPausingStepSize(stepSizeCurrent);
 	this->wayLengthCurrent -= this->stepSizeCurrent;
 	this->OnIteration();
 
-	PositionX::GetInstance()->Set(this->startAbsPosX + this->relCurrentPosX);
-	PositionY::GetInstance()->Set(this->startAbsPosY + this->relCurrentPosY);
-	MotionController::GetInstance()->SetCurrentStepSize(this->stepSizeCurrent);
+	positionX.Set(this->startAbsPosX + this->relCurrentPosX);
+	positionY.Set(this->startAbsPosY + this->relCurrentPosY);
+	motionController.SetCurrentStepSize(this->stepSizeCurrent);
 
 	switch (this->phase){
 		case HEAD:

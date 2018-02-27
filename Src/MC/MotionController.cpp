@@ -17,6 +17,11 @@
 static float timerFrequency;
 static float oneBitLengthMM;
 
+static bool running;
+static bool forward;
+static bool resuming;
+static bool pausing;
+
 static uint32_t stepIncrement;
 static uint32_t currentStepSize;
 static uint32_t startStopStepSize;
@@ -25,16 +30,22 @@ static uint32_t pausingStepSize;
 
 static float startVelocity;
 static float freeRunVelocity;
-static WorkingVelocity workingVelocity(1000.0/60.0);
+static WorkingVelocity workingVelocity;
 static float adjustmentVelocity;
-static double acceleration;
+static float acceleration;
 
-static bool forward = true;
+static Sequence* sequence;
+static uint32_t sequenceSize;
+static uint32_t currentMotionNum;
+static Motion* currentMotion;
+
+MotionController motionController;
 
 MotionController::MotionController() {
 	initMath();
 
 	running = false;
+	forward = true;
 	resuming = false;
 	pausing = false;
 
@@ -44,11 +55,12 @@ MotionController::MotionController() {
 
 	startVelocity =   100.0/60.0;
 	freeRunVelocity = 5000.0/60.0;
-//	workingVelocity = 1000.0/60.0;
 	adjustmentVelocity = 10.0/60.0;
+
 	// setting acceleration & step increment/decrement
 	acceleration = 50.0; // mm/sec/sec
 	stepIncrement = GetStepIncrement4Acceleration();
+
 	// setting current step size for idle motion
     startStopStepSize = GetStepSize(START);
 	currentStepSize = startStopStepSize;
@@ -60,17 +72,8 @@ MotionController::MotionController() {
 	currentMotion->SetupMotion();
 
 	// debug only
-//	running = true;
+	running = true;
 
-}
-
-MotionController::~MotionController() {
-	// TODO Auto-generated destructor stub
-}
-
-MotionController* MotionController::GetInstance(){
-    static MotionController instance;
-    return &instance;
 }
 
 void MotionController::Reset(){
@@ -117,9 +120,9 @@ void MotionController::OnTimer(){
 		else{
 			IterateActionNum();
 			if((currentMotionNum >= 0)&&(currentMotionNum < sequenceSize)){
-				currentMotion = (Motion*)sequence->GetAction(this->currentMotionNum);
+				currentMotion = (Motion*)sequence->GetAction(currentMotionNum);
 				currentMotion->SetupMotion();
-			} else this->Reset();
+			} else Reset();
 		}
 	}
 }
@@ -211,15 +214,15 @@ void MotionController::OnControlKey(char controlKey){
 	};
 }
 
-bool MotionIsForward(){ return forward; }
+bool MotionController::MotionIsForward(){ return forward; }
 
-bool MotionIsBackward(){ return !forward; }
+bool MotionController::MotionIsBackward(){ return !forward; }
 
-void SetMotionForward(){ forward = true; }
+void MotionController::SetMotionForward(){ forward = true; }
 
-void SetMotionBackward(){ forward = false; }
+void MotionController::SetMotionBackward(){ forward = false; }
 
-int64_t GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2) {
+int64_t MotionController::GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2) {
 	int64_t sqr1 = stepSize1*((int64_t)stepSize1);
 	int64_t sqr2 = stepSize2*((int64_t)stepSize2);
 	int64_t result = ((sqr2-sqr1)/stepIncrement)/2;
@@ -229,22 +232,22 @@ int64_t GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2) {
 
 uint32_t MotionController::GetCurrentStepSize(){ return currentStepSize; };
 
-double GetVelocity4Step(uint32_t stepSize){
+float MotionController::GetVelocity4Step(uint32_t stepSize){
 	return 60.0*stepSize*oneBitLengthMM*timerFrequency;
 }
 
-uint32_t GetStepIncrement(){ return stepIncrement; }
+uint32_t MotionController::GetStepIncrement(){ return stepIncrement; }
 
-uint32_t GetStep4Velocity(double velocity){
-	double mmInTick = velocity/timerFrequency;
+uint32_t MotionController::GetStep4Velocity(float velocity){
+	float mmInTick = velocity/timerFrequency;
 	return (uint32_t)(mmInTick/oneBitLengthMM);
 }
 
-int64_t Get64bitForDoubleMM(double mm){ return (int64_t)(mm/oneBitLengthMM); };
+int64_t MotionController::Get64bitForDoubleMM(double mm){ return (int64_t)(mm/oneBitLengthMM); };
 
-double GetDoubleMMFor64bit(int64_t iValue){	return oneBitLengthMM*iValue; };
+double MotionController::GetDoubleMMFor64bit(int64_t iValue){	return oneBitLengthMM*iValue; };
 
-uint32_t GetStepSize(MOTION_VELOCITY t) {
+uint32_t MotionController::GetStepSize(MOTION_VELOCITY t) {
 	switch (t){
 		case FREE_RUN: return GetStep4Velocity(freeRunVelocity);
 		case WORKING: return workingVelocity.GetStepSize();
@@ -254,21 +257,17 @@ uint32_t GetStepSize(MOTION_VELOCITY t) {
 	}
 }
 
-float GetStartVelocity(){ return startVelocity; }
-float GetFreeRunVelocity() { return freeRunVelocity; }
-float GetWorkingVelocity() { return workingVelocity.GetVelocity(); }
+float MotionController::GetStartVelocity(){ return startVelocity; }
+float MotionController::GetFreeRunVelocity() { return freeRunVelocity; }
+float MotionController::GetWorkingVelocity() { return workingVelocity.GetVelocity(); }
 
 extern "C"{
 void MC_OnTimer(){
-	MotionController::GetInstance()->OnTimer();
-}
-
-void MC_Setup(){
-	MotionController::GetInstance();
+	motionController.OnTimer();
 }
 
 void MC_onControlKey(char controlKey){
-	MotionController::GetInstance()->OnControlKey(controlKey);
+	motionController.OnControlKey(controlKey);
 }
 
 }

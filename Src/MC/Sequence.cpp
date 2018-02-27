@@ -32,7 +32,7 @@ Action* Sequence::GetAction(uint32_t num){
 }
 
 void Sequence::FillLines(){
-	double v = GetStartVelocity();
+	double v = MotionController::GetStartVelocity();
 
     MotionStraight *straight1 = new MotionStraight(100.0, 0.0, WORKING, v, v);
     this->actions[0] = (Action*)straight1;
@@ -44,9 +44,9 @@ void Sequence::FillLines(){
 }
 
 void Sequence::FillArcs(){
-	double v = GetStartVelocity();
-    double v1 = GetWorkingVelocity();
-    double v2 = GetFreeRunVelocity();
+	double v = MotionController::GetStartVelocity();
+    double v1 = MotionController::GetWorkingVelocity();
+    double v2 = MotionController::GetFreeRunVelocity();
 
     // 4 ���� �� 90 �������� �� ������� �� ������� ��������
     MotionArc *arc1 = new MotionArc(100.0, 100.0,  100.0, 0.0, CW, WORKING, v, v1);
@@ -76,8 +76,8 @@ void Sequence::FillArcs(){
 }
 
 void Sequence::FillComplex(){
-	double v = GetStartVelocity();
-    double v1 = GetWorkingVelocity();
+	double v = MotionController::GetStartVelocity();
+    double v1 = MotionController::GetWorkingVelocity();
 
     MotionStraight *straight1 = new MotionStraight(0.0, 45.0, WORKING, v, v1);
     this->actions[0] = (Action*)straight1;
