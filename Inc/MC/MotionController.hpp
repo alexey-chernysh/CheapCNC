@@ -22,7 +22,6 @@ public:
 	static MotionController* GetInstance();
 private:
 	bool running;
-	bool forward;
 	bool resuming;
 	bool pausing;
 
@@ -38,11 +37,6 @@ public:
 	void OnControlKey(char controlKey);
 	bool IsRunning();
 	bool IsPaused();
-
-	bool IsForward();
-	void SetForward();
-	bool IsBackward();
-	void SetBackward();
 
 	void SetResuming();
 	uint32_t GetResumingStepSize(uint32_t currentSS);
@@ -63,6 +57,11 @@ private:
 	void IterateActionNum();
 	uint32_t GetStepIncrement4Acceleration();
 };
+
+bool MotionIsForward();
+void SetMotionForward();
+bool MotionIsBackward();
+void SetMotionBackward();
 
 double  GetVelocity4Step(uint32_t stepSize);
 uint32_t GetStep4Velocity(double velocity);

@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : gpio.c
-  * Description        : This file provides code for the configuration
-  *                      of all used GPIO pins.
+  * @file           : usbd_desc.h
+  * @version        : v2.0_Cube
+  * @brief          : Header for usbd_desc.c file.
   ******************************************************************************
   * This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -47,67 +47,110 @@
   ******************************************************************************
   */
 
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __USBD_DESC__H__
+#define __USBD_DESC__H__
+
+#ifdef __cplusplus
+ extern "C" {
+#endif
+
 /* Includes ------------------------------------------------------------------*/
-#include "gpio.h"
-/* USER CODE BEGIN 0 */
+#include "usbd_def.h"
 
-/* USER CODE END 0 */
+/* USER CODE BEGIN INCLUDE */
 
-/*----------------------------------------------------------------------------*/
-/* Configure GPIO                                                             */
-/*----------------------------------------------------------------------------*/
-/* USER CODE BEGIN 1 */
+/* USER CODE END INCLUDE */
 
-/* USER CODE END 1 */
+/** @addtogroup STM32_USB_OTG_DEVICE_LIBRARY
+  * @{
+  */
 
-/** Configure pins as 
-        * Analog 
-        * Input 
-        * Output
-        * EVENT_OUT
-        * EXTI
-*/
-void MX_GPIO_Init(void)
-{
+/** @defgroup USBD_DESC USBD_DESC
+  * @brief Usb device descriptors module.
+  * @{
+  */
 
-  GPIO_InitTypeDef GPIO_InitStruct;
+/** @defgroup USBD_DESC_Exported_Defines USBD_DESC_Exported_Defines
+  * @brief Defines.
+  * @{
+  */
 
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
+/* USER CODE BEGIN EXPORTED_DEFINES */
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, TorchDown_Output_Pin|TorchUp_Output_Pin|Blow_OutPut_Pin|Preheat_Output_Pin 
-                          |Plasma_OnOff_Output_Pin|THC_Auto_Output_Pin|Ignition_Output_Pin|InitialPositioning_Output_Pin, GPIO_PIN_RESET);
+/* USER CODE END EXPORTED_DEFINES */
 
-  /*Configure GPIO pins : PAPin PAPin PAPin */
-  GPIO_InitStruct.Pin = Alarm_Input_Pin|PositioningComplete_Input_Pin|ArcTransfer_Input_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+/**
+  * @}
+  */
 
-  /*Configure GPIO pins : PBPin PBPin PBPin PBPin 
-                           PBPin PBPin PBPin PBPin */
-  GPIO_InitStruct.Pin = TorchDown_Output_Pin|TorchUp_Output_Pin|Blow_OutPut_Pin|Preheat_Output_Pin 
-                          |Plasma_OnOff_Output_Pin|THC_Auto_Output_Pin|Ignition_Output_Pin|InitialPositioning_Output_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+/** @defgroup USBD_DESC_Exported_TypesDefinitions USBD_DESC_Exported_TypesDefinitions
+  * @brief Types.
+  * @{
+  */
 
+/* USER CODE BEGIN EXPORTED_TYPES */
+
+/* USER CODE END EXPORTED_TYPES */
+
+/**
+  * @}
+  */
+
+/** @defgroup USBD_DESC_Exported_Macros USBD_DESC_Exported_Macros
+  * @brief Aliases.
+  * @{
+  */
+
+/* USER CODE BEGIN EXPORTED_MACRO */
+
+/* USER CODE END EXPORTED_MACRO */
+
+/**
+  * @}
+  */
+
+/** @defgroup USBD_DESC_Exported_Variables USBD_DESC_Exported_Variables
+  * @brief Public variables.
+  * @{
+  */
+
+/** Descriptor for the Usb device. */
+extern USBD_DescriptorsTypeDef FS_Desc;
+
+/* USER CODE BEGIN EXPORTED_VARIABLES */
+
+/* USER CODE END EXPORTED_VARIABLES */
+
+/**
+  * @}
+  */
+
+/** @defgroup USBD_DESC_Exported_FunctionsPrototype USBD_DESC_Exported_FunctionsPrototype
+  * @brief Public functions declaration.
+  * @{
+  */
+
+/* USER CODE BEGIN EXPORTED_FUNCTIONS */
+
+/* USER CODE END EXPORTED_FUNCTIONS */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
+
+/**
+  * @}
+  */
+
+#ifdef __cplusplus
 }
+#endif
 
-/* USER CODE BEGIN 2 */
-
-/* USER CODE END 2 */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
+#endif /* __USBD_DESC__H__ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

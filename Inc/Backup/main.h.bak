@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : gpio.c
-  * Description        : This file provides code for the configuration
-  *                      of all used GPIO pins.
+  * @file           : main.h
+  * @brief          : Header for main.c file.
+  *                   This file contains the common defines of the application.
   ******************************************************************************
   * This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
@@ -47,67 +47,64 @@
   ******************************************************************************
   */
 
+/* Define to prevent recursive inclusion -------------------------------------*/
+#ifndef __MAIN_H__
+#define __MAIN_H__
+
 /* Includes ------------------------------------------------------------------*/
-#include "gpio.h"
-/* USER CODE BEGIN 0 */
 
-/* USER CODE END 0 */
+/* USER CODE BEGIN Includes */
 
-/*----------------------------------------------------------------------------*/
-/* Configure GPIO                                                             */
-/*----------------------------------------------------------------------------*/
-/* USER CODE BEGIN 1 */
+/* USER CODE END Includes */
 
-/* USER CODE END 1 */
+/* Private define ------------------------------------------------------------*/
+#define PWM_PRESCALER 0
+#define PWM_PERIOD 7200
 
-/** Configure pins as 
-        * Analog 
-        * Input 
-        * Output
-        * EVENT_OUT
-        * EXTI
-*/
-void MX_GPIO_Init(void)
-{
+#define Alarm_Input_Pin GPIO_PIN_4
+#define Alarm_Input_GPIO_Port GPIOA
+#define PositioningComplete_Input_Pin GPIO_PIN_5
+#define PositioningComplete_Input_GPIO_Port GPIOA
+#define TorchDown_Output_Pin GPIO_PIN_10
+#define TorchDown_Output_GPIO_Port GPIOB
+#define TorchUp_Output_Pin GPIO_PIN_11
+#define TorchUp_Output_GPIO_Port GPIOB
+#define Blow_OutPut_Pin GPIO_PIN_12
+#define Blow_OutPut_GPIO_Port GPIOB
+#define Preheat_Output_Pin GPIO_PIN_13
+#define Preheat_Output_GPIO_Port GPIOB
+#define Plasma_OnOff_Output_Pin GPIO_PIN_14
+#define Plasma_OnOff_Output_GPIO_Port GPIOB
+#define THC_Auto_Output_Pin GPIO_PIN_15
+#define THC_Auto_Output_GPIO_Port GPIOB
+#define ArcTransfer_Input_Pin GPIO_PIN_8
+#define ArcTransfer_Input_GPIO_Port GPIOA
+#define Ignition_Output_Pin GPIO_PIN_8
+#define Ignition_Output_GPIO_Port GPIOB
+#define InitialPositioning_Output_Pin GPIO_PIN_9
+#define InitialPositioning_Output_GPIO_Port GPIOB
 
-  GPIO_InitTypeDef GPIO_InitStruct;
+/* ########################## Assert Selection ############################## */
+/**
+  * @brief Uncomment the line below to expanse the "assert_param" macro in the 
+  *        HAL drivers code
+  */
+/* #define USE_FULL_ASSERT    1U */
 
-  /* GPIO Ports Clock Enable */
-  __HAL_RCC_GPIOC_CLK_ENABLE();
-  __HAL_RCC_GPIOD_CLK_ENABLE();
-  __HAL_RCC_GPIOA_CLK_ENABLE();
-  __HAL_RCC_GPIOB_CLK_ENABLE();
+/* USER CODE BEGIN Private defines */
 
-  /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOB, TorchDown_Output_Pin|TorchUp_Output_Pin|Blow_OutPut_Pin|Preheat_Output_Pin 
-                          |Plasma_OnOff_Output_Pin|THC_Auto_Output_Pin|Ignition_Output_Pin|InitialPositioning_Output_Pin, GPIO_PIN_RESET);
+/* USER CODE END Private defines */
 
-  /*Configure GPIO pins : PAPin PAPin PAPin */
-  GPIO_InitStruct.Pin = Alarm_Input_Pin|PositioningComplete_Input_Pin|ArcTransfer_Input_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_IT_RISING;
-  GPIO_InitStruct.Pull = GPIO_NOPULL;
-  HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
+#ifdef __cplusplus
+ extern "C" {
+#endif
+void _Error_Handler(char *, int);
 
-  /*Configure GPIO pins : PBPin PBPin PBPin PBPin 
-                           PBPin PBPin PBPin PBPin */
-  GPIO_InitStruct.Pin = TorchDown_Output_Pin|TorchUp_Output_Pin|Blow_OutPut_Pin|Preheat_Output_Pin 
-                          |Plasma_OnOff_Output_Pin|THC_Auto_Output_Pin|Ignition_Output_Pin|InitialPositioning_Output_Pin;
-  GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
-  GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
-  HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
-
+#define Error_Handler() _Error_Handler(__FILE__, __LINE__)
+#ifdef __cplusplus
 }
+#endif
 
-/* USER CODE BEGIN 2 */
-
-/* USER CODE END 2 */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
+#endif /* __MAIN_H__ */
 
 /************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/

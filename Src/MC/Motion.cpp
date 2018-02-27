@@ -58,7 +58,7 @@ void Motion::CalcWayLength(){
 void Motion::SetupMotion(){
 	this->currentDistanceToTarget = this->wayLength;
 
-	if(MotionController::GetInstance()->IsForward()){
+	if(MotionIsForward()){
 		this->stepSizeCurrent =  this->stepSizeBeforeAcceleration;
 		this->startAbsPosX = PositionX::GetInstance()->Get();
 		this->startAbsPosY = PositionY::GetInstance()->Get();

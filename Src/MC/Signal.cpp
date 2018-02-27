@@ -5,32 +5,35 @@
  *      Author: Sales
  */
 
+#include "main.h"
 #include <MC/Signal.hpp>
 
-Signal::Signal(uint32_t pN, bool initialState) {
+Signal::Signal(GPIO_TypeDef* p, uint32_t pN, bool initialState) {
+	port = p;
 	pinNum = pN;
-	state = initialState;
+	if(initialState)HAL_GPIO_WritePin(port, pinNum, GPIO_PIN_SET);
+	else HAL_GPIO_WritePin(port, pinNum, GPIO_PIN_RESET);
 }
 
 void Signal::On(){
-
+	HAL_GPIO_WritePin(port, pinNum, GPIO_PIN_SET);
 }
 
 void Signal::Off(){
-
+	HAL_GPIO_WritePin(port, pinNum, GPIO_PIN_RESET);
 }
 
 static SignalSet signalSet;
 
 SignalSet::SignalSet(){
-	autoSignal = new Signal(AUTO_PIN_NUM);
+	THC_auto_output = new Signal(THC_Auto_Output_GPIO_Port, THC_Auto_Output_Pin);
 }
 
-void SetAutoSignalOn(){
-	signalSet.autoSignal->On();
+void THC_AutoOn(){
+	signalSet.THC_auto_output->On();
 }
 
-void SetAutoSignalOff(){
-	signalSet.autoSignal->Off();
+void THC_AutoOff(){
+	signalSet.THC_auto_output->Off();
 }
 

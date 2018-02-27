@@ -58,6 +58,31 @@
 /* USER CODE END Includes */
 
 /* Private define ------------------------------------------------------------*/
+#define PWM_PRESCALER 0
+#define PWM_PERIOD 7199
+
+#define Alarm_Input_Pin GPIO_PIN_4
+#define Alarm_Input_GPIO_Port GPIOA
+#define PositioningComplete_Input_Pin GPIO_PIN_5
+#define PositioningComplete_Input_GPIO_Port GPIOA
+#define TorchDown_Output_Pin GPIO_PIN_10
+#define TorchDown_Output_GPIO_Port GPIOB
+#define TorchUp_Output_Pin GPIO_PIN_11
+#define TorchUp_Output_GPIO_Port GPIOB
+#define Blow_OutPut_Pin GPIO_PIN_12
+#define Blow_OutPut_GPIO_Port GPIOB
+#define Preheat_Output_Pin GPIO_PIN_13
+#define Preheat_Output_GPIO_Port GPIOB
+#define Plasma_OnOff_Output_Pin GPIO_PIN_14
+#define Plasma_OnOff_Output_GPIO_Port GPIOB
+#define THC_Auto_Output_Pin GPIO_PIN_15
+#define THC_Auto_Output_GPIO_Port GPIOB
+#define ArcTransfer_Input_Pin GPIO_PIN_8
+#define ArcTransfer_Input_GPIO_Port GPIOA
+#define Ignition_Output_Pin GPIO_PIN_8
+#define Ignition_Output_GPIO_Port GPIOB
+#define InitialPositioning_Output_Pin GPIO_PIN_9
+#define InitialPositioning_Output_GPIO_Port GPIOB
 
 /* ########################## Assert Selection ############################## */
 /**

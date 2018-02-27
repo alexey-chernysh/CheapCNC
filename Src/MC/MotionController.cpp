@@ -25,15 +25,16 @@ static uint32_t pausingStepSize;
 
 static float startVelocity;
 static float freeRunVelocity;
-static WorkingVelocity workingVelocity;
+static WorkingVelocity workingVelocity(1000.0/60.0);
 static float adjustmentVelocity;
 static double acceleration;
+
+static bool forward = true;
 
 MotionController::MotionController() {
 	initMath();
 
 	running = false;
-	forward = true;
 	resuming = false;
 	pausing = false;
 
@@ -56,9 +57,10 @@ MotionController::MotionController() {
 	sequenceSize = sequence->GetSize();
 	currentMotionNum = 0;
 	currentMotion = (Motion*)sequence->GetAction(currentMotionNum);
+	currentMotion->SetupMotion();
 
 	// debug only
-	running = true;
+//	running = true;
 
 }
 
@@ -85,14 +87,6 @@ bool MotionController::IsRunning(){ return running; }
 
 bool MotionController::IsPaused(){ return !running; }
 
-bool MotionController::IsForward(){ return forward; }
-
-bool MotionController::IsBackward(){ return !forward; }
-
-void MotionController::SetForward(){ forward = true; }
-
-void MotionController::SetBackward(){ forward = false; }
-
 float MotionController::GetTimerFrequency(){ return timerFrequency; }
 
 float MotionController::GetOneBitLengthMM(){ return oneBitLengthMM; }
@@ -102,7 +96,7 @@ float MotionController::GetMinVelocity(){ return 60.0*timerFrequency*oneBitLengt
 float MotionController::GetMaxVelocity(){ return 60.0*timerFrequency*(N_OF_TOOTH*TOOTH_STEP)/STEP_PER_ROTATION/2; }
 
 void MotionController::IterateActionNum(){
-	if(this->forward)
+	if(forward)
 		currentMotionNum++;
 	else
 		currentMotionNum--;
@@ -178,8 +172,8 @@ uint32_t MotionController::GetStepIncrement4Acceleration(){
 
 void MotionController::SetCurrentStepSize(uint32_t newStepSIze){
 	currentStepSize = newStepSIze;
-	if(currentStepSize >= workingVelocity.GetAutoLimit()) SetAutoSignalOn();
-	else SetAutoSignalOff();
+	if(currentStepSize >= workingVelocity.GetAutoLimit()) THC_AutoOn();
+	else THC_AutoOff();
 }
 
 float MotionController::GetCurrentVelocity() { // millimeters in minute
@@ -190,7 +184,7 @@ void MotionController::OnControlKey(char controlKey){
 	switch(controlKey){
 	case 'R': // Start/Resume
 		if(IsPaused()){
-			SetForward();
+			SetMotionForward();
 			SetResuming();
 		};
 		break;
@@ -200,7 +194,7 @@ void MotionController::OnControlKey(char controlKey){
 		break;
 	case 'B': // Rewind
 		if(IsPaused()){
-			SetBackward();
+			SetMotionBackward();
 			SetResuming();
 		};
 		break;
@@ -216,6 +210,14 @@ void MotionController::OnControlKey(char controlKey){
 		break;
 	};
 }
+
+bool MotionIsForward(){ return forward; }
+
+bool MotionIsBackward(){ return !forward; }
+
+void SetMotionForward(){ forward = true; }
+
+void SetMotionBackward(){ forward = false; }
 
 int64_t GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2) {
 	int64_t sqr1 = stepSize1*((int64_t)stepSize1);

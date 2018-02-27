@@ -8,30 +8,30 @@
 #ifndef MC_SIGNAL_HPP_
 #define MC_SIGNAL_HPP_
 
+#include "stm32f103xb.h"
+#include "stm32f1xx_hal.h"
 #include <stdint.h>
 
 class Signal {
 private:
+	GPIO_TypeDef* port;
 	uint32_t pinNum;
-	bool state;
 public:
-	Signal(uint32_t pN, bool initialState = false);
+	Signal(GPIO_TypeDef* p, uint32_t pN, bool initialState = false);
 	void On();
 	void Off();
-	bool IsOn();
-	bool IsOff();
 };
 
 #define AUTO_PIN_NUM 1
 
 class SignalSet {
 public:
-	Signal* autoSignal;
+	Signal* THC_auto_output;
 public:
 	SignalSet();
 };
 
-void SetAutoSignalOn();
-void SetAutoSignalOff();
+void THC_AutoOn();
+void THC_AutoOff();
 
 #endif /* MC_SIGNAL_HPP_ */
