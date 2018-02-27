@@ -1,7 +1,7 @@
 /*
  * Velocity.hpp
  *
- *  Created on: 27 февр. 2018 г.
+ *  Created on: 27 пїЅпїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: Sales
  */
 
@@ -16,11 +16,16 @@ class Velocity {
 protected:
 	uint32_t stepSize;
 public:
-	Velocity(float initialValue);
+	Velocity(float initialValue = 0.0);
 	virtual ~Velocity();
 	virtual void SetVelocity(float newValue);
 	float GetVelocity();
 	uint32_t GetStepSize();
+
+public:
+	// static methods
+	static float  GetVelocity4Step(uint32_t stepSize);
+	static uint32_t GetStep4Velocity(float velocity);
 };
 
 class WorkingVelocity: public Velocity {

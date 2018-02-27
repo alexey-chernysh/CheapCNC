@@ -13,7 +13,6 @@
 #include "MC/MotionController.hpp"
 
 MotionArc::~MotionArc() {
-	// TODO Auto-generated destructor stub
 }
 
 static const double twoPi = 2.0 * M_PI;

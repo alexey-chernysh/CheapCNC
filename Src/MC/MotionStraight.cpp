@@ -12,7 +12,6 @@
 #include "MC/Motion.hpp"
 
 MotionStraight::~MotionStraight() {
-	// TODO Auto-generated destructor stub
 }
 
 MotionStraight::MotionStraight( double _relEndPosX,

@@ -10,9 +10,10 @@
 #include "MC/Action.hpp"
 #include "MC/Position.hpp"
 #include "MC/MotionController.hpp"
+#include "MC/Velocity.hpp"
+#include "MC/MotionDirection.hpp"
 
 Motion::~Motion() {
-	// TODO Auto-generated destructor stub
 }
 
 Motion::Motion( double _relEndPosX,
@@ -28,8 +29,8 @@ Motion::Motion( double _relEndPosX,
 	this->relCurrentPosY = 0;
 
 	this->stepSizeConstantVelocity = MotionController::GetStepSize(velocity);
-	this->stepSizeBeforeAcceleration = MotionController::GetStep4Velocity(startVel);
-	this->stepSizeAfterDeceleration = MotionController::GetStep4Velocity(endVel);
+	this->stepSizeBeforeAcceleration = Velocity::GetStep4Velocity(startVel);
+	this->stepSizeAfterDeceleration = Velocity::GetStep4Velocity(endVel);
 	this->stepSizeIncrement = MotionController::GetStepIncrement();
 
 	this->phase = HEAD;
@@ -58,7 +59,7 @@ void Motion::CalcWayLength(){
 void Motion::SetupMotion(){
 	this->currentDistanceToTarget = this->wayLength;
 
-	if(MotionController::MotionIsForward()){
+	if(MotionController::GetMotionDirection()->IsForward()){
 		this->stepSizeCurrent =  this->stepSizeBeforeAcceleration;
 		this->startAbsPosX = positionX.Get();
 		this->startAbsPosY = positionY.Get();

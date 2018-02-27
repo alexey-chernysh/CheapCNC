@@ -17,15 +17,27 @@ Velocity::~Velocity() {
 }
 
 void Velocity::SetVelocity(float newValue){
-	this->stepSize = MotionController::GetStep4Velocity(newValue);
+	this->stepSize = GetStep4Velocity(newValue);
 }
 
 float Velocity::GetVelocity(){
-	return MotionController::GetVelocity4Step(this->stepSize);
+	return GetVelocity4Step(this->stepSize);
 }
 
 uint32_t Velocity::GetStepSize(){
 	return this->stepSize;
+}
+
+float Velocity::GetVelocity4Step(uint32_t stepSize){
+	return  60.0
+			*stepSize
+			*MotionController::GetOneBitLengthMM()
+			*MotionController::GetTimerFrequency();
+}
+
+uint32_t Velocity::GetStep4Velocity(float velocity){
+	float mmInTick = velocity/MotionController::GetTimerFrequency();
+	return (uint32_t)(mmInTick/MotionController::GetOneBitLengthMM());
 }
 
 WorkingVelocity::WorkingVelocity(float initialValue):Velocity(initialValue){
