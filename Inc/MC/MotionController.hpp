@@ -45,9 +45,9 @@ public:
 	void SetBackward();
 
 	void SetResuming();
-	int32_t GetResumingStepSize(int32_t currentStepSize);
+	uint32_t GetResumingStepSize(uint32_t currentSS);
 	void SetPausing();
-	int32_t GetPausingStepSize(int32_t currentStepSize);
+	uint32_t GetPausingStepSize(uint32_t currentSS);
 
 	float GetTimerFrequency();
 	float GetOneBitLengthMM();
@@ -55,22 +55,23 @@ public:
 	float GetMinVelocity();
 	float GetMaxVelocity();
 
-	void SetCurrentStepSize(int32_t newStepSIze);
-	int32_t GetCurrentStepSize();
+	void SetCurrentStepSize(uint32_t newStepSIze);
+	uint32_t GetCurrentStepSize();
 	float GetCurrentVelocity();
 
 private:
 	void IterateActionNum();
-	double  GetVelocity4Step(int32_t stepSize);
-	int32_t GetStepIncrement4Acceleration();
+	uint32_t GetStepIncrement4Acceleration();
 };
+
+double  GetVelocity4Step(uint32_t stepSize);
+uint32_t GetStep4Velocity(double velocity);
 
 int64_t Get64bitForDoubleMM(double mm);
 double GetDoubleMMFor64bit(int64_t iValue);
 
-int32_t GetStepSize(MOTION_VELOCITY t);
-int32_t GetStepIncrement();
-int32_t GetStep4Velocity(double velocity);
+uint32_t GetStepSize(MOTION_VELOCITY t);
+uint32_t GetStepIncrement();
 int64_t GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2);
 
 float GetStartVelocity();
