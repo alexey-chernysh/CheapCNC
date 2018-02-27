@@ -8,6 +8,8 @@
 #ifndef MC_SIGNAL_HPP_
 #define MC_SIGNAL_HPP_
 
+#include <stdint.h>
+
 class Signal {
 private:
 	uint32_t pinNum;

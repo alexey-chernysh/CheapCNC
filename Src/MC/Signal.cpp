@@ -12,6 +12,14 @@ Signal::Signal(uint32_t pN, bool initialState) {
 	state = initialState;
 }
 
+void Signal::On(){
+
+}
+
+void Signal::Off(){
+
+}
+
 static SignalSet signalSet;
 
 SignalSet::SignalSet(){

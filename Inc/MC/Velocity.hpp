@@ -8,6 +8,8 @@
 #ifndef MC_VELOCITY_HPP_
 #define MC_VELOCITY_HPP_
 
+#include <stdint.h>
+
 #define WORKING_VELOCITY 16.666
 
 class Velocity {
