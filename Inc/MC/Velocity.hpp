@@ -16,8 +16,8 @@ protected:
 public:
 	Velocity(float initialValue = 0.0);
 	virtual ~Velocity();
-	virtual void SetVelocity(float newValue);
-	float GetVelocity();
+	virtual void Set(float newValue);
+	float Get();
 	uint32_t GetStepSize();
 
 public:
@@ -32,7 +32,7 @@ private:
 	void SetLimit();
 public:
 	WorkingVelocity(float initialValue = 0.0);
-	virtual void SetVelocity(float newValue);
+	virtual void Set(float newValue);
 	uint32_t GetAutoLimit();
 };
 

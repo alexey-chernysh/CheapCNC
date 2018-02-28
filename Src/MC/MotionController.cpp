@@ -55,10 +55,10 @@ MotionController::MotionController() {
 	float scale = (float)(1LL<<POSITION_FIRST_SIGNIFICANT_BIT);
 	oneBitLengthMM = (N_OF_TOOTH * TOOTH_STEP)/STEP_PER_ROTATION/(MAX_MICROSTEP + 1.0)/scale;
 
-	startVelocity.SetVelocity(100.0/60.0);
-	freeRunVelocity.SetVelocity(5000.0/60.0);
-	workingVelocity.SetVelocity(1000.0/60.0);
-	adjustmentVelocity.SetVelocity(10.0/60.0);
+	startVelocity.Set(100.0/60.0);
+	freeRunVelocity.Set(5000.0/60.0);
+	workingVelocity.Set(1000.0/60.0);
+	adjustmentVelocity.Set(10.0/60.0);
 
 	// setting acceleration & step increment/decrement
 	acceleration = 50.0; // mm/sec/sec
@@ -249,10 +249,10 @@ uint32_t MotionController::GetStepSize(MOTION_VELOCITY t) {
 
 float MotionController::GetVelocity(MOTION_VELOCITY t){
 	switch (t){
-		case FREE_RUN: return freeRunVelocity.GetVelocity();
-		case WORKING: return workingVelocity.GetVelocity();
-		case START: return startVelocity.GetVelocity();
-		case ADJUSTMENT: return adjustmentVelocity.GetVelocity();
+		case FREE_RUN: return freeRunVelocity.Get();
+		case WORKING: return workingVelocity.Get();
+		case START: return startVelocity.Get();
+		case ADJUSTMENT: return adjustmentVelocity.Get();
 		default: return 0;
 	}
 }

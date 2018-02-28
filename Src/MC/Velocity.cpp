@@ -9,18 +9,18 @@
 #include "MC/MotionController.hpp"
 
 Velocity::Velocity(float initialValue){
-	this->SetVelocity(initialValue);
+	this->Set(initialValue);
 }
 
 Velocity::~Velocity() {
 	// TODO Auto-generated destructor stub
 }
 
-void Velocity::SetVelocity(float newValue){
+void Velocity::Set(float newValue){
 	this->stepSize = GetStep4Velocity(newValue);
 }
 
-float Velocity::GetVelocity(){
+float Velocity::Get(){
 	return GetVelocity4Step(this->stepSize);
 }
 
@@ -43,8 +43,8 @@ WorkingVelocity::WorkingVelocity(float initialValue):Velocity(initialValue){
 	SetLimit();
 }
 
-void WorkingVelocity::SetVelocity(float newValue){
-	this->Velocity::SetVelocity(newValue);
+void WorkingVelocity::Set(float newValue){
+	this->Velocity::Set(newValue);
 	SetLimit();
 }
 
