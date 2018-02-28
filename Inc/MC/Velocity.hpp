@@ -10,8 +10,6 @@
 
 #include <stdint.h>
 
-#define WORKING_VELOCITY 16.666
-
 class Velocity {
 protected:
 	uint32_t stepSize;
@@ -33,7 +31,7 @@ private:
 	uint32_t autoLimit;
 	void SetLimit();
 public:
-	WorkingVelocity(float initialValue = WORKING_VELOCITY);
+	WorkingVelocity(float initialValue = 0.0);
 	virtual void SetVelocity(float newValue);
 	uint32_t GetAutoLimit();
 };

@@ -71,7 +71,7 @@ void InitPWM(TIM_HandleTypeDef htim){
 }
 
 PositionX::PositionX():Position() {
-	InitPWM(htim2);
+//	InitPWM(htim2);
 }
 
 PositionX::~PositionX() {
@@ -123,7 +123,7 @@ void PositionX::SetPWM(uint8_t angle){
 }
 
 PositionY::PositionY():Position() {
-	InitPWM(htim3);
+//	InitPWM(htim3);
 }
 
 PositionY::~PositionY() {

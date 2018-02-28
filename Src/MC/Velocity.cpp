@@ -29,8 +29,7 @@ uint32_t Velocity::GetStepSize(){
 }
 
 float Velocity::GetVelocity4Step(uint32_t stepSize){
-	return  60.0
-			*stepSize
+	return  stepSize
 			*MotionController::GetOneBitLengthMM()
 			*MotionController::GetTimerFrequency();
 }

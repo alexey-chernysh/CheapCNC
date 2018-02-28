@@ -57,6 +57,7 @@ MotionController::MotionController() {
 
 	startVelocity.SetVelocity(100.0/60.0);
 	freeRunVelocity.SetVelocity(5000.0/60.0);
+	workingVelocity.SetVelocity(1000.0/60.0);
 	adjustmentVelocity.SetVelocity(10.0/60.0);
 
 	// setting acceleration & step increment/decrement
