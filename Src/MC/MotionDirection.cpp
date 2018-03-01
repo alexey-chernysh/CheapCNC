@@ -11,11 +11,11 @@ MotionDirection::MotionDirection() {
 	forward = true;
 }
 
-bool MotionDirection::IsForward(){ return forward; }
+bool MotionDirection::DirectionIsForward(){ return forward; }
 
-bool MotionDirection::IsBackward(){ return !forward; }
+bool MotionDirection::DirectionIsBackward(){ return !forward; }
 
-void MotionDirection::SetForward(){ forward = true; }
+void MotionDirection::SetForwardDirection(){ forward = true; }
 
-void MotionDirection::SetBackward(){ forward = false; }
+void MotionDirection::SetBackwardDirection(){ forward = false; }
 

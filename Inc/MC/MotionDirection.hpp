@@ -13,10 +13,10 @@ private:
 	bool forward;
 public:
 	MotionDirection();
-	bool IsForward();
-	void SetForward();
-	bool IsBackward();
-	void SetBackward();
+	bool DirectionIsForward();
+	void SetForwardDirection();
+	bool DirectionIsBackward();
+	void SetBackwardDirection();
 };
 
 #endif /* MC_MOTIONDIRECTION_HPP_ */

@@ -13,25 +13,25 @@
 #include "MC/Sequence.hpp"
 #include "MC/Velocity.hpp"
 #include "MC/MotionDirection.hpp"
+#include "MC/Acceleration.hpp"
 
-class MotionController {
+class MotionController : public MotionDirection, public Acceleration {
 private:
 public:
 	MotionController();
 
-	static void Reset();
+	void Reset();
 
-	static void OnTimer();
-	static void OnControlKey(char controlKey);
+	void OnTimer();
+	void OnControlKey(char controlKey);
 
-	static MotionDirection* GetMotionDirection();
 	static bool IsRunning();
 	static bool IsPaused();
 
-	static void SetResuming();
-	static uint32_t GetResumingStepSize(uint32_t currentSS);
-	static void SetPausing();
-	static uint32_t GetPausingStepSize(uint32_t currentSS);
+	void SetResuming();
+	uint32_t GetResumingStepSize(uint32_t currentSS);
+	void SetPausing();
+	uint32_t GetPausingStepSize(uint32_t currentSS);
 
 	static float GetTimerFrequency();
 	static float GetOneBitLengthMM();
@@ -48,12 +48,9 @@ public:
 
 	static uint32_t GetStepSize(MOTION_VELOCITY t);
 	static float GetVelocity(MOTION_VELOCITY t);
-	static uint32_t GetStepIncrement();
-	static int64_t GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2);
 
 private:
-	static void IterateActionNum();
-	static uint32_t GetStepIncrement4Acceleration();
+	void IterateActionNum();
 };
 
 extern MotionController motionController;

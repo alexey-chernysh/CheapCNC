@@ -9,7 +9,7 @@
 #include "MC/MotionController.hpp"
 
 Acceleration::Acceleration(float initialValue) {
-	this->Set(initialValue);
+	Set(initialValue);
 }
 
 void Acceleration::Set(float newValue){
@@ -29,3 +29,12 @@ float Acceleration::Get(){
 uint32_t Acceleration::GetStepIncrement(){
 	return this->stepIncrement;
 }
+
+int64_t Acceleration::GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2) {
+	int64_t sqr1 = stepSize1*((int64_t)stepSize1);
+	int64_t sqr2 = stepSize2*((int64_t)stepSize2);
+	int64_t result = ((sqr2-sqr1)/this->stepIncrement)/2;
+	if(result >= 0) return result;
+	else return -result;
+}
+

@@ -18,6 +18,7 @@ public:
 	void Set(float newValue);
 	float Get();
 	uint32_t GetStepIncrement();
+	int64_t GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2);
 };
 
 #endif /* MC_ACCELERATION_HPP_ */

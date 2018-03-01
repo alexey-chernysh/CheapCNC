@@ -19,7 +19,6 @@ protected:
 	int32_t stepSizeBeforeAcceleration;
 	int32_t stepSizeAfterDeceleration;
 	int32_t stepSizeConstantVelocity;
-	int32_t stepSizeIncrement;
 
 	int64_t relEndPosX;
 	int64_t relEndPosY;

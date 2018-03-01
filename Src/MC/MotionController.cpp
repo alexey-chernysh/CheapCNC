@@ -14,12 +14,13 @@
 #include "MC/Velocity.hpp"
 #include "MC/Signal.hpp"
 #include "MC/MotionDirection.hpp"
+#include "MC/Acceleration.hpp"
 
 static float timerFrequency;
 static float oneBitLengthMM;
 
 static bool running;
-static MotionDirection motionDirection;
+//static MotionDirection motionDirection;
 static bool resuming;
 static bool pausing;
 
@@ -33,9 +34,6 @@ static Velocity freeRunVelocity;
 static WorkingVelocity workingVelocity;
 static Velocity adjustmentVelocity;
 
-static float acceleration;
-static uint32_t stepIncrement;
-
 static Sequence* sequence;
 static uint32_t sequenceSize;
 static uint32_t currentMotionNum;
@@ -43,11 +41,11 @@ static Motion* currentMotion;
 
 MotionController motionController;
 
-MotionController::MotionController() {
+MotionController::MotionController() : Acceleration(100.0) {
 	initMath();
 
 	running = false;
-	motionDirection.SetForward();
+	SetForwardDirection();
 	resuming = false;
 	pausing = false;
 
@@ -59,10 +57,6 @@ MotionController::MotionController() {
 	freeRunVelocity.Set(5000.0/60.0);
 	workingVelocity.Set(1000.0/60.0);
 	adjustmentVelocity.Set(10.0/60.0);
-
-	// setting acceleration & step increment/decrement
-	acceleration = 50.0; // mm/sec/sec
-	stepIncrement = GetStepIncrement4Acceleration();
 
 	// setting current step size for idle motion
     startStopStepSize = GetStepSize(START);
@@ -81,16 +75,12 @@ MotionController::MotionController() {
 
 void MotionController::Reset(){
 	running = false;
-	motionDirection.SetForward();
+	SetForwardDirection();
 	resuming = false;
 	pausing = false;
 
 	currentMotionNum = 0;
 	currentMotion = (Motion*)sequence->GetAction(currentMotionNum);
-}
-
-MotionDirection* MotionController::GetMotionDirection(){
-	return &motionDirection;
 }
 
 bool MotionController::IsRunning(){ return running; }
@@ -106,7 +96,7 @@ float MotionController::GetMinVelocity(){ return 60.0*timerFrequency*oneBitLengt
 float MotionController::GetMaxVelocity(){ return 60.0*timerFrequency*(N_OF_TOOTH*TOOTH_STEP)/STEP_PER_ROTATION/2; }
 
 void MotionController::IterateActionNum(){
-	if(motionDirection.IsForward())
+	if(DirectionIsForward())
 		currentMotionNum++;
 	else
 		currentMotionNum--;
@@ -116,7 +106,7 @@ void MotionController::OnTimer(){
 	if(currentMotion != 0){
 		bool anotherStepNeeded = true;
 		if(running) {
-			if(motionDirection.IsForward()){
+			if(DirectionIsForward()){
 				anotherStepNeeded = currentMotion->IterateForward();
 			} else {
 				anotherStepNeeded = currentMotion->IterateBackward();
@@ -144,7 +134,7 @@ void MotionController::SetResuming(){
 uint32_t MotionController::GetResumingStepSize(uint32_t currentSS){
     if(resuming){
     	uint32_t result = resumingStepSize;
-        resumingStepSize += stepIncrement;
+        resumingStepSize += this->GetStepIncrement();
         if(result < currentSS) return result;
         else {
             resuming = false;
@@ -162,7 +152,7 @@ void MotionController::SetPausing(){
 uint32_t MotionController::GetPausingStepSize(uint32_t currentSS){
     if(pausing){
         uint32_t result = pausingStepSize;
-        pausingStepSize -= stepIncrement;
+        pausingStepSize -= this->GetStepIncrement();
         if(result > startStopStepSize) return result;
         else {
             running = false;
@@ -170,14 +160,6 @@ uint32_t MotionController::GetPausingStepSize(uint32_t currentSS){
             return startStopStepSize;
         }
     } else return currentSS;
-}
-
-uint32_t MotionController::GetStepIncrement4Acceleration(){
-	double intervalInSec = 1.0/timerFrequency;
-	double velocityIncrement = acceleration * intervalInSec * intervalInSec;
-	int32_t result = Get64bitForDoubleMM(velocityIncrement);
-	if(result<1) result  = 1LL;
-	return result;
 }
 
 void MotionController::SetCurrentStepSize(uint32_t newStepSIze){
@@ -194,7 +176,7 @@ void MotionController::OnControlKey(char controlKey){
 	switch(controlKey){
 	case 'R': // Start/Resume
 		if(IsPaused()){
-			motionDirection.SetForward();
+			SetForwardDirection();
 			SetResuming();
 		};
 		break;
@@ -204,7 +186,7 @@ void MotionController::OnControlKey(char controlKey){
 		break;
 	case 'B': // Rewind
 		if(IsPaused()){
-			motionDirection.SetBackward();
+			SetBackwardDirection();
 			SetResuming();
 		};
 		break;
@@ -221,17 +203,7 @@ void MotionController::OnControlKey(char controlKey){
 	};
 }
 
-int64_t MotionController::GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2) {
-	int64_t sqr1 = stepSize1*((int64_t)stepSize1);
-	int64_t sqr2 = stepSize2*((int64_t)stepSize2);
-	int64_t result = ((sqr2-sqr1)/stepIncrement)/2;
-	if(result >= 0) return result;
-	else return -result;
-}
-
 uint32_t MotionController::GetCurrentStepSize(){ return currentStepSize; };
-
-uint32_t MotionController::GetStepIncrement(){ return stepIncrement; }
 
 int64_t MotionController::Get64bitForDoubleMM(double mm){ return (int64_t)(mm/oneBitLengthMM); };
 

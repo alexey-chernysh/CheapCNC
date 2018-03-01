@@ -58,7 +58,7 @@ uint8_t Position::GetAngle(){
 
 void Position::SetPWM(uint8_t angle){
 }
-
+/*
 void InitPWM(TIM_HandleTypeDef htim){
   HAL_TIM_PWM_Start(&htim, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim, TIM_CHANNEL_2);
@@ -69,9 +69,8 @@ void InitPWM(TIM_HandleTypeDef htim){
 
   HAL_TIM_Base_Start_IT(&htim);
 }
-
+*/
 PositionX::PositionX():Position() {
-//	InitPWM(htim2);
 }
 
 PositionX::~PositionX() {
@@ -123,7 +122,6 @@ void PositionX::SetPWM(uint8_t angle){
 }
 
 PositionY::PositionY():Position() {
-//	InitPWM(htim3);
 }
 
 PositionY::~PositionY() {
@@ -173,34 +171,3 @@ void PositionY::SetPWM(uint8_t angle){
 	Y_AXIS_TIMER->CCR3 = phase3;
 	Y_AXIS_TIMER->CCR4 = phase4;
 }
-
-/*
-extern "C" {
-int64_t GetPositionX(){
-	return positionX.Get();
-}
-
-int64_t GetPositionY(){
-	return positionY.Get();
-}
-
-void SetPositionX(int64_t x){
-	positionX.Set(x);
-}
-
-void SetPositionY(int64_t y){
-	positionY.Set(y);
-}
-
-void shiftPositionX(){
-	positionX.Shift(1);
-}
-
-void resetPositions(){
-	SetPositionX(0LL);
-	SetPositionY(0LL);
-}
-
-} // extern C
-
-*/
