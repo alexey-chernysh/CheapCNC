@@ -59,7 +59,7 @@
 
 /* Private define ------------------------------------------------------------*/
 #define PWM_PRESCALER 0
-#define PWM_PERIOD 7200
+#define PWM_PERIOD 7199
 
 #define Alarm_Input_Pin GPIO_PIN_4
 #define Alarm_Input_GPIO_Port GPIOA
