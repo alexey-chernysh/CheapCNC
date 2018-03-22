@@ -7,8 +7,9 @@
 
 #include <MC/FixedPositionActions/WaitForSignal.hpp>
 
-WaitForSignal::WaitForSignal(uint32_t timeout /* в миллисекундах */)
-:WaitForTimeout(timeout) {
+WaitForSignal::WaitForSignal(GPIO_TypeDef* p, uint32_t pN, uint32_t timeout /* в миллисекундах */):
+WaitForTimeout(timeout),
+Pin(p, pN) {
 	// TODO Auto-generated constructor stub
 
 }

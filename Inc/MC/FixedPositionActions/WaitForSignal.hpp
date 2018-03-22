@@ -8,11 +8,14 @@
 #ifndef MC_FIXEDPOSITIONACTIONS_WAITFORSIGNAL_HPP_
 #define MC_FIXEDPOSITIONACTIONS_WAITFORSIGNAL_HPP_
 
-#include <MC/FixedPositionActions/WaitForTimeout.hpp>
+#include <stdint.h>
+#include "MC/FixedPositionActions/WaitForTimeout.hpp"
+#include "MC/GPIO/Pin.hpp"
 
-class WaitForSignal: public WaitForTimeout {
+class WaitForSignal: public WaitForTimeout, public Pin {
 public:
-	WaitForSignal(uint32_t timeout /* в миллисекундах */);
+	WaitForSignal(GPIO_TypeDef* p, uint32_t pN, /* нога сигнала */
+				  uint32_t timeout /* в миллисекундах */);
 };
 
 #endif /* MC_FIXEDPOSITIONACTIONS_WAITFORSIGNAL_HPP_ */
