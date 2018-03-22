@@ -5,13 +5,13 @@
  *      Author: Sales
  */
 
+#include <MC/Motions/Motion.hpp>
+#include <MC/Motions/MotionDirection.hpp>
+#include <MC/Motions/Velocity.hpp>
 #include "MC/General.h"
-#include "MC/Motion.hpp"
 #include "MC/Action.hpp"
 #include "MC/Position.hpp"
 #include "MC/MotionController.hpp"
-#include "MC/Velocity.hpp"
-#include "MC/MotionDirection.hpp"
 
 Motion::~Motion() {
 }

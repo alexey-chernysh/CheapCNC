@@ -5,11 +5,11 @@
  *      Author: Sales
  */
 
-#ifndef MC_MOTIONSTRAIGHT_HPP_
-#define MC_MOTIONSTRAIGHT_HPP_
+#ifndef MC_MOTIONS_MOTIONSTRAIGHT_HPP_
+#define MC_MOTIONS_MOTIONSTRAIGHT_HPP_
 
+#include <MC/Motions/Motion.hpp>
 #include "MC/Enums.h"
-#include "MC/Motion.hpp"
 
 class MotionStraight : public Motion {
 private:
@@ -28,4 +28,4 @@ protected:
 	virtual void OnIteration();
 };
 
-#endif /* MC_MOTIONSTRAIGHT_HPP_ */
+#endif /* MC_MOTIONS_MOTIONSTRAIGHT_HPP_ */

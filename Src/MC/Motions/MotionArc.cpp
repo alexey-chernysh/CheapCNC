@@ -8,8 +8,8 @@
 #include <stdint.h>
 #include <math.h>
 #include <Math/sine_n_cosine.hpp>
+#include <MC/Motions/MotionArc.hpp>
 #include "MC/Enums.h"
-#include "MC/MotionArc.hpp"
 #include "MC/MotionController.hpp"
 
 MotionArc::~MotionArc() {

@@ -8,8 +8,8 @@
 #include <math.h>
 #include <Math/int128.hpp>
 #include <Math/sine_n_cosine.hpp>
-#include "MC/MotionStraight.hpp"
-#include "MC/Motion.hpp"
+#include <MC/Motions/Motion.hpp>
+#include <MC/Motions/MotionStraight.hpp>
 
 MotionStraight::~MotionStraight() {
 }

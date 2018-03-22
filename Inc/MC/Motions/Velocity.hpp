@@ -5,8 +5,8 @@
  *      Author: Sales
  */
 
-#ifndef MC_VELOCITY_HPP_
-#define MC_VELOCITY_HPP_
+#ifndef MC_MOTIONS_VELOCITY_HPP_
+#define MC_MOTIONS_VELOCITY_HPP_
 
 #include <stdint.h>
 
@@ -36,4 +36,4 @@ public:
 	uint32_t GetAutoLimit();
 };
 
-#endif /* MC_VELOCITY_HPP_ */
+#endif /* MC_MOTIONS_VELOCITY_HPP_ */

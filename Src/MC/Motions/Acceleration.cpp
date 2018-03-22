@@ -5,7 +5,7 @@
  *      Author: Sales
  */
 
-#include <MC/Acceleration.hpp>
+#include <MC/Motions/Acceleration.hpp>
 #include "MC/MotionController.hpp"
 
 Acceleration::Acceleration(float initialValue) {

@@ -5,8 +5,8 @@
  *      Author: alexey
  */
 
-#ifndef MC_MOTIONDIRECTION_HPP_
-#define MC_MOTIONDIRECTION_HPP_
+#ifndef MC_MOTIONS_MOTIONDIRECTION_HPP_
+#define MC_MOTIONS_MOTIONDIRECTION_HPP_
 
 class MotionDirection {
 private:
@@ -19,4 +19,4 @@ public:
 	void SetBackwardDirection();
 };
 
-#endif /* MC_MOTIONDIRECTION_HPP_ */
+#endif /* MC_MOTIONS_MOTIONDIRECTION_HPP_ */

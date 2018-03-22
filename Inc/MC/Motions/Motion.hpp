@@ -5,8 +5,8 @@
  *      Author: Sales
  */
 
-#ifndef MC_MOTION_HPP_
-#define MC_MOTION_HPP_
+#ifndef MC_MOTIONS_MOTION_HPP_
+#define MC_MOTIONS_MOTION_HPP_
 
 #include <stdint.h>
 #include "MC/Enums.h"
@@ -48,4 +48,4 @@ protected:
 	virtual void OnIteration();
 };
 
-#endif /* MC_MOTION_HPP_ */
+#endif /* MC_MOTIONS_MOTION_HPP_ */

@@ -5,11 +5,11 @@
  *      Author: Sales
  */
 
+#include <MC/Motions/Motion.hpp>
+#include <MC/Motions/MotionArc.hpp>
+#include <MC/Motions/MotionStraight.hpp>
 #include <MC/Sequence.hpp>
 #include "MC/Action.hpp"
-#include "MC/Motion.hpp"
-#include "MC/MotionStraight.hpp"
-#include "MC/MotionArc.hpp"
 #include "MC/MotionController.hpp"
 
 Sequence::Sequence() {

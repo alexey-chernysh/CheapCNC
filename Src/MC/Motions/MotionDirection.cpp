@@ -5,7 +5,7 @@
  *      Author: alexey
  */
 
-#include <MC/MotionDirection.hpp>
+#include <MC/Motions/MotionDirection.hpp>
 
 MotionDirection::MotionDirection() {
 	forward = true;

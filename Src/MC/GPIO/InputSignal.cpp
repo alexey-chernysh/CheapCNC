@@ -13,3 +13,10 @@ InputSignal::InputSignal(GPIO_TypeDef* p, uint32_t pN)
 
 }
 
+void InputSignal::OnExternalInterrupt(){
+	asm("nop");
+}
+
+InputSignal::~InputSignal(){
+
+}

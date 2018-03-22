@@ -8,12 +8,12 @@
 #ifndef MC_MOTIONCONTROLLER_HPP_
 #define MC_MOTIONCONTROLLER_HPP_
 
+#include <MC/Motions/Acceleration.hpp>
+#include <MC/Motions/Motion.hpp>
+#include <MC/Motions/MotionDirection.hpp>
+#include <MC/Motions/Velocity.hpp>
 #include <stdint.h>
-#include "MC/Motion.hpp"
 #include "MC/Sequence.hpp"
-#include "MC/Velocity.hpp"
-#include "MC/MotionDirection.hpp"
-#include "MC/Acceleration.hpp"
 
 class MotionController : public MotionDirection, public Acceleration {
 private:

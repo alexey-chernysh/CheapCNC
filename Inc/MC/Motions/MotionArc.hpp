@@ -5,11 +5,11 @@
  *      Author: Sales
  */
 
-#ifndef MC_MOTIONARC_HPP_
-#define MC_MOTIONARC_HPP_
+#ifndef MC_MOTIONS_MOTIONARC_HPP_
+#define MC_MOTIONS_MOTIONARC_HPP_
 
+#include <MC/Motions/Motion.hpp>
 #include "MC/Enums.h"
-#include "MC/Motion.hpp"
 
 class MotionArc: public Motion {
 private:
@@ -40,4 +40,4 @@ protected:
 	virtual void OnIteration();
 };
 
-#endif /* MC_MOTIONARC_HPP_ */
+#endif /* MC_MOTIONS_MOTIONARC_HPP_ */

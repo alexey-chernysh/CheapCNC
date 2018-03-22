@@ -5,7 +5,7 @@
  *      Author: Sales
  */
 
-#include "MC/Velocity.hpp"
+#include <MC/Motions/Velocity.hpp>
 #include "MC/MotionController.hpp"
 
 Velocity::Velocity(float initialValue){

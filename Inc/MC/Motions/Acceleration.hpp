@@ -5,8 +5,8 @@
  *      Author: Sales
  */
 
-#ifndef MC_ACCELERATION_HPP_
-#define MC_ACCELERATION_HPP_
+#ifndef MC_MOTIONS_ACCELERATION_HPP_
+#define MC_MOTIONS_ACCELERATION_HPP_
 
 #include <stdint.h>
 
@@ -21,4 +21,4 @@ public:
 	int64_t GetWayLength4StepChange(int32_t stepSize1, int32_t stepSize2);
 };
 
-#endif /* MC_ACCELERATION_HPP_ */
+#endif /* MC_MOTIONS_ACCELERATION_HPP_ */

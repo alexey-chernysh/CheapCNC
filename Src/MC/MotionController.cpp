@@ -7,14 +7,14 @@
 
 #include <Math/sine_n_cosine.hpp>
 #include <MC/GPIO/OutputSignal.hpp>
+#include <MC/Motions/Acceleration.hpp>
+#include <MC/Motions/Motion.hpp>
+#include <MC/Motions/MotionDirection.hpp>
+#include <MC/Motions/Velocity.hpp>
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
 #include "MC/General.h"
-#include "MC/Motion.hpp"
 #include "MC/MotionController.hpp"
-#include "MC/Velocity.hpp"
-#include "MC/MotionDirection.hpp"
-#include "MC/Acceleration.hpp"
 
 static float timerFrequency;
 static float oneBitLengthMM;
