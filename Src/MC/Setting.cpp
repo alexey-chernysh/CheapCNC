@@ -5,7 +5,7 @@
  *      Author: Sales
  */
 
-#include "Setting.hpp"
+#include "MC/Setting.hpp"
 
 Setting::Setting(uint32_t _offset) {
 	this->offset = _offset;

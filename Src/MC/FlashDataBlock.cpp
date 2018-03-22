@@ -8,8 +8,8 @@
 #include "stm32f1xx_hal.h"
 #include "crc.h"
 #include <stdint.h>
-#include "FlashDataBlock.hpp"
-#include "Setting.hpp"
+#include "MC/FlashDataBlock.hpp"
+#include "MC/Setting.hpp"
 
 FlashDataBlock::FlashDataBlock():
 dataChanged(false),
