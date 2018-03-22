@@ -6,13 +6,13 @@
  */
 
 #include <Math/sine_n_cosine.hpp>
+#include <MC/GPIO/OutputSignal.hpp>
 #include <stdint.h>
 #include "stm32f1xx_hal.h"
 #include "MC/General.h"
 #include "MC/Motion.hpp"
 #include "MC/MotionController.hpp"
 #include "MC/Velocity.hpp"
-#include "MC/Signal.hpp"
 #include "MC/MotionDirection.hpp"
 #include "MC/Acceleration.hpp"
 

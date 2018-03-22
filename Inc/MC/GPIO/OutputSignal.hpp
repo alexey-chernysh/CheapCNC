@@ -5,19 +5,17 @@
  *      Author: Sales
  */
 
-#ifndef MC_SIGNAL_HPP_
-#define MC_SIGNAL_HPP_
+#ifndef MC_GPIO_OUTPUTSIGNAL_HPP_
+#define MC_GPIO_OUTPUTSIGNAL_HPP_
 
 #include "stm32f103xb.h"
 #include "stm32f1xx_hal.h"
 #include <stdint.h>
+#include "MC/GPIO/Pin.hpp"
 
-class Signal {
-private:
-	GPIO_TypeDef* port;
-	uint32_t pinNum;
+class OutputSignal: public Pin {
 public:
-	Signal(GPIO_TypeDef* p, uint32_t pN, bool initialState = false);
+	OutputSignal(GPIO_TypeDef* p, uint32_t pN, bool initialState = false);
 	void On();
 	void Off();
 };
@@ -26,7 +24,7 @@ public:
 
 class SignalSet {
 public:
-	Signal* THC_auto_output;
+	OutputSignal* THC_auto_output;
 public:
 	SignalSet();
 };
@@ -34,4 +32,4 @@ public:
 void THC_AutoOn();
 void THC_AutoOff();
 
-#endif /* MC_SIGNAL_HPP_ */
+#endif /* MC_GPIO_OUTPUTSIGNAL_HPP_ */

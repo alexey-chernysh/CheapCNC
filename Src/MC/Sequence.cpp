@@ -79,25 +79,25 @@ void Sequence::FillComplex(){
 	double v = MotionController::GetVelocity(START);
     double v1 = MotionController::GetVelocity(WORKING);
 
-    MotionStraight *straight1 = new MotionStraight(0.0, 45.0, WORKING, v, v1);
+    MotionStraight *straight1 = new MotionStraight(0.0, 95.0, WORKING, v, v1);
     this->actions[0] = (Action*)straight1;
 
     MotionArc *arc1 = new MotionArc(10.0, 10.0, 10.0, 0.0, CW, WORKING, v1, v1);
     this->actions[1] = (Action*)arc1;
 
-    MotionStraight *straight2 = new MotionStraight(30.0,  0.0, WORKING, v1, v1);
+    MotionStraight *straight2 = new MotionStraight(80.0,  0.0, WORKING, v1, v1);
     this->actions[2] = (Action*)straight2;
 
     MotionArc *arc2 = new MotionArc(10.0, -10.0, 0.0, -10.0, CW, WORKING, v1, v1);
     this->actions[3] = (Motion*)arc2;
 
-    MotionStraight *straight3 = new MotionStraight(0.0, -30.0, WORKING, v1, v1);
+    MotionStraight *straight3 = new MotionStraight(0.0, -80.0, WORKING, v1, v1);
     this->actions[4] = (Motion*)straight3;
 
     MotionArc *arc3 = new MotionArc(-10.0, -10.0, -10.0, 0.0, CW, WORKING, v1, v1);
     this->actions[5] = (Motion*)arc3;
 
-    MotionStraight *straight4 = new MotionStraight(-45.0, 0.0, WORKING, v1, v);
+    MotionStraight *straight4 = new MotionStraight(-95.0, 0.0, WORKING, v1, v);
     this->actions[6] = (Motion*)straight4;
 
     MotionStraight *straight5 = new MotionStraight(5.0, -5.0, FREE_RUN, v, v);
