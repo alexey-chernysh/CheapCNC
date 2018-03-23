@@ -15,7 +15,7 @@
 Sequence::Sequence() {
     this->FillDebugTask();
     for(uint32_t i=0; i< this->GetSize(); i++)
-    	this->actions[i]->Reset();
+    	this->actions[i]->Init();
 }
 
 Sequence::~Sequence() {
@@ -114,6 +114,6 @@ void Sequence::FillDebugTask(){
 
 void Sequence::ResetTask(){
     for(uint32_t i=0; i<this->size; i++){
-    	this->actions[i]->Reset();
+    	this->actions[i]->Init();
     };
 }

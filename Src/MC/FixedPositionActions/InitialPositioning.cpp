@@ -6,12 +6,20 @@
  */
 
 #include "main.h"
+#include "MC/GPIO/InputSignal.hpp"
 #include <MC/FixedPositionActions/InitialPositioning.hpp>
 #include "MC/Settings/Settings.hpp"
 
 InitialPositioning::InitialPositioning():
-WaitForSignal(PositioningComplete_Input_GPIO_Port, PositioningComplete_Input_Pin, &(settings.initialPositioningTimeout)){
-	// TODO Auto-generated constructor stub
-
+WaitForSignal(PositioningComplete_Input_GPIO_Port, PositioningComplete_Input_Pin, &(settings.initialPositioningTimeout)),
+OutputSignal(InitialPositioning_Output_GPIO_Port, InitialPositioning_Output_Pin){
 }
 
+bool InitialPositioning::IterateForward(){
+	this->On();
+	if(this->WaitForSignal::IterateForward())return true;
+	else {
+		this->Off();
+		return false;
+	}
+}

@@ -10,7 +10,5 @@
 
 WaitForPerforation::WaitForPerforation()
 :WaitForTimeout(&(settings.perforationTime)) {
-	// TODO Auto-generated constructor stub
-
 }
 

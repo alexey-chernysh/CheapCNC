@@ -22,11 +22,15 @@
 #define	INITIAL_POSITIONING_TIMEOUT_OFFSET 8L
 #define INITIAL_POSITIONING_TIMEOUT_FACTORY_SETTING 5.0
 
-class Settings {
+#define	TORCH_UP_TIMEOUT_OFFSET 12L
+#define TORCH_UP_TIMEOUT_FACTORY_SETTING 1.0
+
+class Settings: public FlashDataBlock {
 public:
 	TimeoutSetting perforationTime;
 	TimeoutSetting ignitionTime;
 	TimeoutSetting initialPositioningTimeout;
+	TimeoutSetting torchUpTime;
 public:
 	Settings();
 };

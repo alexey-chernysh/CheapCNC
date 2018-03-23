@@ -37,7 +37,7 @@ static Velocity adjustmentVelocity;
 static Sequence* sequence;
 static uint32_t sequenceSize;
 static uint32_t currentMotionNum;
-static Motion* currentMotion;
+static Action* currentAction;
 
 MotionController motionController;
 
@@ -65,8 +65,8 @@ MotionController::MotionController() : Acceleration(100.0) {
 	sequence = new Sequence();
 	sequenceSize = sequence->GetSize();
 	currentMotionNum = 0;
-	currentMotion = (Motion*)sequence->GetAction(currentMotionNum);
-	currentMotion->SetupMotion();
+	currentAction = (Motion*)sequence->GetAction(currentMotionNum);
+	currentAction->Init();
 
 	// debug only
 	running = true;
@@ -80,7 +80,7 @@ void MotionController::Reset(){
 	pausing = false;
 
 	currentMotionNum = 0;
-	currentMotion = (Motion*)sequence->GetAction(currentMotionNum);
+	currentAction = (Motion*)sequence->GetAction(currentMotionNum);
 }
 
 bool MotionController::IsRunning(){ return running; }
@@ -103,13 +103,13 @@ void MotionController::IterateActionNum(){
 }
 
 void MotionController::OnTimer(){
-	if(currentMotion != 0){
+	if(currentAction != 0){
 		bool anotherStepNeeded = true;
 		if(running) {
 			if(DirectionIsForward()){
-				anotherStepNeeded = currentMotion->IterateForward();
+				anotherStepNeeded = currentAction->IterateForward();
 			} else {
-				anotherStepNeeded = currentMotion->IterateBackward();
+				anotherStepNeeded = currentAction->IterateBackward();
 			}
 		}
 
@@ -117,8 +117,8 @@ void MotionController::OnTimer(){
 		else{
 			IterateActionNum();
 			if((currentMotionNum >= 0)&&(currentMotionNum < sequenceSize)){
-				currentMotion = (Motion*)sequence->GetAction(currentMotionNum);
-				currentMotion->SetupMotion();
+				currentAction = (Motion*)sequence->GetAction(currentMotionNum);
+				currentAction->Init();
 			} else Reset();
 		}
 	}

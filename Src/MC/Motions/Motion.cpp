@@ -55,7 +55,7 @@ void Motion::CalcWayLength(){
 
 }
 
-void Motion::SetupMotion(){
+void Motion::Init(){
 	this->currentDistanceToTarget = this->wayLength;
 
 	if(motionController.DirectionIsForward()){

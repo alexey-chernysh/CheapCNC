@@ -12,7 +12,7 @@ class Action {
 public:
 	Action();
 	virtual ~Action();
-	virtual void Reset();
+	virtual void Init();
 	virtual bool IterateForward();
 	virtual bool IterateBackward();
 	virtual void OnResumeKeyPressed();

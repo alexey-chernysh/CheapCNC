@@ -18,7 +18,7 @@ private:
 	uint32_t _counter;
 public:
 	WaitForTimeout(SettingInt32* timeout /* в миллисекундах */);
-	virtual void Reset();
+	virtual void Init();
 	virtual bool IterateForward();
 	virtual bool IterateBackward();
 	virtual void OnResumeKeyPressed();

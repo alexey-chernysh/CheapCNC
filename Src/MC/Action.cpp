@@ -11,7 +11,7 @@ Action::Action() {}
 
 Action::~Action() {}
 
-void Action::Reset() {}
+void Action::Init() {}
 
 bool Action::IterateForward(){ return false; }
 

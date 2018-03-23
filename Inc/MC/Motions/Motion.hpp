@@ -40,7 +40,7 @@ public:
 		    double startVel,
 		    double endVel);
 	virtual ~Motion();
-	virtual void SetupMotion();
+	virtual void Init();
 	virtual bool IterateForward();
 	virtual bool IterateBackward();
 protected:

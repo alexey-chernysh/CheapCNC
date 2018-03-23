@@ -105,38 +105,3 @@ uint32_t FlashDataBlock::DownloadDataToFlash(){
 	return error_code;
 }
 
-FlashDataBlock settingsBlock;
-
-extern "C"{
-
-void FlashDataBlockTest(){
-	SettingFloat settingFloat1(0,0);
-	SettingFloat settingFloat2(1,4);
-	SettingFloat settingFloat3(2,8);
-	SettingFloat settingFloat4(3,12);
-	SettingFloat settingFloat5(4,16);
-	SettingFloat settingFloat6(5,20);
-	SettingFloat settingFloat7(6,24);
-	SettingFloat settingFloat8(7,28);
-
-	volatile float accum = 0;
-	accum += settingFloat1.Get();
-	accum += settingFloat2.Get();
-	accum += settingFloat3.Get();
-	accum += settingFloat4.Get();
-	accum += settingFloat5.Get();
-	accum += settingFloat6.Get();
-	accum += settingFloat7.Get();
-	accum += settingFloat8.Get();
-
-	settingsBlock.CommitChanges();
-
-	volatile uint32_t accum2 = 0;
-	FlashDataBlock block2;
-	for(uint32_t i = 0; i<FLASH_DATA_SIZE32; i++){
-		volatile float tmp = block2.GetFloat(i);
-		accum2 += tmp;
-	};
-}
-
-}

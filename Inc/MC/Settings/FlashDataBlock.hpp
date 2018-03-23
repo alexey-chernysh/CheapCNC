@@ -42,6 +42,4 @@ private:
 	uint32_t DownloadDataToFlash();
 };
 
-extern FlashDataBlock settingsBlock;
-
 #endif /* FLASHDATABLOCK_HPP_ */

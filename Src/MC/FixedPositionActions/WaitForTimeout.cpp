@@ -13,7 +13,7 @@ _timeout(timeout),
 _counter(0L){
 }
 
-void WaitForTimeout::Reset(){
+void WaitForTimeout::Init(){
 	this->_counter = 0;
 }
 
@@ -21,13 +21,13 @@ bool WaitForTimeout::IterateForward(){
 	this->_counter++;
 	if(this->_counter < this->_timeout->Get()) return true;
 	else {
-		this->Reset();
+		this->Init();
 		return true;
 	}
 }
 
 bool WaitForTimeout::IterateBackward(){
-	this->Reset();
+	this->Init();
 	return false;
 }
 
@@ -37,6 +37,6 @@ void WaitForTimeout::OnResumeKeyPressed(){
 
 void WaitForTimeout::OnStoreNResumeKeyPressed(){
 	this->_timeout->Set(this->_counter);
-	settingsBlock.CommitChanges();
+	settings.CommitChanges();
 	this->OnResumeKeyPressed();
 }
