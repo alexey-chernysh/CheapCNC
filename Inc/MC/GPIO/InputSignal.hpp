@@ -13,8 +13,7 @@
 class InputSignal: public Pin {
 public:
 	InputSignal(GPIO_TypeDef* p, uint32_t pN);
-	virtual void OnExternalInterrupt();
-	virtual ~InputSignal();
+	bool GetSignal();
 };
 
 #endif /* MC_GPIO_INPUTSIGNAL_HPP_ */

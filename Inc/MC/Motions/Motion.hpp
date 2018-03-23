@@ -41,8 +41,8 @@ public:
 		    double endVel);
 	virtual ~Motion();
 	virtual void SetupMotion();
-	bool IterateForward();
-	bool IterateBackward();
+	virtual bool IterateForward();
+	virtual bool IterateBackward();
 protected:
 	void CalcWayLength();
 	virtual void OnIteration();

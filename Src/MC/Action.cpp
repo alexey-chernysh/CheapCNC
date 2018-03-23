@@ -7,17 +7,16 @@
 
 #include "MC/Action.hpp"
 
-Action::Action() {
-	// TODO Auto-generated constructor stub
+Action::Action() {}
 
-}
+Action::~Action() {}
 
-Action::~Action() {
-	// TODO Auto-generated destructor stub
-}
+void Action::Reset() {}
 
-void Action::Reset() {
-	// TODO Auto-generated constructor stub
-}
+bool Action::IterateForward(){ return false; }
 
+bool Action::IterateBackward(){ return false; }
 
+void Action::OnResumeKeyPressed(){}
+
+void Action::OnStoreNResumeKeyPressed(){}

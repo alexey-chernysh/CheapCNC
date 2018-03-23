@@ -8,6 +8,8 @@
 #ifndef FLASHDATABLOCK_HPP_
 #define FLASHDATABLOCK_HPP_
 
+#include <stdint.h>
+
 #define FLASH_BLOCK_ADDRESS 0x0800FC00
 
 #define FLASH_BLOCK_SIZE 1024

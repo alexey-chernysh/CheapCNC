@@ -10,12 +10,19 @@
 
 #include <stdint.h>
 #include "MC/Action.hpp"
+#include "MC/Settings/Setting.hpp"
 
 class WaitForTimeout: public Action {
 private:
-	uint32_t _timeout;
+	SettingInt32* _timeout;
+	uint32_t _counter;
 public:
-	WaitForTimeout(uint32_t timeout /* в миллисекундах */);
+	WaitForTimeout(SettingInt32* timeout /* в миллисекундах */);
+	virtual void Reset();
+	virtual bool IterateForward();
+	virtual bool IterateBackward();
+	virtual void OnResumeKeyPressed();
+	virtual void OnStoreNResumeKeyPressed();
 };
 
 #endif /* MC_FIXEDPOSITIONACTIONS_WAITFORTIMEOUT_HPP_ */

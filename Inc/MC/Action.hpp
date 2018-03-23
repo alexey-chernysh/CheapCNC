@@ -13,6 +13,10 @@ public:
 	Action();
 	virtual ~Action();
 	virtual void Reset();
+	virtual bool IterateForward();
+	virtual bool IterateBackward();
+	virtual void OnResumeKeyPressed();
+	virtual void OnStoreNResumeKeyPressed();
 };
 
 #endif /* MC_ACTION_HPP_ */

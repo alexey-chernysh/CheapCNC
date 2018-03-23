@@ -7,10 +7,14 @@
 
 #include <MC/FixedPositionActions/WaitForSignal.hpp>
 
-WaitForSignal::WaitForSignal(GPIO_TypeDef* p, uint32_t pN, uint32_t timeout /* в миллисекундах */):
+WaitForSignal::WaitForSignal(GPIO_TypeDef* p, uint32_t pN, SettingInt32* timeout /* в миллисекундах */):
 WaitForTimeout(timeout),
-Pin(p, pN) {
-	// TODO Auto-generated constructor stub
+InputSignal(p, pN) {
+}
 
+bool WaitForSignal::IterateForward(){
+	if(this->WaitForTimeout::IterateForward()){
+		return this->GetSignal();
+	} else return false;
 }
 
