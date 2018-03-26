@@ -5,9 +5,17 @@
  *      Author: Sales
  */
 
+#include "MC/General.h"
 #include <MC/Motions/Velocity.hpp>
 #include "MC/MotionController.hpp"
 #include "MC/Settings/Settings.hpp"
+
+Velocity::Velocity(float initialValue){
+	this->stepSize = GetStep4Velocity(initialValue);
+}
+
+Velocity::~Velocity(){
+}
 
 void Velocity::Set(float newValue){
 	this->SetStepSize(newValue);
@@ -28,12 +36,24 @@ uint32_t Velocity::GetStepSize(){
 float Velocity::GetVelocity4Step(uint32_t stepSize){
 	return  stepSize*60.0
 			*motionController.GetOneBitLengthMM()
-			*motionController.GetTimerFrequency;
+			*motionController.GetTimerFrequency();
 }
 
 uint32_t Velocity::GetStep4Velocity(float velocity){
 	float mmInTick = velocity/60.0/motionController.GetTimerFrequency();
 	return (uint32_t)(mmInTick/motionController.GetOneBitLengthMM());
+}
+
+float Velocity::GetMinVelocity(){
+	return  60.0
+			*motionController.GetTimerFrequency()
+			*motionController.GetOneBitLengthMM();
+}
+
+float Velocity::GetMaxVelocity(){
+	return  60.0
+			*motionController.GetTimerFrequency()
+			*(N_OF_TOOTH*TOOTH_STEP)/STEP_PER_ROTATION/2;
 }
 
 FreeRunVelocity::FreeRunVelocity():
@@ -59,6 +79,9 @@ Velocity(0.0),
 _freeRunVelocity(frv),
 _ratio(currentSetting){
 	this->Set(this->_freeRunVelocity->Get()*this->_ratio->Get());
+}
+
+RelativeVelocity::~RelativeVelocity(){
 }
 
 void RelativeVelocity::Set(float newVelocity){

@@ -26,6 +26,8 @@ public:
 	// static methods
 	static float  GetVelocity4Step(uint32_t stepSize);
 	static uint32_t GetStep4Velocity(float velocity);
+	static float GetMinVelocity();
+	static float GetMaxVelocity();
 };
 
 

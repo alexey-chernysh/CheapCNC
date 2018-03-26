@@ -5,8 +5,8 @@
  *      Author: Sales
  */
 
+#include <MC/ExecutionDirection.hpp>
 #include <MC/Motions/Motion.hpp>
-#include <MC/Motions/MotionDirection.hpp>
 #include <MC/Motions/Velocity.hpp>
 #include "MC/General.h"
 #include "MC/Action.hpp"
@@ -58,7 +58,7 @@ void Motion::CalcWayLength(){
 void Motion::Init(){
 	this->currentDistanceToTarget = this->wayLength;
 
-	if(motionController.motionDirection.DirectionIsForward()){
+	if(motionController.executionState.DirectionIsForward()){
 		this->stepSizeCurrent =  this->stepSizeBeforeAcceleration;
 		this->startAbsPosX = positionX.Get();
 		this->startAbsPosY = positionY.Get();

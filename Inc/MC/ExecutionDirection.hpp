@@ -5,18 +5,18 @@
  *      Author: alexey
  */
 
-#ifndef MC_MOTIONS_MOTIONDIRECTION_HPP_
-#define MC_MOTIONS_MOTIONDIRECTION_HPP_
+#ifndef MC_EXECUTIONDIRECTION_HPP_
+#define MC_EXECUTIONDIRECTION_HPP_
 
-class MotionDirection {
+class ExecutionDirection {
 private:
 	bool forward;
 public:
-	MotionDirection();
+	ExecutionDirection();
 	bool DirectionIsForward();
 	void SetForwardDirection();
 	bool DirectionIsBackward();
 	void SetBackwardDirection();
 };
 
-#endif /* MC_MOTIONS_MOTIONDIRECTION_HPP_ */
+#endif /* MC_EXECUTIONDIRECTION_HPP_ */

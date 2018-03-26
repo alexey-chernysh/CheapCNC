@@ -8,34 +8,31 @@
 #ifndef MC_MOTIONCONTROLLER_HPP_
 #define MC_MOTIONCONTROLLER_HPP_
 
+#include <MC/ExecutionDirection.hpp>
+#include <stdint.h>
 #include <MC/Motions/Acceleration.hpp>
 #include <MC/Motions/Motion.hpp>
-#include <MC/Motions/MotionDirection.hpp>
 #include <MC/Motions/Velocity.hpp>
-#include <stdint.h>
 #include "MC/Sequence.hpp"
+#include "MC/ExecutionState.hpp"
 
 class MotionController {
 public:
 	float timerFrequency;
 	float oneBitLengthMM;
 
-	bool running;
-	bool resuming;
-	bool pausing;
-
 	uint32_t currentStepSize;
 	uint32_t startStopStepSize;
 	uint32_t resumingStepSize;
 	uint32_t pausingStepSize;
 
-	MotionDirection motionDirection;
+	ExecutionState executionState;
 
-	FreeRunVelocity startVelocity;
 	Acceleration acceleration;
 	FreeRunVelocity freeRunVelocity;
-	RelativeVelocity workingVelocity;
-	FreeRunVelocity adjustmentVelocity;
+	WorkingVelocity workingVelocity;
+	RelativeVelocity startVelocity;
+	RelativeVelocity adjustmentVelocity;
 
 	Sequence* sequence;
 	uint32_t sequenceSize;
@@ -50,9 +47,6 @@ public:
 	void OnTimer();
 	void OnControlKey(char controlKey);
 
-	bool IsRunning();
-	bool IsPaused();
-
 	void SetResuming();
 	uint32_t GetResumingStepSize(uint32_t currentSS);
 	void SetPausing();
@@ -60,9 +54,6 @@ public:
 
 	float GetTimerFrequency();
 	float GetOneBitLengthMM();
-
-	float GetMinVelocity();
-	float GetMaxVelocity();
 
 	void SetCurrentStepSize(uint32_t newStepSIze);
 	uint32_t GetCurrentStepSize();

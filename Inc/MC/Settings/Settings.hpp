@@ -1,7 +1,7 @@
 /*
  * Settings.hpp
  *
- *  Created on: 23 мар. 2018 г.
+ *  Created on: 23 пїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: Sales
  */
 
@@ -37,6 +37,12 @@
 #define	AUTO_LIMIT_RATIO_OFFSET 28L
 #define	AUTO_LIMIT_RATIO_FACTORY_SETTING 0.8
 
+#define	START_VELOCITY_OFFSET 32L
+#define	START_VELOCITY_FACTORY_SETTING 0.1
+
+#define	ADJUSTMENT_VELOCITY_OFFSET 36L
+#define	ADJUSTMENT_VELOCITY_FACTORY_SETTING 0.05
+
 class Settings: public FlashDataBlock {
 public:
 	TimeoutSetting perforationTime;
@@ -47,6 +53,8 @@ public:
 	FloatSetting freeRunVelocity;
 	FloatSetting workingVelocity;
 	FloatSetting autoLimitRatio;
+	FloatSetting startVelocity;
+	FloatSetting adjustmentVelocity;
 public:
 	Settings();
 };
