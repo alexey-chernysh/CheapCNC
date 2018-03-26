@@ -34,7 +34,7 @@ uint32_t Velocity::GetStepSize(){
 }
 
 float Velocity::GetVelocity4Step(uint32_t stepSize){
-	return  stepSize*60.0
+	return  60.0*stepSize
 			*motionController.GetOneBitLengthMM()
 			*motionController.GetTimerFrequency();
 }
@@ -45,9 +45,7 @@ uint32_t Velocity::GetStep4Velocity(float velocity){
 }
 
 float Velocity::GetMinVelocity(){
-	return  60.0
-			*motionController.GetTimerFrequency()
-			*motionController.GetOneBitLengthMM();
+	return  GetVelocity4Step(1L);
 }
 
 float Velocity::GetMaxVelocity(){

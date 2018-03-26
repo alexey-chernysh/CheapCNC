@@ -15,11 +15,15 @@
 #include <MC/Motions/Velocity.hpp>
 #include "MC/Sequence.hpp"
 #include "MC/ExecutionState.hpp"
+#include "MC/Position.hpp"
 
 class MotionController {
 public:
 	float timerFrequency;
 	float oneBitLengthMM;
+
+	PositionX positionX;
+	PositionY positionY;
 
 	uint32_t currentStepSize;
 	uint32_t startStopStepSize;
@@ -28,11 +32,11 @@ public:
 
 	ExecutionState executionState;
 
-	Acceleration acceleration;
 	FreeRunVelocity freeRunVelocity;
 	WorkingVelocity workingVelocity;
 	RelativeVelocity startVelocity;
 	RelativeVelocity adjustmentVelocity;
+	Acceleration acceleration;
 
 	Sequence* sequence;
 	uint32_t sequenceSize;

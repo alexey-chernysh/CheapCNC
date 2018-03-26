@@ -16,9 +16,6 @@
 static bool pwm_table_ready = false;
 static uint32_t pwm_table[MAX_MICROSTEP+1];
 
-PositionX positionX;
-PositionY positionY;
-
 void buildPwmTable(){
 	if(!pwm_table_ready){
 		float scale1 = M_PI / 2.0 / MAX_MICROSTEP;

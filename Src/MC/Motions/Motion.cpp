@@ -60,8 +60,8 @@ void Motion::Init(){
 
 	if(motionController.executionState.DirectionIsForward()){
 		this->stepSizeCurrent =  this->stepSizeBeforeAcceleration;
-		this->startAbsPosX = positionX.Get();
-		this->startAbsPosY = positionY.Get();
+		this->startAbsPosX = motionController.positionX.Get();
+		this->startAbsPosY = motionController.positionY.Get();
 	} else
 		this->stepSizeCurrent = this->stepSizeAfterDeceleration;
 
@@ -81,8 +81,8 @@ bool Motion::IterateForward(){ // return true if another step needed
 	this->wayLengthCurrent += this->stepSizeCurrent;
 	this->OnIteration();
 
-	positionX.Set(this->startAbsPosX + this->relCurrentPosX);
-	positionY.Set(this->startAbsPosY + this->relCurrentPosY);
+	motionController.positionX.Set(this->startAbsPosX + this->relCurrentPosX);
+	motionController.positionY.Set(this->startAbsPosY + this->relCurrentPosY);
 	motionController.SetCurrentStepSize(this->stepSizeCurrent);
 
 	switch (this->phase){
@@ -118,8 +118,8 @@ bool Motion::IterateBackward(){ // return true if another step needed
 	this->wayLengthCurrent -= this->stepSizeCurrent;
 	this->OnIteration();
 
-	positionX.Set(this->startAbsPosX + this->relCurrentPosX);
-	positionY.Set(this->startAbsPosY + this->relCurrentPosY);
+	motionController.positionX.Set(this->startAbsPosX + this->relCurrentPosX);
+	motionController.positionY.Set(this->startAbsPosY + this->relCurrentPosY);
 	motionController.SetCurrentStepSize(this->stepSizeCurrent);
 
 	switch (this->phase){

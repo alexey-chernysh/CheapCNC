@@ -41,7 +41,4 @@ protected:
 	virtual void SetPWM(uint8_t angle);
 };
 
-extern PositionX positionX;
-extern PositionY positionY;
-
 #endif /* POSITION_HPP_ */
