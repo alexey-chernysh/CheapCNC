@@ -25,8 +25,8 @@ MotionArc::MotionArc(  double _relEndPosX,
 					   MOTION_VELOCITY velocity,
 					   double startVel,
 					   double endVel):Motion(_relEndPosX, _relEndPosY, velocity, startVel, endVel){
-    this->relCenterPosX = MotionController::Get64bitForDoubleMM(_relCenterPosX);
-    this->relCenterPosY = MotionController::Get64bitForDoubleMM(_relCenterPosY);
+    this->relCenterPosX = motionController.Get64bitForDoubleMM(_relCenterPosX);
+    this->relCenterPosY = motionController.Get64bitForDoubleMM(_relCenterPosY);
     this->arcDirection = dir;
 
 	double      angle;
@@ -38,7 +38,7 @@ MotionArc::MotionArc(  double _relEndPosX,
 	this->radiusLong = (int64_t)sqrt(x*x + y*y);
 
 	int64_t tmp64 = (1LL<<SCALING_SHIFT);
-	this->oneDividedByRadiusScaled = (tmp64*tmp64)/ this->radiusLong;
+	this->oneDividedByRadiusScaled = (tmp64*tmp64) / this->radiusLong;
 
 	startAngle = atan2(-(double)this->relCenterPosY,-(double)this->relCenterPosX);
 	endAngle = atan2((double)(this->relEndPosY - this->relCenterPosY), (double)(this->relEndPosX - this->relCenterPosX));

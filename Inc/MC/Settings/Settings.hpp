@@ -25,12 +25,28 @@
 #define	TORCH_UP_TIMEOUT_OFFSET 12L
 #define TORCH_UP_TIMEOUT_FACTORY_SETTING 1.0
 
+#define	ACCELERATION_OFFSET 16L
+#define ACCELERATION_FACTORY_SETTING 100.0
+
+#define	FREE_RUN_VELOCITY_OFFSET 20L
+#define	FREE_RUN_VELOCITY_FACTORY_SETTING 5000.0
+
+#define	WORKING_VELOCITY_OFFSET 24L
+#define	WORKING_VELOCITY_FACTORY_SETTING 1.0
+
+#define	AUTO_LIMIT_RATIO_OFFSET 28L
+#define	AUTO_LIMIT_RATIO_FACTORY_SETTING 0.8
+
 class Settings: public FlashDataBlock {
 public:
 	TimeoutSetting perforationTime;
 	TimeoutSetting ignitionTime;
 	TimeoutSetting initialPositioningTimeout;
 	TimeoutSetting torchUpTime;
+	FloatSetting acceleration;
+	FloatSetting freeRunVelocity;
+	FloatSetting workingVelocity;
+	FloatSetting autoLimitRatio;
 public:
 	Settings();
 };

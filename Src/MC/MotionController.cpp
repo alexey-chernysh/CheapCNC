@@ -15,46 +15,24 @@
 #include "stm32f1xx_hal.h"
 #include "MC/General.h"
 #include "MC/MotionController.hpp"
-
-static float timerFrequency;
-static float oneBitLengthMM;
-
-static bool running;
-//static MotionDirection motionDirection;
-static bool resuming;
-static bool pausing;
-
-static uint32_t currentStepSize;
-static uint32_t startStopStepSize;
-static uint32_t resumingStepSize;
-static uint32_t pausingStepSize;
-
-static Velocity startVelocity;
-static Velocity freeRunVelocity;
-static WorkingVelocity workingVelocity;
-static Velocity adjustmentVelocity;
-
-static Sequence* sequence;
-static uint32_t sequenceSize;
-static uint32_t currentMotionNum;
-static Action* currentAction;
+#include "MC/Settings/Settings.hpp"
 
 MotionController motionController;
 
-MotionController::MotionController() : Acceleration(100.0) {
+MotionController::MotionController():
+acceleration(&(settings.acceleration)),
+running(false),
+resuming(false),
+pausing(false) {
 	initMath();
 
-	running = false;
-	SetForwardDirection();
-	resuming = false;
-	pausing = false;
+	this->motionDirection.SetForwardDirection();
 
 	timerFrequency = ((float)HAL_RCC_GetPCLK2Freq())/(PWM_PRESCALER+1)/(PWM_PERIOD+1);
 	float scale = (float)(1LL<<POSITION_FIRST_SIGNIFICANT_BIT);
 	oneBitLengthMM = (N_OF_TOOTH * TOOTH_STEP)/STEP_PER_ROTATION/(MAX_MICROSTEP + 1.0)/scale;
 
 	startVelocity.Set(100.0/60.0);
-	freeRunVelocity.Set(5000.0/60.0);
 	workingVelocity.Set(1000.0/60.0);
 	adjustmentVelocity.Set(10.0/60.0);
 
@@ -75,7 +53,7 @@ MotionController::MotionController() : Acceleration(100.0) {
 
 void MotionController::Reset(){
 	running = false;
-	SetForwardDirection();
+	this->motionDirection.SetForwardDirection();
 	resuming = false;
 	pausing = false;
 
@@ -96,7 +74,7 @@ float MotionController::GetMinVelocity(){ return 60.0*timerFrequency*oneBitLengt
 float MotionController::GetMaxVelocity(){ return 60.0*timerFrequency*(N_OF_TOOTH*TOOTH_STEP)/STEP_PER_ROTATION/2; }
 
 void MotionController::IterateActionNum(){
-	if(DirectionIsForward())
+	if(this->motionDirection.DirectionIsForward())
 		currentMotionNum++;
 	else
 		currentMotionNum--;
@@ -106,7 +84,7 @@ void MotionController::OnTimer(){
 	if(currentAction != 0){
 		bool anotherStepNeeded = true;
 		if(running) {
-			if(DirectionIsForward()){
+			if(this->motionDirection.DirectionIsForward()){
 				anotherStepNeeded = currentAction->IterateForward();
 			} else {
 				anotherStepNeeded = currentAction->IterateBackward();
@@ -134,7 +112,7 @@ void MotionController::SetResuming(){
 uint32_t MotionController::GetResumingStepSize(uint32_t currentSS){
     if(resuming){
     	uint32_t result = resumingStepSize;
-        resumingStepSize += this->GetStepIncrement();
+        resumingStepSize += this->acceleration.GetStepIncrement();
         if(result < currentSS) return result;
         else {
             resuming = false;
@@ -152,7 +130,7 @@ void MotionController::SetPausing(){
 uint32_t MotionController::GetPausingStepSize(uint32_t currentSS){
     if(pausing){
         uint32_t result = pausingStepSize;
-        pausingStepSize -= this->GetStepIncrement();
+        pausingStepSize -= this->acceleration.GetStepIncrement();
         if(result > startStopStepSize) return result;
         else {
             running = false;
@@ -176,7 +154,7 @@ void MotionController::OnControlKey(char controlKey){
 	switch(controlKey){
 	case 'R': // Start/Resume
 		if(IsPaused()){
-			SetForwardDirection();
+			this->motionDirection.SetForwardDirection();
 			SetResuming();
 		};
 		break;
@@ -186,7 +164,7 @@ void MotionController::OnControlKey(char controlKey){
 		break;
 	case 'B': // Rewind
 		if(IsPaused()){
-			SetBackwardDirection();
+			this->motionDirection.SetBackwardDirection();
 			SetResuming();
 		};
 		break;

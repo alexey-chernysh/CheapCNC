@@ -25,9 +25,9 @@ public:
 	void Set(uint32_t newValue);
 };
 
-class SettingFloat : public Setting {
+class FloatSetting : public Setting {
 public:
-	SettingFloat(float firstRunSetting, uint32_t _offset);
+	FloatSetting(float firstRunSetting, uint32_t _offset);
 	float Get();
 	void Set(float newValue);
 };

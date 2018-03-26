@@ -15,8 +15,33 @@
 #include <stdint.h>
 #include "MC/Sequence.hpp"
 
-class MotionController : public MotionDirection, public Acceleration {
-private:
+class MotionController {
+public:
+	float timerFrequency;
+	float oneBitLengthMM;
+
+	bool running;
+	bool resuming;
+	bool pausing;
+
+	uint32_t currentStepSize;
+	uint32_t startStopStepSize;
+	uint32_t resumingStepSize;
+	uint32_t pausingStepSize;
+
+	MotionDirection motionDirection;
+
+	FreeRunVelocity startVelocity;
+	Acceleration acceleration;
+	FreeRunVelocity freeRunVelocity;
+	RelativeVelocity workingVelocity;
+	FreeRunVelocity adjustmentVelocity;
+
+	Sequence* sequence;
+	uint32_t sequenceSize;
+	uint32_t currentMotionNum;
+	Action* currentAction;
+
 public:
 	MotionController();
 
@@ -25,29 +50,29 @@ public:
 	void OnTimer();
 	void OnControlKey(char controlKey);
 
-	static bool IsRunning();
-	static bool IsPaused();
+	bool IsRunning();
+	bool IsPaused();
 
 	void SetResuming();
 	uint32_t GetResumingStepSize(uint32_t currentSS);
 	void SetPausing();
 	uint32_t GetPausingStepSize(uint32_t currentSS);
 
-	static float GetTimerFrequency();
-	static float GetOneBitLengthMM();
+	float GetTimerFrequency();
+	float GetOneBitLengthMM();
 
-	static float GetMinVelocity();
-	static float GetMaxVelocity();
+	float GetMinVelocity();
+	float GetMaxVelocity();
 
-	static void SetCurrentStepSize(uint32_t newStepSIze);
-	static uint32_t GetCurrentStepSize();
-	static float GetCurrentVelocity();
+	void SetCurrentStepSize(uint32_t newStepSIze);
+	uint32_t GetCurrentStepSize();
+	float GetCurrentVelocity();
 
-	static int64_t Get64bitForDoubleMM(double mm);
-	static double GetDoubleMMFor64bit(int64_t iValue);
+	int64_t Get64bitForDoubleMM(double mm);
+	double GetDoubleMMFor64bit(int64_t iValue);
 
-	static uint32_t GetStepSize(MOTION_VELOCITY t);
-	static float GetVelocity(MOTION_VELOCITY t);
+	uint32_t GetStepSize(MOTION_VELOCITY t);
+	float GetVelocity(MOTION_VELOCITY t);
 
 private:
 	void IterateActionNum();

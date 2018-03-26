@@ -24,14 +24,14 @@ void SettingInt32::Set(uint32_t newValue){
 	settings.SetInt32(newValue, offset);
 }
 
-SettingFloat::SettingFloat(float firstRunSetting, uint32_t _offset):Setting(_offset){
+FloatSetting::FloatSetting(float firstRunSetting, uint32_t _offset):Setting(_offset){
 	if(!settings.DataIntegrityIsOK()) settings.SetFloat(firstRunSetting, offset);
 };
 
-float SettingFloat::Get(){
+float FloatSetting::Get(){
 	return settings.GetFloat(offset);
 };
 
-void SettingFloat::Set(float newValue){
+void FloatSetting::Set(float newValue){
 	settings.SetFloat(newValue, offset);
 };
