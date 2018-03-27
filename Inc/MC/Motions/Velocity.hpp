@@ -54,8 +54,8 @@ public:
 
 class WorkingVelocity: public RelativeVelocity {
 private:
-	FloatSetting* _autoLimitRatio;
 	uint32_t _autoLimitStepSize;
+	FloatSetting* _autoLimitRatio;
 public:
 	WorkingVelocity(FreeRunVelocity* frv);
 	void SetLimit(float newLimitRatio);

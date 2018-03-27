@@ -107,10 +107,13 @@ void WorkingVelocity::SetAutoLimitStepSize(){
 
 void WorkingVelocity::SetLimit(float newLimitRatio){
 	this->_autoLimitRatio->Set(newLimitRatio);
+	this->SetAutoLimitStepSize();
 }
 
 float WorkingVelocity::GetLimit(){
 	return 	this->_autoLimitRatio->Get();
 }
 
-uint32_t WorkingVelocity::GetAutoLimitStepSize(){}
+uint32_t WorkingVelocity::GetAutoLimitStepSize(){
+	return this->_autoLimitStepSize;
+}

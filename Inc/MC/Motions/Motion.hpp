@@ -15,10 +15,12 @@
 class Motion : public Action {
 protected:
 	MOTION_PHASE phase;
-	int32_t stepSizeCurrent;
-	int32_t stepSizeBeforeAcceleration;
-	int32_t stepSizeAfterDeceleration;
-	int32_t stepSizeConstantVelocity;
+
+	int64_t wayLength;
+	int64_t wayLengthCurrent;
+	int64_t wayLengthAcceleration;
+	int64_t wayLengthDeceleration;
+	int64_t currentDistanceToTarget;
 
 	int64_t relEndPosX;
 	int64_t relEndPosY;
@@ -27,11 +29,10 @@ protected:
 	int64_t startAbsPosX;
 	int64_t startAbsPosY;
 
-	int64_t wayLength;
-	int64_t wayLengthCurrent;
-	int64_t wayLengthAcceleration;
-	int64_t wayLengthDeceleration;
-	int64_t currentDistanceToTarget;
+	int32_t stepSizeCurrent;
+	int32_t stepSizeBeforeAcceleration;
+	int32_t stepSizeAfterDeceleration;
+	int32_t stepSizeConstantVelocity;
 
 public:
 	Motion( double _relEndPosX,

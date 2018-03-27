@@ -5,10 +5,10 @@
  *      Author: Sales
  */
 
+#include "MC/General.h"
 #include <MC/ExecutionDirection.hpp>
 #include <MC/Motions/Motion.hpp>
 #include <MC/Motions/Velocity.hpp>
-#include "MC/General.h"
 #include "MC/Action.hpp"
 #include "MC/Position.hpp"
 #include "MC/MotionController.hpp"
@@ -20,25 +20,24 @@ Motion::Motion( double _relEndPosX,
 			    double _relEndPosY,
 			    MOTION_VELOCITY velocity,
 			    double startVel,
-			    double endVel) {
+			    double endVel):	phase(HEAD),
+			    				wayLength(0L),
+			    				wayLengthCurrent(0L),
+								wayLengthAcceleration(0L),
+								wayLengthDeceleration(0L),
+								currentDistanceToTarget(0L),
+								relEndPosX(motionController.Get64bitForDoubleMM(_relEndPosX)),
+								relEndPosY(motionController.Get64bitForDoubleMM(_relEndPosY)),
+								relCurrentPosX(0L),
+								relCurrentPosY(0L),
+								startAbsPosX(0L),
+								startAbsPosY(0L),
+								stepSizeCurrent(0L){
 
-	this->relEndPosX = motionController.Get64bitForDoubleMM(_relEndPosX);
-	this->relEndPosY = motionController.Get64bitForDoubleMM(_relEndPosY);
-
-	this->relCurrentPosX = 0;
-	this->relCurrentPosY = 0;
 
 	this->stepSizeConstantVelocity = motionController.GetStepSize(velocity);
-	this->stepSizeBeforeAcceleration = FreeRunVelocity::GetStep4Velocity(startVel);
-	this->stepSizeAfterDeceleration = FreeRunVelocity::GetStep4Velocity(endVel);
-
-	this->phase = HEAD;
-
-	this->startAbsPosX = 0;
-	this->startAbsPosY = 0;
-	this->stepSizeCurrent = 0;
-	this->currentDistanceToTarget = 0;
-	this->wayLength = 0;
+	this->stepSizeBeforeAcceleration = Velocity::GetStep4Velocity(startVel);
+	this->stepSizeAfterDeceleration = Velocity::GetStep4Velocity(endVel);
 }
 
 void Motion::CalcWayLength(){
@@ -67,7 +66,7 @@ void Motion::Init(){
 
 }
 
-void Motion::OnIteration(){};
+void Motion::OnIteration(){}
 
 static int64_t iabs(int64_t x){
 	if(x >= 0) return x;
