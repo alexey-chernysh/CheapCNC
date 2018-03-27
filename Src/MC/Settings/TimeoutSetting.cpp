@@ -11,7 +11,5 @@
 
 TimeoutSetting::TimeoutSetting(float factorySetting /* заводская установка в секундах */, uint32_t offset)
 :SettingInt32((uint32_t)(factorySetting*motionController->GetTimerFrequency()), offset){
-	// TODO Auto-generated constructor stub
-
 }
 

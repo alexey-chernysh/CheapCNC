@@ -57,7 +57,7 @@ float Velocity::GetMaxVelocity(){
 
 FreeRunVelocity::FreeRunVelocity():
 Velocity(0.0),
-_value(&(motionController->settings.freeRunVelocity)){
+_value(&(motionController->freeRunVelocitySetting)){
 	this->SetStepSize(this->_value->Get());
 }
 
@@ -96,9 +96,9 @@ float RelativeVelocity::Get(){
 }
 
 WorkingVelocity::WorkingVelocity(FreeRunVelocity* frv):
-RelativeVelocity(&(motionController->settings.workingVelocity), frv),
+RelativeVelocity(&(motionController->workingVelocitySetting), frv),
 _autoLimitStepSize(0),
-_autoLimitRatio(&(motionController->settings.autoLimitRatio)) {
+_autoLimitRatio(&(motionController->autoLimitRatioSetting)) {
 	SetAutoLimitStepSize();
 }
 

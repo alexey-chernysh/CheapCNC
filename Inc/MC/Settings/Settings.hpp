@@ -45,16 +45,16 @@
 
 class Settings: public FlashDataBlock {
 public:
-	TimeoutSetting perforationTime;
-	TimeoutSetting ignitionTime;
-	TimeoutSetting initialPositioningTimeout;
-	TimeoutSetting torchUpTime;
-	FloatSetting acceleration;
-	FloatSetting freeRunVelocity;
-	FloatSetting workingVelocity;
-	FloatSetting autoLimitRatio;
-	FloatSetting startVelocity;
-	FloatSetting adjustmentVelocity;
+	TimeoutSetting perforationTimeSetting;
+	TimeoutSetting ignitionTimeSetting;
+	TimeoutSetting initialPositioningTimeoutSetting;
+	TimeoutSetting torchUpTimeSetting;
+	FloatSetting accelerationSetting;
+	FloatSetting freeRunVelocitySetting;
+	FloatSetting workingVelocitySetting;
+	FloatSetting autoLimitRatioSetting;
+	FloatSetting startVelocitySetting;
+	FloatSetting adjustmentVelocitySetting;
 public:
 	Settings();
 };

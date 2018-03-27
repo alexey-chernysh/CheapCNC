@@ -10,7 +10,7 @@
 #include "MC/Settings/Settings.hpp"
 #include "MC/Position.hpp"
 
-Acceleration::Acceleration(): _value(&(motionController->settings.acceleration)) {
+Acceleration::Acceleration(): _value(&(motionController->accelerationSetting)) {
 	SetIncrement();
 }
 

@@ -14,25 +14,25 @@ Setting::Setting(uint32_t _offset) {
 }
 
 SettingInt32::SettingInt32(uint32_t firstRunSetting, uint32_t _offset):Setting(_offset){
-	if(!motionController->settings.DataIntegrityIsOK()) motionController->settings.SetInt32(firstRunSetting, offset);
+	if(!motionController->DataIntegrityIsOK()) motionController->SetInt32(firstRunSetting, offset);
 }
 
 uint32_t SettingInt32::Get(){
-	return motionController->settings.GetInt32(offset);
+	return motionController->GetInt32(offset);
 }
 
 void SettingInt32::Set(uint32_t newValue){
-	motionController->settings.SetInt32(newValue, offset);
+	motionController->SetInt32(newValue, offset);
 }
 
 FloatSetting::FloatSetting(float firstRunSetting, uint32_t _offset):Setting(_offset){
-	if(!motionController->settings.DataIntegrityIsOK()) motionController->settings.SetFloat(firstRunSetting, offset);
+	if(!motionController->DataIntegrityIsOK()) motionController->SetFloat(firstRunSetting, offset);
 };
 
 float FloatSetting::Get(){
-	return motionController->settings.GetFloat(offset);
+	return motionController->GetFloat(offset);
 };
 
 void FloatSetting::Set(float newValue){
-	motionController->settings.SetFloat(newValue, offset);
+	motionController->SetFloat(newValue, offset);
 };

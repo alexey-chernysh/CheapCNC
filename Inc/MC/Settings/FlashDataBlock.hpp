@@ -35,10 +35,10 @@ public:
 	void SetInt32(int32_t newValue, uint32_t offset);
 	float GetFloat(uint32_t offset);
 	void SetFloat(float newValue, uint32_t offset);
-	void CommitChanges();
+	void CommitChangesToFlash();
 private:
 	void UploadDataFromFlash();
-	void CheckDataIntegrity();
+	void CheckFlashDataIntegrity();
 	uint32_t DownloadDataToFlash();
 };
 

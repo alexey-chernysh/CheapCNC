@@ -15,6 +15,7 @@ FlashDataBlock::FlashDataBlock():
 dataChanged(false),
 dataUploaded(false),
 dataIntegrityFlag(false){
+	UploadDataFromFlash();
 }
 
 int32_t FlashDataBlock::GetInt32(uint32_t offset){
@@ -42,7 +43,7 @@ void FlashDataBlock::SetFloat(float newValue, uint32_t offset){
 	this->dataChanged = true;
 }
 
-void FlashDataBlock::CommitChanges(){
+void FlashDataBlock::CommitChangesToFlash(){
 	if(this->dataChanged){
 		this->dataBuffer.crc = HAL_CRC_Calculate(&hcrc, (uint32_t*)this->dataBuffer.data, FLASH_DATA_SIZE32);
 		uint32_t error_code = this->DownloadDataToFlash();
@@ -62,10 +63,10 @@ void FlashDataBlock::UploadDataFromFlash(){
 		bufferAddress++;
 	}
 	this->dataUploaded = true;
-	CheckDataIntegrity();
+	CheckFlashDataIntegrity();
 }
 
-void FlashDataBlock::CheckDataIntegrity(){
+void FlashDataBlock::CheckFlashDataIntegrity(){
 	uint32_t newCRC = HAL_CRC_Calculate(&hcrc, (uint32_t*)this->dataBuffer.data, FLASH_DATA_SIZE32);
 	this->dataIntegrityFlag = (newCRC == this->dataBuffer.crc);
 }

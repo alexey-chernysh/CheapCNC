@@ -6,8 +6,6 @@
  */
 
 #include <stdint.h>
-#include "stm32f1xx_hal.h"
-#include "MC/General.h"
 #include <MC/ExecutionDirection.hpp>
 #include <MC/Motions/Acceleration.hpp>
 #include <MC/Motions/Motion.hpp>
@@ -17,11 +15,10 @@
 MotionController* motionController = 0;
 
 MotionController::MotionController()
-:MCUfrequency((float)HAL_RCC_GetPCLK2Freq())
-,timerFrequency(MCUfrequency/(PWM_PRESCALER+1)/(PWM_PERIOD+1))
+:TimerFrequency()
+,Settings()
 ,positionX()
 ,positionY()
-,settings()
 ,velocityProfile()
 ,executionState()
 ,startStopStepSize(velocityProfile.startVelocity.GetStepSize())
@@ -44,8 +41,6 @@ void MotionController::Reset(){
 	currentActionNum = 0;
 	currentAction = (Motion*)sequence->GetAction(currentActionNum);
 }
-
-float MotionController::GetTimerFrequency(){ return timerFrequency; }
 
 void MotionController::IterateActionNum(){
 	if(this->executionState.DirectionIsForward())

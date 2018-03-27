@@ -15,16 +15,16 @@
 #include <MC/Motions/VelocityProfile.hpp>
 #include "MC/Position.hpp"
 #include <MC/Settings/Settings.hpp>
+#include <MC/TimerFrequency.hpp>
 
-class MotionController :  {
+class MotionController
+: public TimerFrequency
+, public Settings {
 public:
-	float MCUfrequency;
-	float timerFrequency;
-
 	PositionX positionX;
 	PositionY positionY;
 
-	Settings settings;
+//	Settings settings;
 	VelocityProfile velocityProfile;
 	ExecutionState executionState;
 
@@ -51,7 +51,6 @@ public:
 	void SetPausing();
 	uint32_t GetPausingStepSize(uint32_t currentSS);
 
-	float GetTimerFrequency();
 private:
 	void IterateActionNum();
 };
