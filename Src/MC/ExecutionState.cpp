@@ -12,8 +12,6 @@ ExecutionState::ExecutionState():
 running(false),
 resuming(false),
 pausing(false){
-	// TODO Auto-generated constructor stub
-
 }
 
 void ExecutionState::Reset(){

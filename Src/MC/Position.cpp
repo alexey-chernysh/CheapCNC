@@ -5,27 +5,40 @@
  *      Author: Sales
  */
 
-#include "MC/Position.hpp"
 #include <stdint.h>
 #include <math.h>
-#include <MC/General.h>
 #include "tim.h"
 #include "stm32f103xb.h"
 #include "stm32f1xx_hal.h"
+#include <MC/General.h>
+#include "MC/Position.hpp"
+#include <Math/sine_n_cosine.hpp>
 
 static bool pwm_table_ready = false;
 static uint32_t pwm_table[MAX_MICROSTEP+1];
+static float oneBitLengthMM;
 
 void buildPwmTable(){
 	if(!pwm_table_ready){
+		initMath();
+
 		float scale1 = M_PI / 2.0 / MAX_MICROSTEP;
 		float scale2 = MAX_PWM_WIDTH * PWM_PERIOD;
 		for(uint32_t i=0; i <= MAX_MICROSTEP; i++){
 			pwm_table[i] = scale2*sin(scale1*i);
 		}
 		pwm_table_ready = true;
+
+		float scale = (float)(1LL<<POSITION_FIRST_SIGNIFICANT_BIT);
+		oneBitLengthMM = (N_OF_TOOTH * TOOTH_STEP)/STEP_PER_ROTATION/(MAX_MICROSTEP + 1.0)/scale;
 	};
 }
+
+float GetOneBitLengthMM(){ return oneBitLengthMM; }
+
+int64_t Get64bitForDoubleMM(double mm){ return (int64_t)(mm/oneBitLengthMM); };
+
+double GetDoubleMMFor64bit(int64_t iValue){	return oneBitLengthMM*iValue; };
 
 Position::Position() {
 	buildPwmTable();

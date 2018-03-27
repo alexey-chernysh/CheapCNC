@@ -8,6 +8,7 @@
 #ifndef MC_MOTIONCONTROLLER_H_
 #define MC_MOTIONCONTROLLER_H_
 
+void MC_Init();
 void MC_OnTimer();
 void MC_onControlKey(char controlKey);
 

@@ -8,39 +8,34 @@
 #ifndef MC_MOTIONCONTROLLER_HPP_
 #define MC_MOTIONCONTROLLER_HPP_
 
-#include <MC/ExecutionDirection.hpp>
 #include <stdint.h>
-#include <MC/Motions/Acceleration.hpp>
 #include <MC/Motions/Motion.hpp>
-#include <MC/Motions/Velocity.hpp>
 #include "MC/Sequence.hpp"
 #include "MC/ExecutionState.hpp"
+#include <MC/Motions/VelocityProfile.hpp>
 #include "MC/Position.hpp"
+#include <MC/Settings/Settings.hpp>
 
-class MotionController {
+class MotionController :  {
 public:
+	float MCUfrequency;
 	float timerFrequency;
-	float oneBitLengthMM;
 
 	PositionX positionX;
 	PositionY positionY;
 
-	uint32_t currentStepSize;
+	Settings settings;
+	VelocityProfile velocityProfile;
+	ExecutionState executionState;
+
+private:
 	uint32_t startStopStepSize;
 	uint32_t resumingStepSize;
 	uint32_t pausingStepSize;
-
-	ExecutionState executionState;
-
-	FreeRunVelocity freeRunVelocity;
-	WorkingVelocity workingVelocity;
-	RelativeVelocity startVelocity;
-	RelativeVelocity adjustmentVelocity;
-	Acceleration acceleration;
-
+public:
 	Sequence* sequence;
 	uint32_t sequenceSize;
-	uint32_t currentMotionNum;
+	uint32_t currentActionNum;
 	Action* currentAction;
 
 public:
@@ -57,22 +52,10 @@ public:
 	uint32_t GetPausingStepSize(uint32_t currentSS);
 
 	float GetTimerFrequency();
-	float GetOneBitLengthMM();
-
-	void SetCurrentStepSize(uint32_t newStepSIze);
-	uint32_t GetCurrentStepSize();
-	float GetCurrentVelocity();
-
-	int64_t Get64bitForDoubleMM(double mm);
-	double GetDoubleMMFor64bit(int64_t iValue);
-
-	uint32_t GetStepSize(MOTION_VELOCITY t);
-	float GetVelocity(MOTION_VELOCITY t);
-
 private:
 	void IterateActionNum();
 };
 
-extern MotionController motionController;
+extern MotionController* motionController;
 
 #endif /* MC_MOTIONCONTROLLER_HPP_ */

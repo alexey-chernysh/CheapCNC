@@ -7,9 +7,10 @@
 
 #include <stdint.h>
 #include <math.h>
+#include "MC/Enums.h"
 #include <Math/sine_n_cosine.hpp>
 #include <MC/Motions/MotionArc.hpp>
-#include "MC/Enums.h"
+#include "MC/Position.hpp"
 #include "MC/MotionController.hpp"
 
 MotionArc::~MotionArc() {
@@ -25,8 +26,8 @@ MotionArc::MotionArc(  double _relEndPosX,
 					   MOTION_VELOCITY velocity,
 					   double startVel,
 					   double endVel):Motion(_relEndPosX, _relEndPosY, velocity, startVel, endVel){
-    this->relCenterPosX = motionController.Get64bitForDoubleMM(_relCenterPosX);
-    this->relCenterPosY = motionController.Get64bitForDoubleMM(_relCenterPosY);
+    this->relCenterPosX = Get64bitForDoubleMM(_relCenterPosX);
+    this->relCenterPosY = Get64bitForDoubleMM(_relCenterPosY);
     this->arcDirection = dir;
 
 	double      angle;

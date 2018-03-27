@@ -9,9 +9,10 @@
 #include "MC/GPIO/InputSignal.hpp"
 #include <MC/FixedPositionActions/InitialPositioning.hpp>
 #include "MC/Settings/Settings.hpp"
+#include "MC/MotionController.hpp"
 
 InitialPositioning::InitialPositioning():
-WaitForSignal(PositioningComplete_Input_GPIO_Port, PositioningComplete_Input_Pin, &(settings.initialPositioningTimeout)),
+WaitForSignal(PositioningComplete_Input_GPIO_Port, PositioningComplete_Input_Pin, &(motionController->settings.initialPositioningTimeout)),
 OutputSignal(InitialPositioning_Output_GPIO_Port, InitialPositioning_Output_Pin){
 }
 

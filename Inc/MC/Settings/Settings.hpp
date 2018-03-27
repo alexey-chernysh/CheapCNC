@@ -59,6 +59,4 @@ public:
 	Settings();
 };
 
-extern Settings settings;
-
 #endif /* MC_SETTINGS_HPP_ */

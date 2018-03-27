@@ -7,6 +7,7 @@
 
 #include <MC/FixedPositionActions/WaitForTimeout.hpp>
 #include "MC/Settings/Settings.hpp"
+#include "MC/MotionController.hpp"
 
 WaitForTimeout::WaitForTimeout(SettingInt32*  timeout /* в миллисекундах */):
 _timeout(timeout),
@@ -37,6 +38,6 @@ void WaitForTimeout::OnResumeKeyPressed(){
 
 void WaitForTimeout::OnStoreNResumeKeyPressed(){
 	this->_timeout->Set(this->_counter);
-	settings.CommitChanges();
+	motionController->settings.CommitChanges();
 	this->OnResumeKeyPressed();
 }

@@ -10,6 +10,12 @@
 
 #include <stdint.h>
 
+float GetOneBitLengthMM();
+
+int64_t Get64bitForDoubleMM(double mm);
+
+double GetDoubleMMFor64bit(int64_t iValue);
+
 class Position {
 private:
 	int64_t absPosition;

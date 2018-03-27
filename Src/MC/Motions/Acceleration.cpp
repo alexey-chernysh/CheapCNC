@@ -8,15 +8,16 @@
 #include <MC/Motions/Acceleration.hpp>
 #include "MC/MotionController.hpp"
 #include "MC/Settings/Settings.hpp"
+#include "MC/Position.hpp"
 
-Acceleration::Acceleration(): _value(&(settings.acceleration)) {
+Acceleration::Acceleration(): _value(&(motionController->settings.acceleration)) {
 	SetIncrement();
 }
 
 void Acceleration::SetIncrement(){
-	float intervalInSec = 1.0/motionController.GetTimerFrequency();
+	float intervalInSec = 1.0/motionController->GetTimerFrequency();
 	float velocityIncrement = _value->Get() * intervalInSec * intervalInSec;
-	int32_t tmp = motionController.Get64bitForDoubleMM(velocityIncrement);
+	int32_t tmp = Get64bitForDoubleMM(velocityIncrement);
 	if(tmp < 1) tmp  = 1LL;
 	this->_stepIncrement = tmp;
 }

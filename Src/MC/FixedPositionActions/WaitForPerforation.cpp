@@ -7,8 +7,9 @@
 
 #include <MC/FixedPositionActions/WaitForPerforation.hpp>
 #include "MC/Settings/Settings.hpp"
+#include "MC/MotionController.hpp"
 
 WaitForPerforation::WaitForPerforation()
-:WaitForTimeout(&(settings.perforationTime)) {
+:WaitForTimeout(&(motionController->settings.perforationTime)) {
 }
 
