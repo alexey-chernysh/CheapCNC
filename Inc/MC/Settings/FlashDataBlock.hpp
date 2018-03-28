@@ -1,7 +1,7 @@
 /*
  * FlashDataBlock.h
  *
- *  Created on: 2 мар. 2018 г.
+ *  Created on: 2 пїЅпїЅпїЅ. 2018 пїЅ.
  *      Author: Sales
  */
 
@@ -20,15 +20,6 @@
 #define FLASH_DATA_SIZE64 (FLASH_DATA_SIZE/8)
 
 class FlashDataBlock {
-private:
-	bool dataChanged;
-	bool dataUploaded;
-	bool dataIntegrityFlag;
-	struct DataBlock {
-		uint32_t crc;
-		uint8_t data[FLASH_DATA_SIZE];
-	} dataBuffer;
-
 public:
 	FlashDataBlock();
 	bool DataIntegrityIsOK();
