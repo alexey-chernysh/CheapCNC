@@ -10,6 +10,7 @@
 #include <MC/Motions/Acceleration.hpp>
 #include <MC/Motions/Motion.hpp>
 #include <MC/Motions/Velocity.hpp>
+#include <MC/Settings/Settings.hpp>
 #include "MC/MotionController.hpp"
 
 MotionController* motionController = 0;

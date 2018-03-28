@@ -16,7 +16,8 @@
 #define FLASH_BLOCK_SIZE32 (FLASH_BLOCK_SIZE/4)
 #define FLASH_BLOCK_SIZE64 (FLASH_BLOCK_SIZE/8)
 #define FLASH_DATA_SIZE (FLASH_BLOCK_SIZE-4)
-#define FLASH_DATA_SIZE32 FLASH_DATA_SIZE/4
+#define FLASH_DATA_SIZE32 (FLASH_DATA_SIZE/4)
+#define FLASH_DATA_SIZE64 (FLASH_DATA_SIZE/8)
 
 class FlashDataBlock {
 private:
@@ -32,9 +33,9 @@ public:
 	FlashDataBlock();
 	bool DataIntegrityIsOK();
 	int32_t GetInt32(uint32_t offset);
-	void SetInt32(int32_t newValue, uint32_t offset);
+	void SetInt32(int32_t newValue, uint16_t offset);
 	float GetFloat(uint32_t offset);
-	void SetFloat(float newValue, uint32_t offset);
+	void SetFloat(float newValue, uint16_t offset);
 	void CommitChangesToFlash();
 private:
 	void UploadDataFromFlash();

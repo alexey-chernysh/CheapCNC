@@ -9,7 +9,7 @@
 #include "crc.h"
 #include <stdint.h>
 #include "MC/Settings/Setting.hpp"
-#include <MC/Settings/FlashDataBlock.hpp>
+#include "MC/Settings/FlashDataBlock.hpp"
 
 FlashDataBlock::FlashDataBlock():
 dataChanged(false),
@@ -28,7 +28,7 @@ bool FlashDataBlock::DataIntegrityIsOK(){
 	return this->dataIntegrityFlag;
 };
 
-void FlashDataBlock::SetInt32(int32_t newValue, uint32_t offset){
+void FlashDataBlock::SetInt32(int32_t newValue, uint16_t offset){
 	*(this->dataBuffer.data + offset) = newValue;
 	this->dataChanged = true;
 };
@@ -38,7 +38,7 @@ float FlashDataBlock::GetFloat(uint32_t offset){
 	return (float)*(this->dataBuffer.data + offset);
 }
 
-void FlashDataBlock::SetFloat(float newValue, uint32_t offset){
+void FlashDataBlock::SetFloat(float newValue, uint16_t offset){
 	*(this->dataBuffer.data + offset) = newValue;
 	this->dataChanged = true;
 }
@@ -105,4 +105,3 @@ uint32_t FlashDataBlock::DownloadDataToFlash(){
 	error_code = HAL_FLASH_Lock();
 	return error_code;
 }
-
