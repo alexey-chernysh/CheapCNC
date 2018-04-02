@@ -18,7 +18,6 @@ MotionController* motionController = 0;
 MotionController::MotionController()
 :positionX()
 ,positionY()
-,timerFrequency()
 ,velocityProfile()
 ,executionState()
 ,startStopStepSize(velocityProfile.startVelocity.GetStepSize())

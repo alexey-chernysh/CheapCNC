@@ -22,7 +22,7 @@ public:
 	PositionX positionX;
 	PositionY positionY;
 
-	TimerFrequency timerFrequency;
+//	TimerFrequency timerFrequency;
 //	Settings settings;
 
 	VelocityProfile velocityProfile;

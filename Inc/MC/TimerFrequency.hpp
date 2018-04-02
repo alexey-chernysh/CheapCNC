@@ -8,10 +8,7 @@
 #ifndef MC_TIMERFREQUENCY_HPP_
 #define MC_TIMERFREQUENCY_HPP_
 
-class TimerFrequency {
-public:
-	TimerFrequency();
-	static float GetTimerFrequency();
-};
+float GetTimerFrequency();
+float GetMCUFrequency();
 
 #endif /* MC_TIMERFREQUENCY_HPP_ */

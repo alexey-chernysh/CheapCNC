@@ -54,6 +54,6 @@ void VelocityProfile::SetCurrentStepSize(uint32_t newStepSIze){
 float VelocityProfile::GetCurrentVelocity() { // millimeters in minute
 	return (float)(60.0
 			     *GetDoubleMMFor64bit(this->currentStepSize)
-				 * motionController->timerFrequency.GetTimerFrequency());
+				 *GetTimerFrequency());
 }
 

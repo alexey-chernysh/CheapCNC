@@ -10,6 +10,6 @@
 #include "MC/MotionController.hpp"
 
 TimeoutSetting::TimeoutSetting(float factorySetting /* заводская установка в секундах */, Settings *_parent, uint32_t offset)
-:SettingInt32((uint32_t)(factorySetting*motionController->timerFrequency.GetTimerFrequency()), _parent, offset){
+:SettingInt32((uint32_t)(factorySetting*GetTimerFrequency()), _parent, offset){
 }
 
