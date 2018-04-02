@@ -8,10 +8,12 @@
 #ifndef MC_VELOCITY_VELOCITYPROFILE_HPP_
 #define MC_VELOCITY_VELOCITYPROFILE_HPP_
 
-#include <MC/Velocity/Acceleration.hpp>
-#include <MC/Velocity/Velocity.hpp>
 #include <stdint.h>
 #include "MC/Enums.h"
+#include <MC/Velocity/Acceleration.hpp>
+#include <MC/Velocity/FreeRunVelocity.hpp>
+#include <MC/Velocity/WorkingVelocity.hpp>
+#include <MC/Velocity/RelativeVelocity.hpp>
 
 class VelocityProfile {
 public:
