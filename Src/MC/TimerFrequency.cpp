@@ -9,9 +9,12 @@
 #include "MC/General.h"
 #include <MC/TimerFrequency.hpp>
 
-TimerFrequency::TimerFrequency()
-:MCUfrequency((float)HAL_RCC_GetPCLK2Freq())
-,timerFrequency(MCUfrequency/(PWM_PRESCALER+1)/(PWM_PERIOD+1)) {
+static float MCUfrequency;
+static float timerFrequency;
+
+TimerFrequency::TimerFrequency(){
+	MCUfrequency = (float)HAL_RCC_GetPCLK2Freq();
+	timerFrequency = MCUfrequency/(PWM_PRESCALER+1)/(PWM_PERIOD+1);
 }
 
 float TimerFrequency::GetTimerFrequency(){ return timerFrequency; }

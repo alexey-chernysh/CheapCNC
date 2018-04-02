@@ -9,9 +9,10 @@
 #define MC_SETTINGS_HPP_
 
 #include <stdint.h>
-#include "MC/Settings/TimeoutSetting.hpp"
+#include "MC/Settings/FlashDataBlock.hpp"
 #include "MC/Settings/Setting.hpp"
-#include <MC/Settings/FlashDataBlock.hpp>
+#include "MC/Settings/TimeoutSetting.hpp"
+#include "MC/Settings/FloatSetting.hpp"
 
 #define MAX_COUNTER (UINT32_MAX-1)
 
@@ -45,7 +46,7 @@
 #define	ADJUSTMENT_VELOCITY_OFFSET 36U
 #define	ADJUSTMENT_VELOCITY_FACTORY_SETTING 0.05
 
-class Settings: public FlashDataBlock {
+class Settings: public FlashDataBlock { //Singleton
 public:
 	TimeoutSetting perforationTimeSetting;
 	TimeoutSetting ignitionTimeSetting;
@@ -58,7 +59,7 @@ public:
 	FloatSetting startVelocitySetting;
 	FloatSetting adjustmentVelocitySetting;
 public:
-	Settings();
+  Settings();// конструктор недоступен
 };
 
 #endif /* MC_SETTINGS_HPP_ */

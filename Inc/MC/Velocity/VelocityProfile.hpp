@@ -5,13 +5,13 @@
  *      Author: Sales
  */
 
-#ifndef MC_MOTIONS_VELOCITYPROFILE_HPP_
-#define MC_MOTIONS_VELOCITYPROFILE_HPP_
+#ifndef MC_VELOCITY_VELOCITYPROFILE_HPP_
+#define MC_VELOCITY_VELOCITYPROFILE_HPP_
 
+#include <MC/Velocity/Acceleration.hpp>
+#include <MC/Velocity/Velocity.hpp>
 #include <stdint.h>
 #include "MC/Enums.h"
-#include "MC/Motions/Velocity.hpp"
-#include "MC/Motions/Acceleration.hpp"
 
 class VelocityProfile {
 public:
@@ -34,4 +34,4 @@ public:
 	float GetCurrentVelocity();
 };
 
-#endif /* MC_MOTIONS_VELOCITYPROFILE_HPP_ */
+#endif /* MC_VELOCITY_VELOCITYPROFILE_HPP_ */

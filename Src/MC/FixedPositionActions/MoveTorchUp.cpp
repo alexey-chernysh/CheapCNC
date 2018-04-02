@@ -10,7 +10,7 @@
 #include "MC/MotionController.hpp"
 
 MoveTorchUp::MoveTorchUp():
-WaitForTimeout(&(motionController->torchUpTimeSetting)),
+WaitForTimeout(&(motionController->settings.torchUpTimeSetting)),
 OutputSignal(TorchUp_Output_GPIO_Port, TorchUp_Output_Pin){
 }
 

@@ -5,9 +5,9 @@
  *      Author: Sales
  */
 
-#include "MC/Motions/VelocityProfile.hpp"
+#include <MC/Velocity/Velocity.hpp>
+#include <MC/Velocity/VelocityProfile.hpp>
 #include "MC/Settings/Settings.hpp"
-#include "MC/Motions/Velocity.hpp"
 #include "MC/MotionController.hpp"
 #include "MC/GPIO/OutputSignal.hpp"
 #include "MC/Position.hpp"
@@ -15,8 +15,8 @@
 VelocityProfile::VelocityProfile():
 freeRunVelocity(),
 workingVelocity(&freeRunVelocity),
-startVelocity(&(motionController->startVelocitySetting), &freeRunVelocity),
-adjustmentVelocity(&(motionController->adjustmentVelocitySetting), &freeRunVelocity),
+startVelocity(&(motionController->settings.startVelocitySetting), &freeRunVelocity),
+adjustmentVelocity(&(motionController->settings.adjustmentVelocitySetting), &freeRunVelocity),
 acceleration(),
 currentStepSize(startVelocity.GetStepSize()){
 }
@@ -54,6 +54,6 @@ void VelocityProfile::SetCurrentStepSize(uint32_t newStepSIze){
 float VelocityProfile::GetCurrentVelocity() { // millimeters in minute
 	return (float)(60.0
 			     *GetDoubleMMFor64bit(this->currentStepSize)
-				 * motionController->GetTimerFrequency());
+				 * motionController->timerFrequency.GetTimerFrequency());
 }
 

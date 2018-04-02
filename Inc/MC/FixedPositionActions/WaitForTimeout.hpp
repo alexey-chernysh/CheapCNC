@@ -10,7 +10,7 @@
 
 #include <stdint.h>
 #include "MC/Action.hpp"
-#include "MC/Settings/Setting.hpp"
+#include "MC/Settings/SettingInt32.hpp"
 
 class WaitForTimeout: public Action {
 private:

@@ -5,11 +5,11 @@
  *      Author: Sales
  */
 
-#ifndef MC_MOTIONS_VELOCITY_HPP_
-#define MC_MOTIONS_VELOCITY_HPP_
+#ifndef MC_VELOCITY_VELOCITY_HPP_
+#define MC_VELOCITY_VELOCITY_HPP_
 
 #include <stdint.h>
-#include "MC/Settings/Setting.hpp"
+#include "MC/Settings/FloatSetting.hpp"
 
 class Velocity {
 protected:
@@ -65,4 +65,4 @@ private:
 	void SetAutoLimitStepSize();
 };
 
-#endif /* MC_MOTIONS_VELOCITY_HPP_ */
+#endif /* MC_VELOCITY_VELOCITY_HPP_ */

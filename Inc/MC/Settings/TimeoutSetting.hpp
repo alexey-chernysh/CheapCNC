@@ -8,11 +8,13 @@
 #ifndef MC_TIMEOUTSETTING_HPP_
 #define MC_TIMEOUTSETTING_HPP_
 
-#include "MC/Settings/Setting.hpp"
+#include "MC/Settings/SettingInt32.hpp"
+
+class Settings;
 
 class TimeoutSetting: public SettingInt32 {
 public:
-	TimeoutSetting(float firstRunSetting /* заводская установка в секундах */, uint32_t offset);
+	TimeoutSetting(float firstRunSetting /* заводская установка в секундах */, Settings *_parent, uint32_t offset);
 };
 
 #endif /* MC_TIMEOUTSETTING_HPP_ */

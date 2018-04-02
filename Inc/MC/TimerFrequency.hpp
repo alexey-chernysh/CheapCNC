@@ -9,12 +9,9 @@
 #define MC_TIMERFREQUENCY_HPP_
 
 class TimerFrequency {
-private:
-	float MCUfrequency;
-	float timerFrequency;
 public:
 	TimerFrequency();
-	float GetTimerFrequency();
+	static float GetTimerFrequency();
 };
 
 #endif /* MC_TIMERFREQUENCY_HPP_ */

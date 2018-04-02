@@ -10,6 +10,6 @@
 #include "MC/MotionController.hpp"
 
 WaitForPerforation::WaitForPerforation()
-:WaitForTimeout(&(motionController->perforationTimeSetting)) {
+:WaitForTimeout(&(motionController->settings.perforationTimeSetting)) {
 }
 

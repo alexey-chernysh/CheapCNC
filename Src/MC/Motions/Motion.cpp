@@ -8,7 +8,7 @@
 #include "MC/General.h"
 #include <MC/ExecutionDirection.hpp>
 #include <MC/Motions/Motion.hpp>
-#include <MC/Motions/Velocity.hpp>
+#include <MC/Velocity/Velocity.hpp>
 #include "MC/Action.hpp"
 #include "MC/Position.hpp"
 #include "MC/MotionController.hpp"

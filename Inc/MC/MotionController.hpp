@@ -12,19 +12,19 @@
 #include <MC/Motions/Motion.hpp>
 #include "MC/Sequence.hpp"
 #include "MC/ExecutionState.hpp"
-#include <MC/Motions/VelocityProfile.hpp>
 #include "MC/Position.hpp"
 #include <MC/Settings/Settings.hpp>
 #include <MC/TimerFrequency.hpp>
+#include <MC/Velocity/VelocityProfile.hpp>
 
-class MotionController
-: public TimerFrequency
-, public Settings {
+class MotionController {
 public:
 	PositionX positionX;
 	PositionY positionY;
 
-//	Settings settings;
+	TimerFrequency timerFrequency;
+	Settings settings;
+
 	VelocityProfile velocityProfile;
 	ExecutionState executionState;
 

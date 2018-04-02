@@ -5,9 +5,9 @@
  *      Author: Sales
  */
 
+#include <MC/Velocity/Velocity.hpp>
 #include "MC/General.h"
 #include "MC/Position.hpp"
-#include <MC/Motions/Velocity.hpp>
 #include "MC/MotionController.hpp"
 #include "MC/Settings/Settings.hpp"
 
@@ -37,11 +37,11 @@ uint32_t Velocity::GetStepSize(){
 float Velocity::GetVelocity4Step(uint32_t stepSize){
 	return  60.0*stepSize
 			*GetOneBitLengthMM()
-			*motionController->GetTimerFrequency();
+			*motionController->timerFrequency.GetTimerFrequency();
 }
 
 uint32_t Velocity::GetStep4Velocity(float velocity){
-	float mmInTick = velocity/60.0/motionController->GetTimerFrequency();
+	float mmInTick = velocity/60.0/motionController->timerFrequency.GetTimerFrequency();
 	return (uint32_t)(mmInTick/GetOneBitLengthMM());
 }
 
@@ -51,14 +51,15 @@ float Velocity::GetMinVelocity(){
 
 float Velocity::GetMaxVelocity(){
 	return  60.0
-			*motionController->GetTimerFrequency()
+			*motionController->timerFrequency.GetTimerFrequency()
 			*(N_OF_TOOTH*TOOTH_STEP)/STEP_PER_ROTATION/2;
 }
 
 FreeRunVelocity::FreeRunVelocity():
 Velocity(0.0),
-_value(&(motionController->freeRunVelocitySetting)){
-	this->SetStepSize(this->_value->Get());
+_value(&(motionController->settings.freeRunVelocitySetting)){
+	float currentVelocitySetting = this->_value->Get();
+	this->SetStepSize(currentVelocitySetting);
 }
 
 FreeRunVelocity::~FreeRunVelocity() {
@@ -96,9 +97,9 @@ float RelativeVelocity::Get(){
 }
 
 WorkingVelocity::WorkingVelocity(FreeRunVelocity* frv):
-RelativeVelocity(&(motionController->workingVelocitySetting), frv),
+RelativeVelocity(&(motionController->settings.workingVelocitySetting), frv),
 _autoLimitStepSize(0),
-_autoLimitRatio(&(motionController->autoLimitRatioSetting)) {
+_autoLimitRatio(&(motionController->settings.autoLimitRatioSetting)) {
 	SetAutoLimitStepSize();
 }
 

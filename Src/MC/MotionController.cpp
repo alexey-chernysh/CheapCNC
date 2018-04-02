@@ -7,19 +7,19 @@
 
 #include <stdint.h>
 #include <MC/ExecutionDirection.hpp>
-#include <MC/Motions/Acceleration.hpp>
 #include <MC/Motions/Motion.hpp>
-#include <MC/Motions/Velocity.hpp>
 #include <MC/Settings/Settings.hpp>
+#include <MC/Velocity/Acceleration.hpp>
+#include <MC/Velocity/Velocity.hpp>
 #include "MC/MotionController.hpp"
 
 MotionController* motionController = 0;
 
 MotionController::MotionController()
-:TimerFrequency()
-,Settings()
-,positionX()
+:positionX()
 ,positionY()
+,timerFrequency()
+,settings()
 ,velocityProfile()
 ,executionState()
 ,startStopStepSize(velocityProfile.startVelocity.GetStepSize())

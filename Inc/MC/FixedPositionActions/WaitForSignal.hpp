@@ -8,10 +8,10 @@
 #ifndef MC_FIXEDPOSITIONACTIONS_WAITFORSIGNAL_HPP_
 #define MC_FIXEDPOSITIONACTIONS_WAITFORSIGNAL_HPP_
 
-#include <MC/Settings/Setting.hpp>
 #include <stdint.h>
-#include "MC/FixedPositionActions/WaitForTimeout.hpp"
 #include "MC/GPIO/InputSignal.hpp"
+#include "MC/FixedPositionActions/WaitForTimeout.hpp"
+#include <MC/Settings/SettingInt32.hpp>
 
 class WaitForSignal: public WaitForTimeout, private InputSignal {
 public:

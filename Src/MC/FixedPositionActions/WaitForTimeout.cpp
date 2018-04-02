@@ -38,6 +38,7 @@ void WaitForTimeout::OnResumeKeyPressed(){
 
 void WaitForTimeout::OnStoreNResumeKeyPressed(){
 	this->_timeout->Set(this->_counter);
-	motionController->CommitChangesToFlash();
+	motionController->settings.CommitChangesToFlash();
 	this->OnResumeKeyPressed();
 }
+
