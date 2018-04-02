@@ -10,6 +10,8 @@
 
 #include <MC/Settings/Setting.hpp>
 
+class Settings;
+
 class SettingInt32 : public Setting {
 public:
 	SettingInt32(uint32_t firstRunSetting, Settings *parent, uint32_t _offset);

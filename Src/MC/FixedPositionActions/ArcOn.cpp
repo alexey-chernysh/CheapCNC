@@ -12,7 +12,7 @@
 #include "MC/MotionController.hpp"
 
 ArcOn::ArcOn():
-WaitForSignal(ArcTransfer_Input_GPIO_Port, ArcTransfer_Input_Pin, &(motionController->settings.ignitionTimeSetting)),
+WaitForSignal(ArcTransfer_Input_GPIO_Port, ArcTransfer_Input_Pin, &(Settings::GetInstance()->ignitionTimeSetting)),
 OutputSignal(Plasma_OnOff_Output_GPIO_Port, Plasma_OnOff_Output_Pin){
 }
 

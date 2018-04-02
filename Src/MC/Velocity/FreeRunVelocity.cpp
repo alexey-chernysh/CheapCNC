@@ -10,7 +10,7 @@
 
 FreeRunVelocity::FreeRunVelocity():
 Velocity(0.0),
-_value(&(motionController->settings.freeRunVelocitySetting)){
+_value(&(Settings::GetInstance()->freeRunVelocitySetting)){
 	float currentVelocitySetting = this->_value->Get();
 	this->SetStepSize(currentVelocitySetting);
 }

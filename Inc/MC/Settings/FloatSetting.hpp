@@ -12,7 +12,7 @@
 
 class Settings;
 
-class FloatSetting : public Setting {
+class FloatSetting: public Setting {
 public:
 	FloatSetting(float firstRunSetting, Settings *parent, uint32_t _offset);
 	float Get();

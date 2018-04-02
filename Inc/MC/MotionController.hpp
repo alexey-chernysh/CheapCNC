@@ -23,7 +23,7 @@ public:
 	PositionY positionY;
 
 	TimerFrequency timerFrequency;
-	Settings settings;
+//	Settings settings;
 
 	VelocityProfile velocityProfile;
 	ExecutionState executionState;

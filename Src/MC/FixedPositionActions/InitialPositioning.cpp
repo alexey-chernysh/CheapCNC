@@ -12,7 +12,7 @@
 #include "MC/MotionController.hpp"
 
 InitialPositioning::InitialPositioning():
-WaitForSignal(PositioningComplete_Input_GPIO_Port, PositioningComplete_Input_Pin, &(motionController->settings.initialPositioningTimeoutSetting)),
+WaitForSignal(PositioningComplete_Input_GPIO_Port, PositioningComplete_Input_Pin, &(Settings::GetInstance()->initialPositioningTimeoutSetting)),
 OutputSignal(InitialPositioning_Output_GPIO_Port, InitialPositioning_Output_Pin){
 }
 

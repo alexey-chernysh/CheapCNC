@@ -11,8 +11,8 @@
 #include <stdint.h>
 #include "MC/Settings/FlashDataBlock.hpp"
 #include "MC/Settings/Setting.hpp"
-#include "MC/Settings/TimeoutSetting.hpp"
 #include "MC/Settings/FloatSetting.hpp"
+#include "MC/Settings/TimeoutSetting.hpp"
 
 #define MAX_COUNTER (UINT32_MAX-1)
 
@@ -59,7 +59,14 @@ public:
 	FloatSetting startVelocitySetting;
 	FloatSetting adjustmentVelocitySetting;
 public:
-  Settings();// конструктор недоступен
+    static Settings* GetInstance();
+
+    Settings(const Settings&) = delete;
+    Settings& operator= (const Settings) = delete;
+
+protected:
+    Settings();
+    ~Settings();
 };
 
 #endif /* MC_SETTINGS_HPP_ */

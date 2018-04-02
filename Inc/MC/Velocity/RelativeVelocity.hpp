@@ -9,8 +9,8 @@
 #define MC_VELOCITY_RELATIVEVELOCITY_HPP_
 
 #include "MC/Velocity/Velocity.hpp"
+#include "MC/Settings/FloatSetting.hpp"
 
-class FloatSetting;
 class FreeRunVelocity;
 
 class RelativeVelocity: public Velocity {

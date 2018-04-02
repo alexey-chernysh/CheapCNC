@@ -9,7 +9,8 @@
 #define MC_VELOCITY_ACCELERATION_HPP_
 
 #include <stdint.h>
-#include "MC/Settings/FloatSetting.hpp"
+
+class FloatSetting;
 
 class Acceleration {
 private:

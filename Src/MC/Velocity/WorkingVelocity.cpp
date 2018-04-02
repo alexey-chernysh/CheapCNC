@@ -10,9 +10,9 @@
 #include "MC/MotionController.hpp"
 
 WorkingVelocity::WorkingVelocity(FreeRunVelocity* frv):
-RelativeVelocity(&(motionController->settings.workingVelocitySetting), frv),
+RelativeVelocity(&(Settings::GetInstance()->workingVelocitySetting), frv),
 _autoLimitStepSize(0),
-_autoLimitRatio(&(motionController->settings.autoLimitRatioSetting)) {
+_autoLimitRatio(&(Settings::GetInstance()->autoLimitRatioSetting)) {
 	SetAutoLimitStepSize();
 }
 

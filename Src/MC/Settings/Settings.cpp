@@ -8,6 +8,8 @@
 #include <MC/Settings/Settings.hpp>
 #include "MC/Settings/FlashDataBlock.hpp"
 
+static Settings* _instance = 0;
+
 Settings::Settings():
 FlashDataBlock(),
 perforationTimeSetting(PERFORATION_TIME_FACTORY_SETTING, this, PERFORATION_TIME_OFFSET),
@@ -22,3 +24,10 @@ startVelocitySetting(START_VELOCITY_FACTORY_SETTING, this, START_VELOCITY_OFFSET
 adjustmentVelocitySetting(ADJUSTMENT_VELOCITY_FACTORY_SETTING, this, ADJUSTMENT_VELOCITY_OFFSET){
 	this->CommitChangesToFlash();
 }
+
+Settings* Settings::GetInstance(){
+	if(_instance == 0) _instance = new Settings();
+	return _instance;;
+}
+
+Settings::~Settings(){}

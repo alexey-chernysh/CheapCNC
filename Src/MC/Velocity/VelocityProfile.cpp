@@ -15,8 +15,8 @@
 VelocityProfile::VelocityProfile():
 freeRunVelocity(),
 workingVelocity(&freeRunVelocity),
-startVelocity(&(motionController->settings.startVelocitySetting), &freeRunVelocity),
-adjustmentVelocity(&(motionController->settings.adjustmentVelocitySetting), &freeRunVelocity),
+startVelocity(&(Settings::GetInstance()->startVelocitySetting), &freeRunVelocity),
+adjustmentVelocity(&(Settings::GetInstance()->adjustmentVelocitySetting), &freeRunVelocity),
 acceleration(),
 currentStepSize(startVelocity.GetStepSize()){
 }
