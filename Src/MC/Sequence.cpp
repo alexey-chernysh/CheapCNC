@@ -44,9 +44,9 @@ void Sequence::FillLines(){
 }
 
 void Sequence::FillArcs(){
-	double v  = motionController->velocityProfile.GetVelocity(START);
-    double v1 = motionController->velocityProfile.GetVelocity(WORKING);
-    double v2 = motionController->velocityProfile.GetVelocity(FREE_RUN);
+	double v  = motionController->velocityProfile.startVelocity.Get();
+    double v1 = motionController->velocityProfile.workingVelocity.Get();
+    double v2 = motionController->velocityProfile.freeRunVelocity.Get();
 
     // 4 ���� �� 90 �������� �� ������� �� ������� ��������
     MotionArc *arc1 = new MotionArc(100.0, 100.0,  100.0, 0.0, CW, WORKING, v, v1);
@@ -108,8 +108,8 @@ void Sequence::FillComplex(){
 
 void Sequence::FillDebugTask(){
 //	fillLines();
-//	this->FillArcs();
-	this->FillComplex();
+	this->FillArcs();
+//	this->FillComplex();
 }
 
 void Sequence::ResetTask(){

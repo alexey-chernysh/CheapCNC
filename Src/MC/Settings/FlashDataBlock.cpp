@@ -29,7 +29,10 @@ FlashDataBlock::FlashDataBlock(){
 
 int32_t FlashDataBlock::GetInt32(uint32_t offset){
 	if(!dataUploaded) UploadDataFromFlash();
-	return (uint32_t)*(dataBuffer.data + offset);
+	uint8_t* ptr8 = dataBuffer.data + offset;
+	int32_t* ptr32 = (int32_t*)ptr8;
+	int32_t result = *ptr32;
+	return result;
 };
 
 bool FlashDataBlock::DataIntegrityIsOK(){
@@ -38,17 +41,24 @@ bool FlashDataBlock::DataIntegrityIsOK(){
 };
 
 void FlashDataBlock::SetInt32(int32_t newValue, uint16_t offset){
-	*(dataBuffer.data + offset) = newValue;
+	uint8_t* ptr8 = dataBuffer.data + offset;
+	int32_t* ptr32 = (int32_t*)ptr8;
+	*ptr32 = newValue;
 	dataChanged = true;
 };
 
 float FlashDataBlock::GetFloat(uint32_t offset){
 	if(!dataUploaded) UploadDataFromFlash();
-	return (float)*(dataBuffer.data + offset);
+	uint8_t* ptr8 = dataBuffer.data + offset;
+	float* ptrFloat = (float*)ptr8;
+	float result = *ptrFloat;
+	return result;
 }
 
 void FlashDataBlock::SetFloat(float newValue, uint16_t offset){
-	*(dataBuffer.data + offset) = newValue;
+	uint8_t* ptr8 = dataBuffer.data + offset;
+	float* ptrFloat = (float*)ptr8;
+	*ptrFloat = newValue;
 	dataChanged = true;
 }
 

@@ -17,7 +17,9 @@ _autoLimitRatio(&(Settings::GetInstance()->autoLimitRatioSetting)) {
 }
 
 void WorkingVelocity::SetAutoLimitStepSize(){
-	this->_autoLimitStepSize = this->GetStepSize()*this->_autoLimitRatio->Get();
+	uint32_t ss = this->GetStepSize();
+	float r = this->_autoLimitRatio->Get();
+	this->_autoLimitStepSize = ss * r;
 }
 
 void WorkingVelocity::SetLimit(float newLimitRatio){

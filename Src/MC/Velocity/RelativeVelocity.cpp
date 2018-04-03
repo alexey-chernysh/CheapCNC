@@ -13,7 +13,10 @@ RelativeVelocity::RelativeVelocity(FloatSetting* currentSetting, FreeRunVelocity
 Velocity(0.0),
 _freeRunVelocity(frv),
 _ratio(currentSetting){
-	this->Set(this->_freeRunVelocity->Get()*this->_ratio->Get());
+	float _frv = this->_freeRunVelocity->Get();
+	float r = this->_ratio->Get();
+	float value = _frv*r;
+	this->Set(value);
 }
 
 RelativeVelocity::~RelativeVelocity(){
@@ -28,6 +31,9 @@ void RelativeVelocity::Set(float newVelocity){
 }
 
 float RelativeVelocity::Get(){
-	return (this->_freeRunVelocity->Get() * this->_ratio->Get());
+	float free_vel = this->_freeRunVelocity->Get();
+	float  r = this->_ratio->Get();
+	float result = free_vel * r;
+	return result;
 }
 
