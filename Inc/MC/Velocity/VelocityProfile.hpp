@@ -27,13 +27,22 @@ public:
 private:
 	uint32_t currentStepSize;
 
-public:
+private:
 	VelocityProfile();
+	~VelocityProfile();
+
+public:
 	uint32_t GetStepSize(MOTION_VELOCITY t);
 	float GetVelocity(MOTION_VELOCITY t);
 	void SetCurrentStepSize(uint32_t newStepSIze);
 	uint32_t GetCurrentStepSize();
 	float GetCurrentVelocity();
+
+    static VelocityProfile* GetInstance();
+
+	VelocityProfile(const VelocityProfile&) = delete;
+	VelocityProfile& operator= (const VelocityProfile) = delete;
+
 };
 
 #endif /* MC_VELOCITY_VELOCITYPROFILE_HPP_ */

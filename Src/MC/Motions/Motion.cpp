@@ -7,11 +7,12 @@
 
 #include "MC/General.h"
 #include <MC/ExecutionDirection.hpp>
+#include <MC/MotionController.hpp>
 #include <MC/Motions/Motion.hpp>
 #include <MC/Velocity/Velocity.hpp>
 #include "MC/Action.hpp"
 #include "MC/Position.hpp"
-#include "MC/MotionController.hpp"
+#include "MC/Velocity/VelocityProfile.hpp"
 
 Motion::~Motion() {
 }
@@ -35,15 +36,15 @@ Motion::Motion( double _relEndPosX,
 								stepSizeCurrent(0L){
 
 
-	this->stepSizeConstantVelocity = motionController->velocityProfile.GetStepSize(velocity);
+	this->stepSizeConstantVelocity = VelocityProfile::GetInstance()->GetStepSize(velocity);
 	this->stepSizeBeforeAcceleration = Velocity::GetStep4Velocity(startVel);
 	this->stepSizeAfterDeceleration = Velocity::GetStep4Velocity(endVel);
 }
 
 void Motion::CalcWayLength(){
 	this->wayLengthCurrent = 0LL;
-	this->wayLengthAcceleration = motionController->velocityProfile.acceleration.GetWayLength4StepChange(this->stepSizeBeforeAcceleration, this->stepSizeConstantVelocity);
-	this->wayLengthDeceleration = motionController->velocityProfile.acceleration.GetWayLength4StepChange(this->stepSizeConstantVelocity, this->stepSizeAfterDeceleration);
+	this->wayLengthAcceleration = VelocityProfile::GetInstance()->acceleration.GetWayLength4StepChange(this->stepSizeBeforeAcceleration, this->stepSizeConstantVelocity);
+	this->wayLengthDeceleration = VelocityProfile::GetInstance()->acceleration.GetWayLength4StepChange(this->stepSizeConstantVelocity, this->stepSizeAfterDeceleration);
 
 	int64_t wayLengthConstantVelocity = this->wayLength - this->wayLengthAcceleration - this->wayLengthDeceleration;
 	if(wayLengthConstantVelocity < 0){
@@ -82,12 +83,12 @@ bool Motion::IterateForward(){ // return true if another step needed
 
 	motionController->positionX.Set(this->startAbsPosX + this->relCurrentPosX);
 	motionController->positionY.Set(this->startAbsPosY + this->relCurrentPosY);
-	motionController->velocityProfile.SetCurrentStepSize(this->stepSizeCurrent);
+	VelocityProfile::GetInstance()->SetCurrentStepSize(this->stepSizeCurrent);
 
 	switch (this->phase){
 		case HEAD:
 			if(this->stepSizeCurrent < this->stepSizeConstantVelocity)
-				this->stepSizeCurrent += motionController->velocityProfile.acceleration.GetStepIncrement();
+				this->stepSizeCurrent += VelocityProfile::GetInstance()->acceleration.GetStepIncrement();
 			else {
 				this->stepSizeCurrent = this->stepSizeConstantVelocity;
 				this->phase = BODY;
@@ -98,7 +99,7 @@ bool Motion::IterateForward(){ // return true if another step needed
 			break;
 		case TAIL:
 			if(this->stepSizeCurrent > this->stepSizeAfterDeceleration)
-				this->stepSizeCurrent -= motionController->velocityProfile.acceleration.GetStepIncrement();
+				this->stepSizeCurrent -= VelocityProfile::GetInstance()->acceleration.GetStepIncrement();
 			else this->stepSizeCurrent = this->stepSizeAfterDeceleration;
 			break;
 	}
@@ -119,12 +120,12 @@ bool Motion::IterateBackward(){ // return true if another step needed
 
 	motionController->positionX.Set(this->startAbsPosX + this->relCurrentPosX);
 	motionController->positionY.Set(this->startAbsPosY + this->relCurrentPosY);
-	motionController->velocityProfile.SetCurrentStepSize(this->stepSizeCurrent);
+	VelocityProfile::GetInstance()->SetCurrentStepSize(this->stepSizeCurrent);
 
 	switch (this->phase){
 		case HEAD:
 			if(this->stepSizeCurrent > this->stepSizeBeforeAcceleration)
-				this->stepSizeCurrent -= motionController->velocityProfile.acceleration.GetStepIncrement();
+				this->stepSizeCurrent -= VelocityProfile::GetInstance()->acceleration.GetStepIncrement();
 			else this->stepSizeCurrent = this->stepSizeBeforeAcceleration;
 			break;
 		case BODY:
@@ -132,7 +133,7 @@ bool Motion::IterateBackward(){ // return true if another step needed
 			break;
 		case TAIL:
 			if(this->stepSizeCurrent < this->stepSizeConstantVelocity)
-				this->stepSizeCurrent += motionController->velocityProfile.acceleration.GetStepIncrement();
+				this->stepSizeCurrent += VelocityProfile::GetInstance()->acceleration.GetStepIncrement();
 			else {
 				this->stepSizeCurrent = this->stepSizeConstantVelocity;
 				this->phase = BODY;

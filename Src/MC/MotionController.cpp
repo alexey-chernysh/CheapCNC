@@ -18,9 +18,9 @@ MotionController* motionController = 0;
 MotionController::MotionController()
 :positionX()
 ,positionY()
-,velocityProfile()
+//,velocityProfile()
 ,executionState()
-,startStopStepSize(velocityProfile.startVelocity.GetStepSize())
+,startStopStepSize(VelocityProfile::GetInstance()->startVelocity.GetStepSize())
 ,resumingStepSize(startStopStepSize)
 ,pausingStepSize(startStopStepSize){
 	sequence = new Sequence();
@@ -80,7 +80,7 @@ void MotionController::SetResuming(){
 uint32_t MotionController::GetResumingStepSize(uint32_t _currentStepSize){
     if(this->executionState.IsResuming()){
     	uint32_t result = resumingStepSize;
-        resumingStepSize += this->velocityProfile.acceleration.GetStepIncrement();
+        resumingStepSize += VelocityProfile::GetInstance()->acceleration.GetStepIncrement();
         if(result < _currentStepSize) return result;
         else {
         	this->executionState.SetNonResuming();
@@ -90,7 +90,7 @@ uint32_t MotionController::GetResumingStepSize(uint32_t _currentStepSize){
 }
 
 void MotionController::SetPausing(){
-    pausingStepSize = velocityProfile.GetCurrentStepSize();
+    pausingStepSize = VelocityProfile::GetInstance()->GetCurrentStepSize();
     executionState.SetNonResuming();
     executionState.SetPausing();
 }
@@ -98,7 +98,7 @@ void MotionController::SetPausing(){
 uint32_t MotionController::GetPausingStepSize(uint32_t currentSS){
     if(this->executionState.IsPausing()){
         uint32_t result = pausingStepSize;
-        pausingStepSize -= this->velocityProfile.acceleration.GetStepIncrement();
+        pausingStepSize -= VelocityProfile::GetInstance()->acceleration.GetStepIncrement();
         if(result > startStopStepSize) return result;
         else {
             this->executionState.SetPaused();

@@ -12,6 +12,8 @@
 #include "MC/GPIO/OutputSignal.hpp"
 #include "MC/Position.hpp"
 
+static VelocityProfile* _instance = 0;
+
 VelocityProfile::VelocityProfile():
 freeRunVelocity(),
 workingVelocity(&freeRunVelocity),
@@ -57,3 +59,9 @@ float VelocityProfile::GetCurrentVelocity() { // millimeters in minute
 				 *GetTimerFrequency());
 }
 
+VelocityProfile* VelocityProfile::GetInstance(){
+	if(_instance == 0) _instance = new VelocityProfile();
+	return _instance;;
+}
+
+VelocityProfile::~VelocityProfile(){}

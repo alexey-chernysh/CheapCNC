@@ -64,7 +64,7 @@ public:
     Settings(const Settings&) = delete;
     Settings& operator= (const Settings) = delete;
 
-protected:
+private:
     Settings();
     ~Settings();
 };

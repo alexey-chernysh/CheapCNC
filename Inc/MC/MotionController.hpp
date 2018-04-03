@@ -25,7 +25,7 @@ public:
 //	TimerFrequency timerFrequency;
 //	Settings settings;
 
-	VelocityProfile velocityProfile;
+//	VelocityProfile velocityProfile;
 	ExecutionState executionState;
 
 private:
