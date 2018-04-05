@@ -11,9 +11,9 @@
 #include <stdint.h>
 #include <MC/Motions/Motion.hpp>
 #include "MC/Sequence.hpp"
-#include "MC/ExecutionState.hpp"
 #include "MC/Position.hpp"
 #include <MC/Settings/Settings.hpp>
+#include <MC/State/ExecutionState.hpp>
 #include <MC/TimerFrequency.hpp>
 #include <MC/Velocity/VelocityProfile.hpp>
 
@@ -22,10 +22,6 @@ public:
 	PositionX positionX;
 	PositionY positionY;
 
-//	TimerFrequency timerFrequency;
-//	Settings settings;
-
-//	VelocityProfile velocityProfile;
 	ExecutionState executionState;
 
 private:
@@ -47,11 +43,14 @@ public:
 	void OnControlKey(char controlKey);
 
 	void SetResuming();
-	uint32_t GetResumingStepSize(uint32_t currentSS);
+	void SetResumingBackward();
 	void SetPausing();
+
+	uint32_t GetResumingStepSize(uint32_t currentSS);
 	uint32_t GetPausingStepSize(uint32_t currentSS);
 
 private:
+	void StartResuming();
 	void IterateActionNum();
 };
 

@@ -6,9 +6,9 @@
  */
 
 #include <stdint.h>
-#include <MC/ExecutionDirection.hpp>
 #include <MC/Motions/Motion.hpp>
 #include <MC/Settings/Settings.hpp>
+#include <MC/State/ExecutionDirection.hpp>
 #include <MC/Velocity/Acceleration.hpp>
 #include <MC/Velocity/Velocity.hpp>
 #include "MC/MotionController.hpp"
@@ -18,7 +18,6 @@ MotionController* motionController = 0;
 MotionController::MotionController()
 :positionX()
 ,positionY()
-//,velocityProfile()
 ,executionState()
 ,startStopStepSize(VelocityProfile::GetInstance()->startVelocity.GetStepSize())
 ,resumingStepSize(startStopStepSize)
@@ -70,11 +69,33 @@ void MotionController::OnTimer(){
 	}
 }
 
+void MotionController::StartResuming(){
+	resumingStepSize = startStopStepSize;
+	this->executionState.SetResuming();
+	this->executionState.SetNonPausing();
+	this->executionState.SetRunning();
+}
+
 void MotionController::SetResuming(){
-    resumingStepSize = startStopStepSize;
-    this->executionState.SetResuming();
-    this->executionState.SetNonPausing();
-    this->executionState.SetRunning();
+	if(this->executionState.IsPaused()){
+		this->executionState.SetForwardDirection();
+		this->StartResuming();
+	}
+}
+
+void MotionController::SetResumingBackward(){
+	if(this->executionState.IsPaused()){
+		this->executionState.SetBackwardDirection();
+		this->StartResuming();
+	}
+}
+
+void MotionController::SetPausing(){
+	if(this->executionState.IsRunning()){
+	    pausingStepSize = VelocityProfile::GetInstance()->GetCurrentStepSize();
+	    executionState.SetNonResuming();
+	    executionState.SetPausing();
+	}
 }
 
 uint32_t MotionController::GetResumingStepSize(uint32_t _currentStepSize){
@@ -87,12 +108,6 @@ uint32_t MotionController::GetResumingStepSize(uint32_t _currentStepSize){
             return _currentStepSize;
         }
     } else return _currentStepSize;
-}
-
-void MotionController::SetPausing(){
-    pausingStepSize = VelocityProfile::GetInstance()->GetCurrentStepSize();
-    executionState.SetNonResuming();
-    executionState.SetPausing();
 }
 
 uint32_t MotionController::GetPausingStepSize(uint32_t currentSS){
@@ -111,20 +126,13 @@ uint32_t MotionController::GetPausingStepSize(uint32_t currentSS){
 void MotionController::OnControlKey(char controlKey){
 	switch(controlKey){
 	case 'R': // Start/Resume
-		if(this->executionState.IsPaused()){
-			this->executionState.SetForwardDirection();
 			SetResuming();
-		};
 		break;
 	case 'P': // Stop/Pause
-		if(this->executionState.IsRunning())
 			SetPausing();
 		break;
 	case 'B': // Rewind
-		if(this->executionState.IsPaused()){
-			this->executionState.SetBackwardDirection();
-			SetResuming();
-		};
+		SetResumingBackward();
 		break;
 	case 'W': // Up
 		break;

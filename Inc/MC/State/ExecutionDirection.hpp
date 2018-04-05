@@ -5,8 +5,8 @@
  *      Author: alexey
  */
 
-#ifndef MC_EXECUTIONDIRECTION_HPP_
-#define MC_EXECUTIONDIRECTION_HPP_
+#ifndef MC_STATE_EXECUTIONDIRECTION_HPP_
+#define MC_STATE_EXECUTIONDIRECTION_HPP_
 
 class ExecutionDirection {
 private:
@@ -19,4 +19,4 @@ public:
 	void SetBackwardDirection();
 };
 
-#endif /* MC_EXECUTIONDIRECTION_HPP_ */
+#endif /* MC_STATE_EXECUTIONDIRECTION_HPP_ */

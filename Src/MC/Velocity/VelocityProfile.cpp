@@ -27,8 +27,6 @@ uint32_t VelocityProfile::GetStepSize(MOTION_VELOCITY t) {
 	switch (t){
 		case FREE_RUN: return freeRunVelocity.GetStepSize();
 		case WORKING: return workingVelocity.GetStepSize();
-		case START: return startVelocity.GetStepSize();
-		case ADJUSTMENT: return adjustmentVelocity.GetStepSize();
 		default: return 0;
 	}
 }
@@ -37,8 +35,6 @@ float VelocityProfile::GetVelocity(MOTION_VELOCITY t){
 	switch (t){
 		case FREE_RUN: return freeRunVelocity.Get();
 		case WORKING: return workingVelocity.Get();
-		case START: return startVelocity.Get();
-		case ADJUSTMENT: return adjustmentVelocity.Get();
 		default: return 0;
 	}
 }

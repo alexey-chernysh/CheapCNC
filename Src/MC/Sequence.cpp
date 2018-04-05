@@ -32,7 +32,7 @@ Action* Sequence::GetAction(uint32_t num){
 }
 
 void Sequence::FillLines(){
-	double v = VelocityProfile::GetInstance()->GetVelocity(START);
+	double v  = VelocityProfile::GetInstance()->startVelocity.Get();
 
     MotionStraight *straight1 = new MotionStraight(100.0, 0.0, WORKING, v, v);
     this->actions[0] = (Action*)straight1;
@@ -76,8 +76,8 @@ void Sequence::FillArcs(){
 }
 
 void Sequence::FillComplex(){
-	double v  = VelocityProfile::GetInstance()->GetVelocity(START);
-    double v1 = VelocityProfile::GetInstance()->GetVelocity(WORKING);
+	double v  = VelocityProfile::GetInstance()->startVelocity.Get();
+    double v1 = VelocityProfile::GetInstance()->workingVelocity.Get();
 
     MotionStraight *straight1 = new MotionStraight(0.0, 95.0, WORKING, v, v1);
     this->actions[0] = (Action*)straight1;

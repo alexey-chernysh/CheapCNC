@@ -5,19 +5,25 @@
  *      Author: alexey
  */
 
-#include <MC/ExecutionDirection.hpp>
-#include <MC/ExecutionState.hpp>
+#include <MC/State/ExecutionDirection.hpp>
+#include <MC/State/ExecutionState.hpp>
 
 ExecutionState::ExecutionState():
 running(false),
 resuming(false),
-pausing(false){
+pausing(false),
+repositioning(false),
+demoMode(false),
+adjustmentMode(false){
 }
 
 void ExecutionState::Reset(){
 	running = false;
 	resuming = false;
 	pausing = false;
+	repositioning = false;
+	demoMode = false;
+	adjustmentMode = false;
 	this->SetForwardDirection();
 }
 

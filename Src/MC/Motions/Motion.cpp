@@ -6,9 +6,9 @@
  */
 
 #include "MC/General.h"
-#include <MC/ExecutionDirection.hpp>
 #include <MC/MotionController.hpp>
 #include <MC/Motions/Motion.hpp>
+#include <MC/State/ExecutionDirection.hpp>
 #include <MC/Velocity/Velocity.hpp>
 #include "MC/Action.hpp"
 #include "MC/Position.hpp"

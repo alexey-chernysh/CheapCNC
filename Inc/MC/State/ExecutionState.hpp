@@ -5,16 +5,19 @@
  *      Author: alexey
  */
 
-#ifndef MC_EXECUTIONSTATE_HPP_
-#define MC_EXECUTIONSTATE_HPP_
+#ifndef MC_STATE_EXECUTIONSTATE_HPP_
+#define MC_STATE_EXECUTIONSTATE_HPP_
 
-#include <MC/ExecutionDirection.hpp>
+#include <MC/State/ExecutionDirection.hpp>
 
 class ExecutionState : public ExecutionDirection {
 private:
 	bool running;
 	bool resuming;
 	bool pausing;
+	bool repositioning;
+	bool demoMode;
+	bool adjustmentMode;
 public:
 	ExecutionState();
 	void Reset();
@@ -33,4 +36,4 @@ public:
 	bool IsPausing();
 };
 
-#endif /* MC_EXECUTIONSTATE_HPP_ */
+#endif /* MC_STATE_EXECUTIONSTATE_HPP_ */

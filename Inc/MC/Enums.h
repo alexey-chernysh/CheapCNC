@@ -16,10 +16,14 @@ typedef enum {
 
 typedef enum {
 	FREE_RUN = 0,
-	WORKING,
-	START,
-	ADJUSTMENT,
+	WORKING
 } MOTION_VELOCITY;
+
+typedef enum {
+	WORKING_MOTION,
+	DEMO_NOTION,
+	ADJUSTMENT_MOTION
+} MOTION_TYPE;
 
 typedef enum {
 	CW, // clockwise
