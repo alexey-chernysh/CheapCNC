@@ -126,10 +126,10 @@ uint32_t MotionController::GetPausingStepSize(uint32_t currentSS){
 void MotionController::OnControlKey(char controlKey){
 	switch(controlKey){
 	case 'R': // Start/Resume
-			SetResuming();
+		SetResuming();
 		break;
 	case 'P': // Stop/Pause
-			SetPausing();
+		SetPausing();
 		break;
 	case 'B': // Rewind
 		SetResumingBackward();

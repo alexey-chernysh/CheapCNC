@@ -34,6 +34,11 @@ public:
 	void SetPausing();
 	void SetNonPausing();
 	bool IsPausing();
+
+	void SetDemoMode();
+	void SetWorkingMode();
+	bool IsDemoMode();
+	bool IsWorkingMode();
 };
 
 #endif /* MC_STATE_EXECUTIONSTATE_HPP_ */

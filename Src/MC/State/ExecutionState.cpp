@@ -46,3 +46,13 @@ void ExecutionState::SetPausing(){ this->pausing = true; }
 void ExecutionState::SetNonPausing(){ this->pausing = false; }
 
 bool ExecutionState::IsPausing(){ return this->pausing; }
+
+void ExecutionState::SetDemoMode(){ this->demoMode = true; }
+
+void ExecutionState::SetWorkingMode(){ this->demoMode = false; }
+
+bool ExecutionState::IsDemoMode(){ return this->demoMode; }
+
+bool ExecutionState::IsWorkingMode(){ return !(this->demoMode); }
+
+
