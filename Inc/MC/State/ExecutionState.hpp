@@ -22,23 +22,29 @@ public:
 	ExecutionState();
 	void Reset();
 
-	void SetRunning();
-	void SetPaused();
-	bool IsRunning();
-	bool IsPaused();
+	void SetRunningFlag();
+	void ResetRunningFlag();
+	bool RunningFlagIsOn();
 
-	void SetResuming();
-	void SetNonResuming();
-	bool IsResuming();
+	void SetResumingFlag();
+	void ResetResumingFlag();
+	bool ResumingFlagIsOn();
 
-	void SetPausing();
-	void SetNonPausing();
-	bool IsPausing();
+	void SetPausingFlag();
+	void ResetPausingFlag();
+	bool PausingFlagIsOn();
 
-	void SetDemoMode();
-	void SetWorkingMode();
-	bool IsDemoMode();
-	bool IsWorkingMode();
+	void SetDemoModeFlag();
+	void ResetDemoModeFlag();
+	bool DemoModeFlagIsOn();
+
+	void SetRepositioningModeFlag();
+	void ResetRepositioningModeFlag();
+	bool RepositioningFlagIsOn();
+
+	void SetAdjastmentModeFlag();
+	void ResetAdjastmentModeFlag();
+	bool AdjustmentFlagIsOn();
 };
 
 #endif /* MC_STATE_EXECUTIONSTATE_HPP_ */

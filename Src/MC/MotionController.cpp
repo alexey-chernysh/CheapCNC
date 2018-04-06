@@ -50,7 +50,7 @@ void MotionController::IterateActionNum(){
 void MotionController::OnTimer(){
 	if(currentAction != 0){
 		bool anotherStepNeeded = true;
-		if(this->executionState.IsRunning()) {
+		if(this->executionState.RunningFlagIsOn()) {
 			if(this->executionState.DirectionIsForward()){
 				anotherStepNeeded = currentAction->IterateForward();
 			} else {
@@ -71,53 +71,53 @@ void MotionController::OnTimer(){
 
 void MotionController::StartResuming(){
 	resumingStepSize = startStopStepSize;
-	this->executionState.SetResuming();
-	this->executionState.SetNonPausing();
-	this->executionState.SetRunning();
+	this->executionState.SetResumingFlag();
+	this->executionState.ResetPausingFlag();
+	this->executionState.SetRunningFlag();
 }
 
 void MotionController::SetResuming(){
-	if(this->executionState.IsPaused()){
+	if(!this->executionState.RunningFlagIsOn()){
 		this->executionState.SetForwardDirection();
 		this->StartResuming();
 	}
 }
 
 void MotionController::SetResumingBackward(){
-	if(this->executionState.IsPaused()){
+	if(!this->executionState.RunningFlagIsOn()){
 		this->executionState.SetBackwardDirection();
 		this->StartResuming();
 	}
 }
 
 void MotionController::SetPausing(){
-	if(this->executionState.IsRunning()){
+	if(this->executionState.RunningFlagIsOn()){
 	    pausingStepSize = VelocityProfile::GetInstance()->GetCurrentStepSize();
-	    executionState.SetNonResuming();
-	    executionState.SetPausing();
+	    executionState.ResetResumingFlag();
+	    executionState.SetPausingFlag();
 	}
 }
 
 uint32_t MotionController::GetResumingStepSize(uint32_t _currentStepSize){
-    if(this->executionState.IsResuming()){
+    if(this->executionState.ResumingFlagIsOn()){
     	uint32_t result = resumingStepSize;
         resumingStepSize += VelocityProfile::GetInstance()->acceleration.GetStepIncrement();
         if(result < _currentStepSize) return result;
         else {
-        	this->executionState.SetNonResuming();
+        	this->executionState.ResetResumingFlag();
             return _currentStepSize;
         }
     } else return _currentStepSize;
 }
 
 uint32_t MotionController::GetPausingStepSize(uint32_t currentSS){
-    if(this->executionState.IsPausing()){
+    if(this->executionState.PausingFlagIsOn()){
         uint32_t result = pausingStepSize;
         pausingStepSize -= VelocityProfile::GetInstance()->acceleration.GetStepIncrement();
         if(result > startStopStepSize) return result;
         else {
-            this->executionState.SetPaused();
-            this->executionState.SetNonPausing();
+            this->executionState.ResetRunningFlag();
+            this->executionState.ResetPausingFlag();
             return startStopStepSize;
         }
     } else return currentSS;

@@ -27,32 +27,26 @@ void ExecutionState::Reset(){
 	this->SetForwardDirection();
 }
 
-void ExecutionState::SetRunning(){ this->running = true;}
+void ExecutionState::SetRunningFlag(){ this->running = true;}
+void ExecutionState::ResetRunningFlag(){ this->running = false;}
+bool ExecutionState::RunningFlagIsOn(){ return this->running; }
 
-void ExecutionState::SetPaused(){ this->running = false;}
+void ExecutionState::SetResumingFlag(){ this->resuming = true; }
+void ExecutionState::ResetResumingFlag(){ this->resuming = false; }
+bool ExecutionState::ResumingFlagIsOn(){ return this->resuming; }
 
-bool ExecutionState::IsRunning(){ return this->running; }
+void ExecutionState::SetPausingFlag(){ this->pausing = true; }
+void ExecutionState::ResetPausingFlag(){ this->pausing = false; }
+bool ExecutionState::PausingFlagIsOn(){ return this->pausing; }
 
-bool ExecutionState::IsPaused(){ return !this->running; }
+void ExecutionState::SetDemoModeFlag(){ this->demoMode = true; }
+void ExecutionState::ResetDemoModeFlag(){ this->demoMode = false; }
+bool ExecutionState::DemoModeFlagIsOn(){ return this->demoMode; }
 
-void ExecutionState::SetResuming(){ this->resuming = true; }
+void ExecutionState::SetRepositioningModeFlag(){ this->repositioning = true; }
+void ExecutionState::ResetRepositioningModeFlag(){ this->repositioning = false; }
+bool ExecutionState::RepositioningFlagIsOn(){ return this->repositioning; }
 
-void ExecutionState::SetNonResuming(){ this->resuming = false; }
-
-bool ExecutionState::IsResuming(){ return this->resuming; }
-
-void ExecutionState::SetPausing(){ this->pausing = true; }
-
-void ExecutionState::SetNonPausing(){ this->pausing = false; }
-
-bool ExecutionState::IsPausing(){ return this->pausing; }
-
-void ExecutionState::SetDemoMode(){ this->demoMode = true; }
-
-void ExecutionState::SetWorkingMode(){ this->demoMode = false; }
-
-bool ExecutionState::IsDemoMode(){ return this->demoMode; }
-
-bool ExecutionState::IsWorkingMode(){ return !(this->demoMode); }
-
-
+void ExecutionState::SetAdjastmentModeFlag(){ this->adjustmentMode = true; }
+void ExecutionState::ResetAdjastmentModeFlag(){ this->adjustmentMode = false; }
+bool ExecutionState::AdjustmentFlagIsOn(){ return this->adjustmentMode; }
