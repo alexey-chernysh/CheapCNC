@@ -108,8 +108,8 @@ void Sequence::FillComplex(){
 
 void Sequence::FillDebugTask(){
 //	fillLines();
-	this->FillArcs();
-//	this->FillComplex();
+//  this->FillArcs();
+	this->FillComplex();
 }
 
 void Sequence::ResetTask(){
