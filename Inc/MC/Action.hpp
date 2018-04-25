@@ -11,7 +11,7 @@
 class Action {
 public:
 	Action();
-	virtual ~Action();
+//	virtual ~Action();
 	virtual void Init();
 	virtual bool IterateForward();
 	virtual bool IterateBackward();
