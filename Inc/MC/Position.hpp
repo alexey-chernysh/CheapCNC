@@ -23,6 +23,7 @@ public:
 	Position();
 	virtual ~Position();
 	int64_t Get();
+	double GetMM();
 	void Set(int64_t newPosition);
 	void Shift(int8_t shift);
 private:

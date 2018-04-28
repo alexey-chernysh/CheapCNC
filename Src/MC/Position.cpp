@@ -52,6 +52,10 @@ int64_t Position::Get(){
 	return this->absPosition;
 }
 
+double Position::GetMM(){
+	return GetDoubleMMFor64bit(this->Get());
+}
+
 void Position::Set(int64_t newPosition){
 	this->absPosition = newPosition;
 	this->SetPWM(GetAngle());

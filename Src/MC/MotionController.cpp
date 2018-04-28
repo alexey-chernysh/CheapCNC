@@ -147,6 +147,43 @@ void MotionController::OnControlKey(char controlKey){
 	};
 }
 
+#define MAX_MESSAGE_SIZE 64
+
+static char messageBuffer[MAX_MESSAGE_SIZE];
+
+uint8_t dtoa(char *buffer, double d) {
+	uint8_t result = 0;
+	bool minus = (d<0);
+	double tmpD;
+	if(minus) tmpD = -d;
+	else tmpD = d;
+	uint32_t tmpUI = d*100;
+
+	buffer[result++] = tmpUI % 10;
+	tmpUI /= 10;
+
+	buffer[result++] = tmpUI % 10;
+	tmpUI /= 10;
+
+	buffer[result++] = '.';
+
+	do {
+		buffer[result++] = tmpUI % 10;
+		tmpUI /= 10;
+	} while(tmpUI>0);
+
+	if(minus) buffer[result++] = '-';
+
+	uint8_t n = result/2;
+	for(uint8_t i=0; i<n; i++){
+		uint8_t oppositeNum = result - i -1;
+		char swap = buffer[i];
+		buffer[i] = buffer[oppositeNum];
+		buffer[oppositeNum] = swap;
+	}
+	return result;
+}
+
 extern "C"{
 
 void MC_Init(){
@@ -159,6 +196,16 @@ void MC_OnTimer(){
 
 void MC_onControlKey(char controlKey){
 	motionController->OnControlKey(controlKey);
+}
+
+char* prepareUSBMessage(uint32_t requestNum){
+	double px = motionController->positionX.GetMM();
+	double py = motionController->positionY.GetMM();
+	int semiPos  = dtoa(&messageBuffer[0], px);
+	messageBuffer[semiPos] = ';';
+	int nullPos  = dtoa(&messageBuffer[semiPos+1], py);
+	messageBuffer[nullPos] = 0;
+	return messageBuffer;
 }
 
 }

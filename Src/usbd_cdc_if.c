@@ -294,6 +294,9 @@ static int8_t CDC_Receive_FS(uint8_t* Buf, uint32_t *Len)
   USBD_CDC_SetRxBuffer(&hUsbDeviceFS, &Buf[0]);
   volatile char controlKey = Buf[0];
   MC_onControlKey(controlKey);
+//  char* replayMessage = prepareUSBMessage(controlKey);
+//  uint32_t replayMessageLen = strlen(replayMessage);
+//  CDC_Transmit_FS(replayMessage, *replayMessageLen);
   CDC_Transmit_FS(Buf, *Len);
   USBD_CDC_ReceivePacket(&hUsbDeviceFS);
   return (USBD_OK);

@@ -79,9 +79,9 @@
 #define THC_Auto_Output_GPIO_Port GPIOB
 #define ArcTransfer_Input_Pin GPIO_PIN_8
 #define ArcTransfer_Input_GPIO_Port GPIOA
-#define Ignition_Output_Pin GPIO_PIN_8
+#define Ignition_Output_Pin GPIO_PIN_4
 #define Ignition_Output_GPIO_Port GPIOB
-#define InitialPositioning_Output_Pin GPIO_PIN_9
+#define InitialPositioning_Output_Pin GPIO_PIN_5
 #define InitialPositioning_Output_GPIO_Port GPIOB
 
 /* ########################## Assert Selection ############################## */
